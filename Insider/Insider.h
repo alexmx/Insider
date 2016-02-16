@@ -15,3 +15,4 @@ FOUNDATION_EXPORT double InsiderVersionNumber;
 FOUNDATION_EXPORT const unsigned char InsiderVersionString[];
 
 #import "GCDWebServer.h"
+#import "GCDWebServerURLEncodedFormRequest.h"

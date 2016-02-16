@@ -1,0 +1,10 @@
+disabled_rules:
+ - trailing_whitespace
+ - trailing_newline 
+ - line_length
+ - type_name
+
+excluded: 
+  - Carthage
+  - Pods
+  - Libs

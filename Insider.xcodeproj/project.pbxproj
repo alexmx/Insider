@@ -34,13 +34,13 @@
 		CD3305BC1C737BB000494BB9 /* GCDWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CD33059E1C737BB000494BB9 /* GCDWebServerRequest.m */; };
 		CD3305BD1C737BB000494BB9 /* GCDWebServerResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = CD33059F1C737BB000494BB9 /* GCDWebServerResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3305BE1C737BB000494BB9 /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305A01C737BB000494BB9 /* GCDWebServerResponse.m */; };
-		CD3305BF1C737BB000494BB9 /* GCDWebServerDataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305A21C737BB000494BB9 /* GCDWebServerDataRequest.h */; };
+		CD3305BF1C737BB000494BB9 /* GCDWebServerDataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305A21C737BB000494BB9 /* GCDWebServerDataRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3305C01C737BB000494BB9 /* GCDWebServerDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305A31C737BB000494BB9 /* GCDWebServerDataRequest.m */; };
 		CD3305C11C737BB000494BB9 /* GCDWebServerFileRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305A41C737BB000494BB9 /* GCDWebServerFileRequest.h */; };
 		CD3305C21C737BB000494BB9 /* GCDWebServerFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305A51C737BB000494BB9 /* GCDWebServerFileRequest.m */; };
 		CD3305C31C737BB000494BB9 /* GCDWebServerMultiPartFormRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305A61C737BB000494BB9 /* GCDWebServerMultiPartFormRequest.h */; };
 		CD3305C41C737BB000494BB9 /* GCDWebServerMultiPartFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305A71C737BB000494BB9 /* GCDWebServerMultiPartFormRequest.m */; };
-		CD3305C51C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305A81C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.h */; };
+		CD3305C51C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305A81C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3305C61C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305A91C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.m */; };
 		CD3305C71C737BB000494BB9 /* GCDWebServerDataResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305AB1C737BB000494BB9 /* GCDWebServerDataResponse.h */; };
 		CD3305C81C737BB000494BB9 /* GCDWebServerDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305AC1C737BB000494BB9 /* GCDWebServerDataResponse.m */; };
@@ -291,18 +291,18 @@
 				CD33058B1C737B3800494BB9 /* Insider.h in Headers */,
 				CD3305B31C737BB000494BB9 /* GCDWebServer.h in Headers */,
 				CD3305BD1C737BB000494BB9 /* GCDWebServerResponse.h in Headers */,
+				CD3305C51C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.h in Headers */,
+				CD3305BF1C737BB000494BB9 /* GCDWebServerDataRequest.h in Headers */,
 				CD3305BB1C737BB000494BB9 /* GCDWebServerRequest.h in Headers */,
 				CD3305C11C737BB000494BB9 /* GCDWebServerFileRequest.h in Headers */,
 				CD3305C71C737BB000494BB9 /* GCDWebServerDataResponse.h in Headers */,
 				CD3305B71C737BB000494BB9 /* GCDWebServerFunctions.h in Headers */,
-				CD3305BF1C737BB000494BB9 /* GCDWebServerDataRequest.h in Headers */,
 				CD3305B51C737BB000494BB9 /* GCDWebServerConnection.h in Headers */,
 				CD3305BA1C737BB000494BB9 /* GCDWebServerPrivate.h in Headers */,
 				CD3305B91C737BB000494BB9 /* GCDWebServerHTTPStatusCodes.h in Headers */,
 				CD3305CB1C737BB000494BB9 /* GCDWebServerFileResponse.h in Headers */,
 				CD3305C31C737BB000494BB9 /* GCDWebServerMultiPartFormRequest.h in Headers */,
 				CD3305CD1C737BB000494BB9 /* GCDWebServerStreamedResponse.h in Headers */,
-				CD3305C51C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.h in Headers */,
 				CD3305C91C737BB000494BB9 /* GCDWebServerErrorResponse.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -684,6 +684,7 @@
 				CD3305F21C738D6B00494BB9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CD3305F71C738E6800494BB9 /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
 			isa = XCConfigurationList;
@@ -692,6 +693,7 @@
 				CD3305F91C738E6800494BB9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
