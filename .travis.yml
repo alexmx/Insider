@@ -4,5 +4,5 @@ branches:
  only:
  - master
 
-xcode_project: Insider.xcodeproj
-xcode_scheme: InsiderDemo
+script:
+ - xctool -project Insider.xcodeproj -scheme InsiderDemo -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
