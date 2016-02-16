@@ -42,4 +42,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)insider:(id)object
+{
+    NSLog(@"Insider object: %@", object);
+}
+
 @end
