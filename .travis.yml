@@ -1,3 +1,8 @@
 language: objective-c
+
+branches:
+ only:
+ - master
+
 xcode_project: Insider.xcodeproj
 xcode_scheme: InsiderDemo
