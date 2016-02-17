@@ -42,7 +42,7 @@
 		CD3305C41C737BB000494BB9 /* GCDWebServerMultiPartFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305A71C737BB000494BB9 /* GCDWebServerMultiPartFormRequest.m */; };
 		CD3305C51C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305A81C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3305C61C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305A91C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.m */; };
-		CD3305C71C737BB000494BB9 /* GCDWebServerDataResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305AB1C737BB000494BB9 /* GCDWebServerDataResponse.h */; };
+		CD3305C71C737BB000494BB9 /* GCDWebServerDataResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305AB1C737BB000494BB9 /* GCDWebServerDataResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3305C81C737BB000494BB9 /* GCDWebServerDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305AC1C737BB000494BB9 /* GCDWebServerDataResponse.m */; };
 		CD3305C91C737BB000494BB9 /* GCDWebServerErrorResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3305AD1C737BB000494BB9 /* GCDWebServerErrorResponse.h */; };
 		CD3305CA1C737BB000494BB9 /* GCDWebServerErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305AE1C737BB000494BB9 /* GCDWebServerErrorResponse.m */; };
@@ -294,8 +294,8 @@
 				CD3305C51C737BB000494BB9 /* GCDWebServerURLEncodedFormRequest.h in Headers */,
 				CD3305BF1C737BB000494BB9 /* GCDWebServerDataRequest.h in Headers */,
 				CD3305BB1C737BB000494BB9 /* GCDWebServerRequest.h in Headers */,
-				CD3305C11C737BB000494BB9 /* GCDWebServerFileRequest.h in Headers */,
 				CD3305C71C737BB000494BB9 /* GCDWebServerDataResponse.h in Headers */,
+				CD3305C11C737BB000494BB9 /* GCDWebServerFileRequest.h in Headers */,
 				CD3305B71C737BB000494BB9 /* GCDWebServerFunctions.h in Headers */,
 				CD3305B51C737BB000494BB9 /* GCDWebServerConnection.h in Headers */,
 				CD3305BA1C737BB000494BB9 /* GCDWebServerPrivate.h in Headers */,

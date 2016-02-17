@@ -12,6 +12,11 @@ import UIKit
 @objc
 final public class Insider: NSObject {
 
+    enum StatusCodes: Int {
+        case Success = 200
+        case NotFound = 404
+    }
+    
     struct Constants {
         static let defaultPort: UInt = 8080
         static let defaultInsiderMethodSelector = Selector("insider:")
@@ -19,7 +24,9 @@ final public class Insider: NSObject {
     
     public static let sharedInstance = Insider()
     
-    public var appDelegateInsiderSelector: Selector?
+    public lazy var appDelegateInsiderSelector: Selector = {
+        return Constants.defaultInsiderMethodSelector
+    }()
     
     private let localWebServer = GCDWebServer()
     
@@ -30,33 +37,43 @@ final public class Insider: NSObject {
         // Add POST handler for x-www-form-urlencoded requests
         server.addDefaultHandlerForMethod("POST", requestClass: GCDWebServerURLEncodedFormRequest.self, processBlock: { request in
             
+            var didProcessParams = false
             if let request = request as? GCDWebServerURLEncodedFormRequest {
                 if let json = request.jsonObject {
-                    self.processRequestParams(json, selector: selector)
-                } else if let params = request.arguments {
-                    self.processRequestParams(params, selector: selector)
+                    didProcessParams = self.processRequestParams(json, selector: selector)
+                } else if let encodedParams = request.arguments {
+                    didProcessParams = self.processRequestParams(encodedParams, selector: selector)
                 }
             }
             
-            return nil
+            return GCDWebServerDataResponse(statusCode: (didProcessParams) ? StatusCodes.Success.rawValue : StatusCodes.NotFound.rawValue);
         })
     }
     
-    private func processRequestParams(params: AnyObject, selector: Selector) {
+    private func canProcessRequestParams() -> Bool {
+        return UIApplication.sharedApplication().delegate?.respondsToSelector(appDelegateInsiderSelector) ?? false
+    }
+    
+    private func processRequestParams(params: AnyObject, selector: Selector) -> Bool {
+        guard canProcessRequestParams() else {
+            return false
+        }
+        
         dispatch_sync(dispatch_get_main_queue()) { () -> Void in
             UIApplication.sharedApplication().delegate?.performSelector(selector, withObject: params)
         }
+        
+        return true
     }
+    
+    // MARK - Public methods
     
     public func start() {
         startWithPort(Constants.defaultPort)
     }
     
     public func startWithPort(port: UInt) {
-        addHandlersForServer(localWebServer,
-            withAppDelegateInsiderSelector: appDelegateInsiderSelector ?? Constants.defaultInsiderMethodSelector
-        )
-        
+        addHandlersForServer(localWebServer, withAppDelegateInsiderSelector: appDelegateInsiderSelector)
         localWebServer.startWithPort(port, bonjourName: nil)
     }
     
