@@ -21,6 +21,7 @@ final public class Insider: NSObject {
     struct Endpoints {
         static let invokeEndpoint = "/invoke"
         static let invokeWithResponse = "/invokeForResponse"
+        static let sendNotification = "/notification"
     }
     
     struct Methods {
@@ -35,11 +36,13 @@ final public class Insider: NSObject {
     
     public static let sharedInstance = Insider()
     
+    public static let insiderNotificationKey = "com.insider.insiderNotificationKey"
+    
     public lazy var appDelegateInvokeMethodSelector: Selector = {
         return Constants.defaultInvokeMethodSelector
     }()
     
-    public lazy var appDelegateInvokeForResponseMethodSelector: Selector = {
+    public lazy var invokeForResponseMethodSelector: Selector = {
         return Constants.defaultInvokeForResponseMethodSelector
     }()
     
@@ -55,37 +58,51 @@ final public class Insider: NSObject {
             return GCDWebServerDataResponse(statusCode: StatusCodes.NotFound.rawValue)
         }
         
+        // Invoke method on AppDelegate
         server.addHandlerForMethod(Methods.POST, path: Endpoints.invokeEndpoint, requestClass: GCDWebServerURLEncodedFormRequest.self) {
             (request) -> GCDWebServerResponse! in
             
-            var didProcessParams = false
-            if let request = request as? GCDWebServerURLEncodedFormRequest {
-                if let json = request.jsonObject {
-                    didProcessParams = self.invokeMethodOnAppDelegateWithSelector(self.appDelegateInvokeMethodSelector, params: json)
-                } else if let encodedParams = request.arguments {
-                    didProcessParams = self.invokeMethodOnAppDelegateWithSelector(self.appDelegateInvokeMethodSelector, params: encodedParams)
-                }
-            }
+            let params = self.paramsForRequest(request as? GCDWebServerURLEncodedFormRequest)
+            let didProcessParams = self.invokeMethodOnAppDelegateWithSelector(self.appDelegateInvokeMethodSelector, params: params)
             
             return GCDWebServerDataResponse(statusCode: (didProcessParams) ? StatusCodes.Success.rawValue : StatusCodes.NotFound.rawValue)
         }
         
+        // Invoke method on AppDelegate and wait for return value
         server.addHandlerForMethod(Methods.POST, path: Endpoints.invokeWithResponse, requestClass: GCDWebServerURLEncodedFormRequest.self) {
             (request) -> GCDWebServerResponse! in
             
-            var response: Dictionary<String, AnyObject>?
-            if let request = request as? GCDWebServerURLEncodedFormRequest {
-                if let json = request.jsonObject {
-                    response = self.invokeMethodOnAppDelegateForResponseWithSelector(self.appDelegateInvokeForResponseMethodSelector, params: json)
-                } else if let encodedParams = request.arguments {
-                    response = self.invokeMethodOnAppDelegateForResponseWithSelector(self.appDelegateInvokeForResponseMethodSelector, params: encodedParams)
-                }
-            }
+            let params = self.paramsForRequest(request as? GCDWebServerURLEncodedFormRequest)
+            let response = self.invokeMethodOnAppDelegateForResponseWithSelector(self.invokeForResponseMethodSelector, params: params)
             
             return (response == nil)
                 ? GCDWebServerDataResponse(statusCode: StatusCodes.NotFound.rawValue)
                 : GCDWebServerDataResponse(JSONObject: response)
         }
+        
+        // Send a local notification
+        server.addHandlerForMethod(Methods.POST, path: Endpoints.sendNotification, requestClass: GCDWebServerURLEncodedFormRequest.self) {
+            (request) -> GCDWebServerResponse! in
+            
+            let params = self.paramsForRequest(request as? GCDWebServerURLEncodedFormRequest)
+            self.sendLocalNotificationWithParams(params)
+            
+            return GCDWebServerDataResponse(statusCode: StatusCodes.Success.rawValue)
+        }
+    }
+    
+    func paramsForRequest(request: GCDWebServerURLEncodedFormRequest?) -> Dictionary<String, AnyObject>? {
+        
+        var params: Dictionary<String, AnyObject>?
+        if let request = request {
+            if let json = request.jsonObject {
+                params = json as? Dictionary<String, AnyObject>
+            } else if let encodedParams = request.arguments {
+                params = encodedParams as? Dictionary<String, AnyObject>
+            }
+        }
+        
+        return params
     }
     
     func canPerformSelectorOnAppDelegate(selector: Selector) -> Bool {
@@ -115,6 +132,10 @@ final public class Insider: NSObject {
         }
         
         return response as? Dictionary<String, AnyObject> ?? nil
+    }
+    
+    func sendLocalNotificationWithParams(params: AnyObject?) {
+        NSNotificationCenter.defaultCenter().postNotificationName(Insider.insiderNotificationKey, object: params)
     }
     
     // MARK - Public methods
