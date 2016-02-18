@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+@import Insider;
+
 @interface AppDelegate ()
 
 @end
@@ -16,7 +18,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(insiderNotification:) name:[Insider insiderNotificationKey] object:nil];
+    
     return YES;
 }
 
@@ -40,6 +44,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Insider
+
+- (void)insiderNotification:(NSNotification *)notification
+{
+    NSLog(@"Did recieve notification with params: %@", notification.object);
 }
 
 - (void)insiderInvoke:(id)params
