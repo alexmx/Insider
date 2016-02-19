@@ -4,9 +4,7 @@
 [![Twitter: @amaimescu](https://img.shields.io/badge/contact-%40amaimescu-blue.svg)](https://twitter.com/amaimescu)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/alexmx/ios-ui-automation-overview/blob/master/LICENSE)
 
-Insider is a **testing utility framework** which makes an iOS app to be accessible through the HTTP interface. It runs a web server instance inside the app which receives commands from the external testing environment.
-
-This utility framework can be used to establish a testing communication channel between the tested app and the testing environments like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc.
+Insider is a **testing utility framework** which sets an HTTP communication channel between the tested app and testing environments like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc.
 
 ## Features
 
