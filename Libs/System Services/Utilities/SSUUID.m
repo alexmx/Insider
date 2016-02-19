@@ -14,7 +14,6 @@
 #import "SSAccelerometerInfo.h"
 #import "SSLocalizationInfo.h"
 #import "SSMemoryInfo.h"
-#import "SSJailbreakCheck.h"
 #import "SSAccessoryInfo.h"
 #import "SSBatteryInfo.h"
 
@@ -169,9 +168,6 @@
     // Plugged In
     NSString *PluggedIn = [NSString stringWithFormat:@"%d", [SSHardwareInfo pluggedIn]];
     
-    // Jailbroken
-    NSString *Jailbroken = [NSString stringWithFormat:@"%d", [SSJailbreakCheck jailbroken]];
-    
     // Headphones Attached
     NSString *HeadphonesAttached = [NSString stringWithFormat:@"%d", [SSAccessoryInfo headphonesAttached]];
     
@@ -225,10 +221,6 @@
         // Invalid String
         PluggedIn = @"0";
     }
-    if (Jailbroken == nil || Jailbroken.length <= 0 || Jailbroken.length > 1) {
-        // Invalid String
-        Jailbroken = @"0";
-    }
     if (HeadphonesAttached == nil || HeadphonesAttached.length <= 0 || HeadphonesAttached.length > 1) {
         // Invalid String
         HeadphonesAttached = @"0";
@@ -275,7 +267,7 @@
     }
     
     // Create the Device Signature based on the values
-    DeviceSignature = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@", SystemVersion, ScreenHeight, ScreenWidth, PluggedIn, Jailbroken, HeadphonesAttached, BatteryLevel, FullyCharged, ConnectedtoWiFi, DeviceOrientation, Country, TimeZone, NumberProcessors, ProcessorSpeed, TotalDiskSpace, TotalMemory, Salt];
+    DeviceSignature = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@", SystemVersion, ScreenHeight, ScreenWidth, PluggedIn, HeadphonesAttached, BatteryLevel, FullyCharged, ConnectedtoWiFi, DeviceOrientation, Country, TimeZone, NumberProcessors, ProcessorSpeed, TotalDiskSpace, TotalMemory, Salt];
     
     // Check for errors
     if (DeviceSignature == nil || DeviceSignature.length <= 0) {

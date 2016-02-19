@@ -16,6 +16,7 @@ final public class Insider: NSObject {
         static let invokeEndpoint = "/invoke"
         static let invokeWithResponse = "/invokeForResponse"
         static let sendNotification = "/notification"
+        static let systemInfo = "/systemInfo"
     }
     
     struct Constants {
@@ -35,12 +36,14 @@ final public class Insider: NSObject {
         return Constants.defaultInvokeForResponseMethodSelector
     }()
     
+    private lazy var deviceInfoService: DeviceInfoService = DeviceInfoService()
+    
     private let localWebServer = LocalWebServer()
     
     internal override init() {}
     
     func addHandlersForServer(server: LocalWebServer) {
-        
+                
         // Default handler
         server.addDefaultHandlerForMethod(.POST) { (requestParams) -> (LocalWebServerResponse) in
             return LocalWebServerResponse(statusCode: .NotFound)
@@ -65,6 +68,10 @@ final public class Insider: NSObject {
             
             self.sendLocalNotificationWithParams(requestParams)
             return LocalWebServerResponse(statusCode: .Success)
+        }
+        
+        server.addHandlerForMethod(.GET, path: Endpoints.systemInfo) { (requestParams) -> (LocalWebServerResponse) in
+            return LocalWebServerResponse(response: self.deviceInfoService.allSystemInfo)
         }
     }
     
@@ -104,6 +111,7 @@ final public class Insider: NSObject {
     // MARK - Public methods
     
     public func start() {
+        addHandlersForServer(localWebServer)
         localWebServer.start()
     }
     

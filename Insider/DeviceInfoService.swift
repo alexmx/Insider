@@ -7,5 +7,10 @@
 //
 
 import Foundation
-import Libs
 
+final class DeviceInfoService {
+    
+    var allSystemInfo: Dictionary<String, AnyObject>? {
+        return SystemServices.sharedServices().allSystemInformation as? Dictionary<String, AnyObject>
+    }
+}

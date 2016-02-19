@@ -8,6 +8,20 @@
 
 #import "SystemServices.h"
 
+#import "SSAccelerometerInfo.h"
+#import "SSAccessoryInfo.h"
+#import "SSApplicationInfo.h"
+#import "SSBatteryInfo.h"
+#import "SSCarrierInfo.h"
+#import "SSDiskInfo.h"
+#import "SSHardwareInfo.h"
+#import "SSLocalizationInfo.h"
+#import "SSMemoryInfo.h"
+#import "SSNetworkInfo.h"
+#import "SSProcessInfo.h"
+#import "SSProcessorInfo.h"
+#import "SSUUID.h"
+
 @interface SystemServices () {
     // Private
     
@@ -57,11 +71,6 @@
     
     // Plugged In?
     BOOL pluggedIn;
-    
-    /* Jailbreak Check */
-    
-    // Jailbroken?
-    int jailbroken;
     
     /* Processor Information */
     
@@ -296,7 +305,7 @@
 
 @implementation SystemServices
 
-@dynamic allSystemInformation, systemsUptime, deviceModel, deviceName, systemName, systemsVersion, systemDeviceTypeNotFormatted, systemDeviceTypeFormatted, screenWidth, screenHeight, screenBrightness, multitaskingEnabled, proximitySensorEnabled, debuggerAttached, pluggedIn, jailbroken, numberProcessors, numberActiveProcessors, processorSpeed, processorBusSpeed, accessoriesAttached, headphonesAttached, numberAttachedAccessories, nameAttachedAccessories, carrierName, carrierCountry, carrierMobileCountryCode, carrierISOCountryCode, carrierMobileNetworkCode, carrierAllowsVOIP, batteryLevel, charging, fullyCharged, currentIPAddress, currentMACAddress, externalIPAddress, cellIPAddress, cellMACAddress, cellNetmaskAddress, cellBroadcastAddress, wiFiIPAddress, wiFiMACAddress, wiFiNetmaskAddress, wiFiBroadcastAddress, wiFiRouterAddress, connectedToWiFi, connectedToCellNetwork, processID, processName, processStatus, parentPID, processesInformation, diskSpace, freeDiskSpaceinRaw, freeDiskSpaceinPercent, usedDiskSpaceinRaw, usedDiskSpaceinPercent, longDiskSpace, longFreeDiskSpace, totalMemory, freeMemoryinRaw, freeMemoryinPercent, usedMemoryinRaw, usedMemoryinPercent, activeMemoryinRaw, activeMemoryinPercent, inactiveMemoryinRaw, inactiveMemoryinPercent, wiredMemoryinRaw, wiredMemoryinPercent, purgableMemoryinRaw, purgableMemoryinPercent, deviceOrientation, country, language, timeZoneSS, currency, applicationVersion, clipboardContent, uniqueID, deviceSignature, cfuuid, cpuUsage;
+@dynamic allSystemInformation, systemsUptime, deviceModel, deviceName, systemName, systemsVersion, systemDeviceTypeNotFormatted, systemDeviceTypeFormatted, screenWidth, screenHeight, screenBrightness, multitaskingEnabled, proximitySensorEnabled, debuggerAttached, pluggedIn, accessoriesAttached, headphonesAttached, numberAttachedAccessories, nameAttachedAccessories, carrierName, carrierCountry, carrierMobileCountryCode, carrierISOCountryCode, carrierMobileNetworkCode, carrierAllowsVOIP, batteryLevel, charging, fullyCharged, currentIPAddress, currentMACAddress, externalIPAddress, cellIPAddress, cellMACAddress, cellNetmaskAddress, cellBroadcastAddress, wiFiIPAddress, wiFiMACAddress, wiFiNetmaskAddress, wiFiBroadcastAddress, wiFiRouterAddress, connectedToWiFi, connectedToCellNetwork, diskSpace, freeDiskSpaceinRaw, freeDiskSpaceinPercent, usedDiskSpaceinRaw, usedDiskSpaceinPercent, longDiskSpace, longFreeDiskSpace, totalMemory, freeMemoryinRaw, freeMemoryinPercent, usedMemoryinRaw, usedMemoryinPercent, activeMemoryinRaw, activeMemoryinPercent, inactiveMemoryinRaw, inactiveMemoryinPercent, wiredMemoryinRaw, wiredMemoryinPercent, purgableMemoryinRaw, purgableMemoryinPercent, deviceOrientation, country, language, timeZoneSS, currency, applicationVersion, clipboardContent, cpuUsage;
 
 // Singleton
 + (id)sharedServices {
@@ -374,26 +383,6 @@
 
 - (BOOL)pluggedIn {
     return [SSHardwareInfo pluggedIn];
-}
-
-- (int)jailbroken {
-    return [SSJailbreakCheck jailbroken];
-}
-
-- (NSInteger)numberProcessors {
-    return [SSProcessorInfo numberProcessors];
-}
-
-- (NSInteger)numberActiveProcessors {
-    return [SSProcessorInfo numberActiveProcessors];
-}
-
-- (NSInteger)processorSpeed {
-    return [SSProcessorInfo processorSpeed];
-}
-
-- (NSInteger)processorBusSpeed {
-    return [SSProcessorInfo processorBusSpeed];
 }
 
 - (BOOL)accessoriesAttached {
@@ -504,26 +493,6 @@
     return [SSNetworkInfo connectedToCellNetwork];
 }
 
-- (int)processID {
-    return [SSProcessInfo processID];
-}
-
-- (NSString *)processName {
-    return [SSProcessInfo processName];
-}
-
-- (int)processStatus {
-    return [SSProcessInfo processStatus];
-}
-
-- (int)parentPID {
-    return [SSProcessInfo parentPID];
-}
-
-- (NSMutableArray *)processesInformation {
-    return [SSProcessInfo processesInformation];
-}
-
 - (NSString *)diskSpace {
     return [SSDiskInfo diskSpace];
 }
@@ -632,18 +601,6 @@
     return [SSApplicationInfo clipboardContent];
 }
 
-- (NSString *)uniqueID {
-    return [SSUUID uniqueID];
-}
-
-- (NSString *)deviceSignature {
-    return [SSUUID deviceSignature];
-}
-
-- (NSString *)cfuuid {
-    return [SSUUID cfuuid];
-}
-
 - (float)cpuUsage {
     return [SSApplicationInfo cpuUsage];
 }
@@ -672,11 +629,6 @@
     NSString *ProximitySensorEnabled = ([self proximitySensorEnabled]) ? @"Yes" : @"No";
     NSString *DebuggerAttached = ([self debuggerAttached]) ? @"Yes" : @"No";
     NSString *PluggedIn = ([self pluggedIn]) ? @"Yes" : @"No";
-    NSString *Jailbroken = [NSString stringWithFormat:@"%d", [self jailbroken]];
-    NSString *NumberProcessors = [NSString stringWithFormat:@"%ld", (long)[self numberProcessors]];
-    NSString *NumberActiveProcessors = [NSString stringWithFormat:@"%ld", (long)[self numberActiveProcessors]];
-    NSString *ProcessorSpeed = [NSString stringWithFormat:@"%ld", (long)[self processorSpeed]];
-    NSString *ProcessorBusSpeed = [NSString stringWithFormat:@"%ld", (long)[self processorBusSpeed]];
     NSString *AccessoriesAttached = ([self accessoriesAttached]) ? @"Yes" : @"No";
     NSString *HeadphonesAttached = ([self headphonesAttached]) ? @"Yes" : @"No";
     NSString *NumberAttachedAccessories = [NSString stringWithFormat:@"%ld", (long)[self numberAttachedAccessories]];
@@ -704,11 +656,6 @@
     NSString *WiFiRouterAddress = [self wiFiRouterAddress];
     NSString *ConnectedToWiFi = ([self connectedToWiFi]) ? @"Yes" : @"No";
     NSString *ConnectedToCellNetwork = ([self connectedToCellNetwork]) ? @"Yes" : @"No";
-    NSString *ProcessID = [NSString stringWithFormat:@"%d", [self processID]];
-    NSString *ProcessName = [self processName];
-    NSString *ProcessStatus = [NSString stringWithFormat:@"%d", [self processStatus]];
-    NSString *ParentPID = [NSString stringWithFormat:@"%d", [self parentPID]];
-    NSMutableArray *ProcessesInformation = [self processesInformation];
     NSString *DiskSpace = [self diskSpace];
     NSString *FreeDiskSpaceNO = [self freeDiskSpaceinRaw];
     NSString *FreeDiskSpaceYES = [self freeDiskSpaceinPercent];
@@ -729,16 +676,13 @@
     NSString *WiredMemoryYES = [NSString stringWithFormat:@"%f", [self wiredMemoryinPercent]];
     NSString *PurgableMemoryNO = [NSString stringWithFormat:@"%f", [self purgableMemoryinRaw]];
     NSString *PurgableMemoryYES = [NSString stringWithFormat:@"%f", [self purgableMemoryinPercent]];
-    NSString *DeviceOrientation = [NSString stringWithFormat:@"%ld", [self deviceOrientation]];
+    NSString *DeviceOrientation = [NSString stringWithFormat:@"%ld", (long)[self deviceOrientation]];
     NSString *Country = [self country];
     NSString *Language = [self language];
     NSString *TimeZone = [self timeZoneSS];
     NSString *Currency = [self currency];
     NSString *ApplicationVersion = [self applicationVersion];
     NSString *ClipboardContent = [self clipboardContent];
-    NSString *UniqueID = [self uniqueID];
-    NSString *DeviceSignature = [self deviceSignature];
-    NSString *CFUUID = [self cfuuid];
     NSString *CPUUsage = [NSString stringWithFormat:@"%f", [self cpuUsage]];
     
     // Check to make sure all values are valid (if not, make them)
@@ -797,26 +741,6 @@
     if (PluggedIn == nil || PluggedIn.length <= 0) {
         // Invalid value
         PluggedIn = @"Unknown";
-    }
-    if (Jailbroken == nil || Jailbroken.length <= 0) {
-        // Invalid value
-        Jailbroken = @"Unknown";
-    }
-    if (NumberProcessors == nil || NumberProcessors.length <= 0) {
-        // Invalid value
-        NumberProcessors = @"Unknown";
-    }
-    if (NumberActiveProcessors == nil || NumberActiveProcessors.length <= 0) {
-        // Invalid value
-        NumberActiveProcessors = @"Unknown";
-    }
-    if (ProcessorSpeed == nil || ProcessorSpeed.length <= 0) {
-        // Invalid value
-        ProcessorSpeed = @"Unknown";
-    }
-    if (ProcessorBusSpeed == nil || ProcessorBusSpeed.length <= 0) {
-        // Invalid value
-        ProcessorBusSpeed = @"Unknown";
     }
     if (AccessoriesAttached == nil || AccessoriesAttached.length <= 0) {
         // Invalid value
@@ -926,26 +850,6 @@
         // Invalid value
         ConnectedToCellNetwork = @"Unknown";
     }
-    if (ProcessID == nil || ProcessID.length <= 0) {
-        // Invalid value
-        ProcessID = @"Unknown";
-    }
-    if (ProcessName == nil || ProcessName.length <= 0) {
-        // Invalid value
-        ProcessName = @"Unknown";
-    }
-    if (ProcessStatus == nil || ProcessStatus.length <= 0) {
-        // Invalid value
-        ProcessStatus = @"Unknown";
-    }
-    if (ParentPID == nil || ParentPID.length <= 0) {
-        // Invalid value
-        ParentPID = @"Unknown";
-    }
-    if (ProcessesInformation == nil || ProcessesInformation.count <= 0) {
-        // Invalid value
-        ProcessesInformation = [NSMutableArray arrayWithObject:@"Unknown"];
-    }
     if (DiskSpace == nil || DiskSpace.length <= 0) {
         // Invalid value
         DiskSpace = @"Unknown";
@@ -1054,18 +958,6 @@
         // Invalid value
         ClipboardContent = @"Unknown";
     }
-    if (UniqueID == nil || UniqueID.length <= 0) {
-        // Invalid value
-        UniqueID = @"Unknown";
-    }
-    if (DeviceSignature == nil || DeviceSignature.length <= 0) {
-        // Invalid value
-        DeviceSignature = @"Unknown";
-    }
-    if (CFUUID == nil || CFUUID.length <= 0) {
-        // Invalid value
-        CFUUID = @"Unknown";
-    }
     if (CPUUsage == nil || CPUUsage.length <= 0) {
         // Invalid value
         CPUUsage = @"Unknown";
@@ -1087,11 +979,6 @@
                                                                  ProximitySensorEnabled,
                                                                  DebuggerAttached,
                                                                  PluggedIn,
-                                                                 Jailbroken,
-                                                                 NumberProcessors,
-                                                                 NumberActiveProcessors,
-                                                                 ProcessorSpeed,
-                                                                 ProcessorBusSpeed,
                                                                  AccessoriesAttached,
                                                                  HeadphonesAttached,
                                                                  NumberAttachedAccessories,
@@ -1119,11 +1006,6 @@
                                                                  WiFiRouterAddress,
                                                                  ConnectedToWiFi,
                                                                  ConnectedToCellNetwork,
-                                                                 ProcessID,
-                                                                 ProcessName,
-                                                                 ProcessStatus,
-                                                                 ParentPID,
-                                                                 ProcessesInformation,
                                                                  DiskSpace,
                                                                  FreeDiskSpaceNO,
                                                                  FreeDiskSpaceYES,
@@ -1151,9 +1033,6 @@
                                                                  Currency,
                                                                  ApplicationVersion,
                                                                  ClipboardContent,
-                                                                 UniqueID,
-                                                                 DeviceSignature,
-                                                                 CFUUID,
                                                                  CPUUsage,
                                                                  nil]
                                                         forKeys:[NSArray arrayWithObjects:
@@ -1171,11 +1050,6 @@
                                                                  @"ProximitySensorEnabled",
                                                                  @"DebuggerAttached",
                                                                  @"PluggedIn",
-                                                                 @"Jailbroken",
-                                                                 @"NumberProcessors",
-                                                                 @"NumberActiveProcessors",
-                                                                 @"ProcessorSpeed",
-                                                                 @"ProcessorBusSpeed",
                                                                  @"AccessoriesAttached",
                                                                  @"HeadphonesAttached",
                                                                  @"NumberAttachedAccessories",
@@ -1203,11 +1077,6 @@
                                                                  @"WiFiRouterAddress",
                                                                  @"ConnectedToWiFi",
                                                                  @"ConnectedToCellNetwork",
-                                                                 @"ProcessID",
-                                                                 @"ProcessName",
-                                                                 @"ProcessStatus",
-                                                                 @"ParentPID",
-                                                                 @"ProcessesInformation",
                                                                  @"DiskSpace",
                                                                  @"FreeDiskSpace (Not Formatted)",
                                                                  @"FreeDiskSpace (Formatted)",
@@ -1235,9 +1104,6 @@
                                                                  @"Currency",
                                                                  @"ApplicationVersion",
                                                                  @"ClipboardContent",
-                                                                 @"UniqueID",
-                                                                 @"DeviceSignature",
-                                                                 @"CFUUID",
                                                                  @"CPUUsage",
                                                                  nil]];
     
@@ -1249,19 +1115,6 @@
     
     // Successful
     return SystemInformationDict;
-}
-
-// Parent ID for a certain PID
-- (int)parentPIDForProcess:(int)pid {
-    // Get the Parent Process ID For a process
-    int Number = [SSProcessInfo parentPIDForProcess:pid];
-    // Validate it
-    if (Number <= 0) {
-        // Error, no value returned
-        return -1;
-    }
-    // Successful
-    return Number;
 }
 
 @end

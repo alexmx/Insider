@@ -6,30 +6,15 @@
 //  Copyright (c) 2012 Shmoopi LLC. All rights reserved.
 //
 
-#import "SSAccelerometerInfo.h"
-#import "SSAccessoryInfo.h"
-#import "SSApplicationInfo.h"
-#import "SSBatteryInfo.h"
-#import "SSCarrierInfo.h"
-#import "SSDiskInfo.h"
-#import "SSHardwareInfo.h"
-#import "SSJailbreakCheck.h"
-#import "SSLocalizationInfo.h"
-#import "SSMemoryInfo.h"
-#import "SSNetworkInfo.h"
-#import "SSProcessInfo.h"
-#import "SSProcessorInfo.h"
-#import "SSUUID.h"
-
 /* New Hardware Stuff, new accelerometer stuff, localization stuff, and application info */
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface SystemServices : NSObject
 
 // Shared Manager
 + (id)sharedServices;
-
-// Parent ID for a certain PID
-- (int)parentPIDForProcess:(int)pid;
 
 // Properties
 
@@ -79,25 +64,6 @@
 
 // Plugged In?
 @property (nonatomic, readonly) BOOL pluggedIn;
-
-/* Jailbreak Check */
-
-// Jailbroken?
-@property (nonatomic, readonly) int jailbroken;
-
-/* Processor Information */
-
-// Number of processors
-@property (nonatomic, readonly) NSInteger numberProcessors;
-
-// Number of Active Processors
-@property (nonatomic, readonly) NSInteger numberActiveProcessors;
-
-// Processor Speed in MHz
-@property (nonatomic, readonly) NSInteger processorSpeed;
-
-// Processor Bus Speed in MHz
-@property (nonatomic, readonly) NSInteger processorBusSpeed;
 
 /* Accessory Information */
 
@@ -187,23 +153,6 @@
 
 // Connected to Cellular Network?
 @property (nonatomic, readonly) BOOL connectedToCellNetwork;
-
-/* Process Information */
-
-// Process ID
-@property (nonatomic, readonly) int processID;
-
-// Process Name
-@property (nonatomic, readonly) NSString *processName;
-
-// Process Status
-@property (nonatomic, readonly) int processStatus;
-
-// Parent Process ID
-@property (nonatomic, readonly) int parentPID;
-
-// List of process information including PID's, Names, PPID's, and Status'
-@property (nonatomic, readonly) NSMutableArray *processesInformation;
 
 /* Disk Information */
 
@@ -295,17 +244,6 @@
 
 // Clipboard Content
 @property (nonatomic, readonly) NSString *clipboardContent;
-
-/* Universal Unique Identifiers */
-
-// Unique ID
-@property (nonatomic, readonly) NSString *uniqueID;
-
-// Device Signature
-@property (nonatomic, readonly) NSString *deviceSignature;
-
-// CFUUID
-@property (nonatomic, readonly) NSString *cfuuid;
 
 // CPU Usage
 @property (nonatomic, readonly) float cpuUsage;
