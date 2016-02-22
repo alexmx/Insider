@@ -8,9 +8,11 @@
 
 #import "AppDelegate.h"
 
+NSString * kLogMessageNotificationKey = @"com.alexmx.notificationLogMessage";
+
 @import Insider;
 
-@interface AppDelegate ()
+@interface AppDelegate () <InsiderDelegate>
 
 @end
 
@@ -20,6 +22,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(insiderNotification:) name:[Insider insiderNotificationKey] object:nil];
+    
+    [[Insider sharedInstance] setDelegate:self];
+    [[Insider sharedInstance] start];
     
     return YES;
 }
@@ -46,21 +51,40 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-#pragma mark - Insider
+- (void)postLogNotificationWithObject:(id)object
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLogMessageNotificationKey object:object];
+}
+
+#pragma mark - InsiderDelegate
+
+- (void)insider:(Insider *)insider invokeMethodWithParams:(id)params
+{
+    NSLog(@"Insider invoke object: %@", params);
+    [self postLogNotificationWithObject:params];
+}
+
+- (id)insider:(Insider *)insider invokeMethodForResponseWithParams:(id)params
+{
+    [self postLogNotificationWithObject:params];
+    return @{@"test": @YES};
+}
+
+- (void)insider:(Insider *)insider didSendNotificationWithParams:(id)params
+{
+    [self postLogNotificationWithObject:params];
+}
+
+- (void)insider:(Insider *)insider didReturnSystemInfo:(NSDictionary<NSString *,id> *)systemInfo
+{
+    [self postLogNotificationWithObject:systemInfo];
+}
+
+#pragma mark - Notification
 
 - (void)insiderNotification:(NSNotification *)notification
 {
     NSLog(@"Did recieve notification with params: %@", notification.object);
-}
-
-- (void)insiderInvoke:(id)params
-{
-    NSLog(@"Insider invoke object: %@", params);
-}
-
-- (id)insiderInvokeForResponse:(id)params
-{
-    return @{@"test": @YES};
 }
 
 @end

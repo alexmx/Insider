@@ -10,6 +10,44 @@ import Foundation
 import UIKit
 
 @objc
+public protocol InsiderDelegate: class {
+    
+    /**
+     This method will be called on delegate for "invoke" action
+     
+     - parameter insider: instance of Insider class
+     - parameter params:  request params
+     */
+    func insider(insider: Insider, invokeMethodWithParams params: AnyObject?)
+    
+    /**
+     This method will be called on delegate for "invokeForResponse" action
+     
+     - parameter insider: instance of Insider class
+     - parameter params:  request params
+     
+     - returns: return params
+     */
+    func insider(insider: Insider, invokeMethodForResponseWithParams params: AnyObject?) -> AnyObject?
+    
+    /**
+     This method will be called on delegate for "notification" action
+     
+     - parameter insider: instance of Insider class
+     - parameter params:  request params sent in notification
+     */
+    optional func insider(insider: Insider, didSendNotificationWithParams params: AnyObject?)
+    
+    /**
+     This method will be called on delegate for "systemInfo" action
+     
+     - parameter insider:    instance of Insider class
+     - parameter systemInfo: returned system information
+     */
+    optional func insider(insider: Insider, didReturnSystemInfo systemInfo: Dictionary<String, AnyObject>?)
+}
+
+@objc
 final public class Insider: NSObject {
     
     struct Endpoints {
@@ -20,27 +58,22 @@ final public class Insider: NSObject {
     }
     
     struct Constants {
-        static let defaultInvokeMethodSelector = Selector("insiderInvoke:")
-        static let defaultInvokeForResponseMethodSelector = Selector("insiderInvokeForResponse:")
+        static let invokeMethodSelector = Selector("insiderInvoke:")
+        static let invokeForResponseMethodSelector = Selector("insiderInvokeForResponse:")
     }
     
+    /// Shared instance
     public static let sharedInstance = Insider()
     
+    // Insider delegate
+    public weak var delegate: InsiderDelegate?
+    
+    // Insider notification key
     public static let insiderNotificationKey = "com.insider.insiderNotificationKey"
-    
-    public lazy var appDelegateInvokeMethodSelector: Selector = {
-        return Constants.defaultInvokeMethodSelector
-    }()
-    
-    public lazy var invokeForResponseMethodSelector: Selector = {
-        return Constants.defaultInvokeForResponseMethodSelector
-    }()
     
     private lazy var deviceInfoService: DeviceInfoService = DeviceInfoService()
     
     private let localWebServer = LocalWebServer()
-    
-    internal override init() {}
     
     func addHandlersForServer(server: LocalWebServer) {
                 
@@ -49,17 +82,17 @@ final public class Insider: NSObject {
             return LocalWebServerResponse(statusCode: .NotFound)
         }
         
-        // Invoke method on AppDelegate
+        // Invoke method on delegate
         server.addHandlerForMethod(.POST, path: Endpoints.invokeEndpoint) { (requestParams) -> (LocalWebServerResponse) in
             
-            let didProcessParams = self.invokeMethodOnAppDelegateWithSelector(self.appDelegateInvokeMethodSelector, params: requestParams)
+            let didProcessParams = self.invokeMethodWithSelector(Constants.invokeMethodSelector, params: requestParams)
             return LocalWebServerResponse(statusCode: (didProcessParams) ? .Success : .NotFound)
         }
         
-        // Invoke method on AppDelegate and wait for return value
+        // Invoke method on delegate and wait for return value
         server.addHandlerForMethod(.POST, path: Endpoints.invokeWithResponse) { (requestParams) -> (LocalWebServerResponse) in
             
-            let response = self.invokeMethodOnAppDelegateForResponseWithSelector(self.invokeForResponseMethodSelector, params: requestParams)
+            let response = self.invokeMethodForResponseWithSelector(Constants.invokeForResponseMethodSelector, params: requestParams)
             return (response == nil) ? LocalWebServerResponse(statusCode: .NotFound) : LocalWebServerResponse(response: response)
         }
         
@@ -71,41 +104,49 @@ final public class Insider: NSObject {
         }
         
         server.addHandlerForMethod(.GET, path: Endpoints.systemInfo) { (requestParams) -> (LocalWebServerResponse) in
-            return LocalWebServerResponse(response: self.deviceInfoService.allSystemInfo)
+            return LocalWebServerResponse(response: self.getSystemInfo())
         }
     }
     
-    func canPerformSelectorOnAppDelegate(selector: Selector) -> Bool {
-        return UIApplication.sharedApplication().delegate?.respondsToSelector(selector) ?? false
-    }
-    
-    func invokeMethodOnAppDelegateWithSelector(selector: Selector, params: AnyObject?) -> Bool {
-        guard canPerformSelectorOnAppDelegate(selector) else {
+    func invokeMethodWithSelector(selector: Selector, params: AnyObject?) -> Bool {
+        guard let delegate = delegate else {
             return false
         }
         
-        dispatch_sync(dispatch_get_main_queue()) { () -> Void in
-            UIApplication.sharedApplication().delegate?.performSelector(selector, withObject: params)
+        mainQueue {
+            delegate.insider(self, invokeMethodWithParams: params)
         }
         
         return true
     }
     
-    func invokeMethodOnAppDelegateForResponseWithSelector(selector: Selector, params: AnyObject?) -> Dictionary<String, AnyObject>? {
-        guard canPerformSelectorOnAppDelegate(selector) else {
-            return nil
-        }
-        
+    func invokeMethodForResponseWithSelector(selector: Selector, params: AnyObject?) -> Dictionary<String, AnyObject>? {
         var response: AnyObject?
-        dispatch_sync(dispatch_get_main_queue()) { () -> Void in
-            response = UIApplication.sharedApplication().delegate?.performSelector(selector, withObject: params).takeUnretainedValue()
+        mainQueue {
+            response = self.delegate?.insider(self, invokeMethodForResponseWithParams: params)
         }
         
         return response as? Dictionary<String, AnyObject> ?? nil
     }
     
     func sendLocalNotificationWithParams(params: AnyObject?) {
-        NSNotificationCenter.defaultCenter().postNotificationName(Insider.insiderNotificationKey, object: params)
+        mainQueue {
+            NSNotificationCenter.defaultCenter().postNotificationName(Insider.insiderNotificationKey, object: params)
+            self.delegate?.insider?(self, didSendNotificationWithParams: params)
+        }
+    }
+    
+    func getSystemInfo() -> Dictionary<String, AnyObject>? {
+        let systemInfo = self.deviceInfoService.allSystemInfo
+        mainQueue {
+            self.delegate?.insider?(self, didReturnSystemInfo: systemInfo)
+        }
+        
+        return systemInfo
+    }
+    
+    func mainQueue(closure: (() -> ())?) {
+        dispatch_sync(dispatch_get_main_queue()) { () -> Void in closure?() }
     }
     
     // MARK - Public methods
