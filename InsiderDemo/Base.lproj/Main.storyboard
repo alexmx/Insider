@@ -1,25 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Z37-R9-mxl">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Insider Log-->
+        <scene sceneID="fNy-Nb-xIE">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="cL4-B6-mae" customClass="LogViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="poK-pc-7sD"/>
+                        <viewControllerLayoutGuide type="bottom" id="LEf-LW-aUl"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="jBZ-V1-oC6">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="kIL-Oj-hNh">
+                                <rect key="frame" x="20" y="84" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Rf-M8-hmF">
+                                <rect key="frame" x="20" y="120" width="560" height="460"/>
+                                <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0Rf-M8-hmF" firstAttribute="top" secondItem="kIL-Oj-hNh" secondAttribute="bottom" constant="15" id="2nb-cG-4rw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kIL-Oj-hNh" secondAttribute="trailing" id="4SE-d6-XQ1"/>
+                            <constraint firstItem="LEf-LW-aUl" firstAttribute="top" secondItem="0Rf-M8-hmF" secondAttribute="bottom" constant="20" id="Eh5-oB-J6j"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0Rf-M8-hmF" secondAttribute="trailing" id="KD7-MH-f8O"/>
+                            <constraint firstItem="kIL-Oj-hNh" firstAttribute="top" secondItem="poK-pc-7sD" secondAttribute="bottom" constant="20" id="KLk-jP-tf9"/>
+                            <constraint firstItem="0Rf-M8-hmF" firstAttribute="leading" secondItem="jBZ-V1-oC6" secondAttribute="leadingMargin" id="N9W-8r-8F0"/>
+                            <constraint firstItem="kIL-Oj-hNh" firstAttribute="leading" secondItem="jBZ-V1-oC6" secondAttribute="leadingMargin" id="xMa-pz-zKD"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Insider Log" id="HBy-eb-yAx"/>
+                    <connections>
+                        <outlet property="instructionsLabel" destination="kIL-Oj-hNh" id="d1L-yJ-Io9"/>
+                        <outlet property="logTextView" destination="0Rf-M8-hmF" id="0Al-6C-Rwl"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pdT-Fx-k2i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="456" y="589"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Av2-ag-EKF">
+            <objects>
+                <navigationController id="Z37-R9-mxl" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QxK-tV-XFi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="cL4-B6-mae" kind="relationship" relationship="rootViewController" id="RvA-NJ-gd3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dmc-rd-wDb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-290" y="589"/>
         </scene>
     </scenes>
 </document>

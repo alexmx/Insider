@@ -87,10 +87,15 @@ final class LocalWebServer {
         }
         
         var params: Dictionary<String, AnyObject>?
-        if let json = request.jsonObject {
-            params = json as? Dictionary<String, AnyObject>
-        } else if let encodedParams = request.arguments {
-            params = encodedParams as? Dictionary<String, AnyObject>
+        let contentType = request.contentType
+        if contentType == "application/json" || contentType == "text/json" || contentType == "text/javascript" {
+            if let json = request.jsonObject {
+                params = json as? Dictionary<String, AnyObject>
+            }
+        } else {
+            if let encodedParams = request.arguments {
+                params = encodedParams as? Dictionary<String, AnyObject>
+            }
         }
         
         return params

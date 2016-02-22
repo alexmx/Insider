@@ -21,11 +21,11 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		CD009F191C7B1A70009235AC /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD009F181C7B1A70009235AC /* LogViewController.m */; };
 		CD33058B1C737B3800494BB9 /* Insider.h in Headers */ = {isa = PBXBuildFile; fileRef = CD33058A1C737B3800494BB9 /* Insider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3305D21C737CE000494BB9 /* Insider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3305D11C737CE000494BB9 /* Insider.swift */; };
 		CD3305E11C738D6B00494BB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305E01C738D6B00494BB9 /* main.m */; };
 		CD3305E41C738D6B00494BB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305E31C738D6B00494BB9 /* AppDelegate.m */; };
-		CD3305E71C738D6B00494BB9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305E61C738D6B00494BB9 /* ViewController.m */; };
 		CD3305EA1C738D6B00494BB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD3305E81C738D6B00494BB9 /* Main.storyboard */; };
 		CD3305EC1C738D6B00494BB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD3305EB1C738D6B00494BB9 /* Assets.xcassets */; };
 		CD3305EF1C738D6B00494BB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD3305ED1C738D6B00494BB9 /* LaunchScreen.storyboard */; };
@@ -129,6 +129,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CD009F171C7B1A70009235AC /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
+		CD009F181C7B1A70009235AC /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		CD3305871C737B3800494BB9 /* Insider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Insider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD33058A1C737B3800494BB9 /* Insider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Insider.h; sourceTree = "<group>"; };
 		CD33058C1C737B3800494BB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -137,8 +139,6 @@
 		CD3305E01C738D6B00494BB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CD3305E21C738D6B00494BB9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CD3305E31C738D6B00494BB9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		CD3305E51C738D6B00494BB9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		CD3305E61C738D6B00494BB9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		CD3305E91C738D6B00494BB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CD3305EB1C738D6B00494BB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD3305EE1C738D6B00494BB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -226,6 +226,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD009F161C7B066A009235AC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CD009F171C7B1A70009235AC /* LogViewController.h */,
+				CD009F181C7B1A70009235AC /* LogViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		CD33057D1C737B3800494BB9 = {
 			isa = PBXGroup;
 			children = (
@@ -269,10 +278,9 @@
 		CD3305DE1C738D6B00494BB9 /* InsiderDemo */ = {
 			isa = PBXGroup;
 			children = (
+				CD009F161C7B066A009235AC /* Controllers */,
 				CD3305E21C738D6B00494BB9 /* AppDelegate.h */,
 				CD3305E31C738D6B00494BB9 /* AppDelegate.m */,
-				CD3305E51C738D6B00494BB9 /* ViewController.h */,
-				CD3305E61C738D6B00494BB9 /* ViewController.m */,
 				CD3305E81C738D6B00494BB9 /* Main.storyboard */,
 				CD3305EB1C738D6B00494BB9 /* Assets.xcassets */,
 				CD3305ED1C738D6B00494BB9 /* LaunchScreen.storyboard */,
@@ -605,9 +613,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD3305E71C738D6B00494BB9 /* ViewController.m in Sources */,
 				CD3305E41C738D6B00494BB9 /* AppDelegate.m in Sources */,
 				CD3305E11C738D6B00494BB9 /* main.m in Sources */,
+				CD009F191C7B1A70009235AC /* LogViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
