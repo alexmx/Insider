@@ -156,6 +156,11 @@ final public class Insider: NSObject {
         localWebServer.start()
     }
     
+    public func startWithDelegate(delegate: InsiderDelegate?) {
+        self.delegate = delegate
+        start()
+    }
+    
     public func startWithPort(port: UInt) {
         addHandlersForServer(localWebServer)
         localWebServer.startWithPort(port)
