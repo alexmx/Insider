@@ -17,8 +17,8 @@ Insider is a **testing utility framework** which sets an HTTP communication brid
 
   | Built-in Features 
 ------------ | -------------
-💡 | Invoke a method on a registerd**delegate** with given parameters;
-📎 | Invoke a method on a registerd **delegate** with given parameters and wait for response;
+💡 | Invoke a method on a registered **delegate** with given parameters;
+📎 | Invoke a method on a registered **delegate** with given parameters and wait for response;
 📢 | Send local notifications through **NSNotificationCenter** with given parameters;
 📱 | Get device system state information (CPU, memory, IP address, etc);
 
