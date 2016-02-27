@@ -4,7 +4,7 @@
 [![Twitter: @amaimescu](https://img.shields.io/badge/contact-%40amaimescu-blue.svg)](https://twitter.com/amaimescu)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/alexmx/ios-ui-automation-overview/blob/master/LICENSE)
 
-Insider is a **testing utility framework** which sets an HTTP communication bridge between the app and testing environments like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc. Some use cases which could requrie such communication channel:
+Insider is a **testing utility framework** which sets an HTTP communication bridge between the app and testing environments like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc. Some real use cases which could require such communication channel:
 * Set a particular state for the app during the test scenario;
 * Simulate push notifications;
 * Simulate app invokation using custom schemes / universal links;
