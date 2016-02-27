@@ -81,13 +81,13 @@
 		CD75FF831C776EB800F82FF1 /* SSMemoryInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF481C776EB800F82FF1 /* SSMemoryInfo.h */; };
 		CD75FF841C776EB800F82FF1 /* SSMemoryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF491C776EB800F82FF1 /* SSMemoryInfo.m */; };
 		CD75FF851C776EB800F82FF1 /* SSNetworkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF4A1C776EB800F82FF1 /* SSNetworkInfo.h */; };
-		CD75FF861C776EB800F82FF1 /* SSNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF4B1C776EB800F82FF1 /* SSNetworkInfo.m */; };
+		CD75FF861C776EB800F82FF1 /* SSNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF4B1C776EB800F82FF1 /* SSNetworkInfo.m */; settings = {COMPILER_FLAGS = "-Wno-format"; }; };
 		CD75FF871C776EB800F82FF1 /* SSProcessInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF4C1C776EB800F82FF1 /* SSProcessInfo.h */; };
 		CD75FF881C776EB800F82FF1 /* SSProcessInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF4D1C776EB800F82FF1 /* SSProcessInfo.m */; };
 		CD75FF891C776EB800F82FF1 /* SSProcessorInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF4E1C776EB800F82FF1 /* SSProcessorInfo.h */; };
 		CD75FF8A1C776EB800F82FF1 /* SSProcessorInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF4F1C776EB800F82FF1 /* SSProcessorInfo.m */; };
 		CD75FF8B1C776EB800F82FF1 /* SSUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF501C776EB800F82FF1 /* SSUUID.h */; };
-		CD75FF8C1C776EB800F82FF1 /* SSUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF511C776EB800F82FF1 /* SSUUID.m */; };
+		CD75FF8C1C776EB800F82FF1 /* SSUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF511C776EB800F82FF1 /* SSUUID.m */; settings = {COMPILER_FLAGS = "-Wno-format"; }; };
 		CD75FF8E1C776F9300F82FF1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CD75FF8D1C776F9300F82FF1 /* libz.tbd */; };
 		CDBD90BD1C7636D700879F0C /* DeviceInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBD90BC1C7636D700879F0C /* DeviceInfoService.swift */; };
 		CDCF8EB91C7722B300BD0B1D /* LocalWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCF8EB81C7722B300BD0B1D /* LocalWebServer.swift */; };

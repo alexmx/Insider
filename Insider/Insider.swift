@@ -57,11 +57,6 @@ final public class Insider: NSObject {
         static let systemInfo = "/systemInfo"
     }
     
-    struct Constants {
-        static let invokeMethodSelector = Selector("insiderInvoke:")
-        static let invokeForResponseMethodSelector = Selector("insiderInvokeForResponse:")
-    }
-    
     /// Shared instance
     public static let sharedInstance = Insider()
     
@@ -85,14 +80,14 @@ final public class Insider: NSObject {
         // Invoke method on delegate
         server.addHandlerForMethod(.POST, path: Endpoints.invokeEndpoint) { (requestParams) -> (LocalWebServerResponse) in
             
-            let didProcessParams = self.invokeMethodWithSelector(Constants.invokeMethodSelector, params: requestParams)
+            let didProcessParams = self.invokeMethodOnDelegateWithParams(requestParams)
             return LocalWebServerResponse(statusCode: (didProcessParams) ? .Success : .NotFound)
         }
         
         // Invoke method on delegate and wait for return value
         server.addHandlerForMethod(.POST, path: Endpoints.invokeWithResponse) { (requestParams) -> (LocalWebServerResponse) in
             
-            let response = self.invokeMethodForResponseWithSelector(Constants.invokeForResponseMethodSelector, params: requestParams)
+            let response = self.invokeMethodOnDelegateWithParamsForResponse(requestParams)
             return (response == nil) ? LocalWebServerResponse(statusCode: .NotFound) : LocalWebServerResponse(response: response)
         }
         
@@ -108,7 +103,7 @@ final public class Insider: NSObject {
         }
     }
     
-    func invokeMethodWithSelector(selector: Selector, params: AnyObject?) -> Bool {
+    func invokeMethodOnDelegateWithParams(params: AnyObject?) -> Bool {
         guard let delegate = delegate else {
             return false
         }
@@ -120,7 +115,7 @@ final public class Insider: NSObject {
         return true
     }
     
-    func invokeMethodForResponseWithSelector(selector: Selector, params: AnyObject?) -> Dictionary<String, AnyObject>? {
+    func invokeMethodOnDelegateWithParamsForResponse(params: AnyObject?) -> Dictionary<String, AnyObject>? {
         var response: AnyObject?
         mainQueue {
             response = self.delegate?.insider(self, invokeMethodForResponseWithParams: params)
@@ -154,6 +149,11 @@ final public class Insider: NSObject {
     public func start() {
         addHandlersForServer(localWebServer)
         localWebServer.start()
+    }
+    
+    public func startWithDelegate(delegate: InsiderDelegate?) {
+        self.delegate = delegate
+        start()
     }
     
     public func startWithPort(port: UInt) {
