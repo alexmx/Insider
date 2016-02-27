@@ -57,11 +57,6 @@ final public class Insider: NSObject {
         static let systemInfo = "/systemInfo"
     }
     
-    struct Constants {
-        static let invokeMethodSelector = Selector("insiderInvoke:")
-        static let invokeForResponseMethodSelector = Selector("insiderInvokeForResponse:")
-    }
-    
     /// Shared instance
     public static let sharedInstance = Insider()
     
