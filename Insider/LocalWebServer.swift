@@ -8,7 +8,8 @@
 
 import Foundation
 
-typealias LocalWebServerRequestHandler = (Dictionary<String, AnyObject>?) -> (LocalWebServerResponse)
+typealias JSONDictionary = Dictionary<String, AnyObject>
+typealias LocalWebServerRequestHandler = (JSONDictionary?) -> (LocalWebServerResponse)
 
 
 enum LocalWebServerRequestMethod: String {
@@ -82,13 +83,14 @@ final class LocalWebServer {
     }
     
     func paramsForRequest(request: GCDWebServerURLEncodedFormRequest?) -> Dictionary<String, AnyObject>? {
-        guard let request = request where LocalWebServerRequestMethod(rawValue: request.method!) != .GET else {
+        guard let request = request where LocalWebServerRequestMethod(rawValue: request.method) != .GET else {
             return nil
         }
         
         var params: Dictionary<String, AnyObject>?
         let contentType = request.contentType
-        if contentType == "application/json" || contentType == "text/json" || contentType == "text/javascript" {
+        let jsonTypes = ["application/json", "text/json", "text/javascript"]
+        if jsonTypes.contains(contentType) {
             if let json = request.jsonObject {
                 params = json as? Dictionary<String, AnyObject>
             }

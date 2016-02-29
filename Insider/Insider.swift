@@ -28,7 +28,7 @@ public protocol InsiderDelegate: class {
      
      - returns: return params
      */
-    func insider(insider: Insider, invokeMethodForResponseWithParams params: AnyObject?) -> AnyObject?
+    func insider(insider: Insider, invokeMethodForResponseWithParams params: AnyObject?) -> Dictionary<String, AnyObject>?
     
     /**
      This method will be called on delegate for "notification" action
@@ -65,8 +65,7 @@ final public class Insider: NSObject {
     
     // Insider notification key
     public static let insiderNotificationKey = "com.insider.insiderNotificationKey"
-    
-    private lazy var deviceInfoService: DeviceInfoService = DeviceInfoService()
+    private lazy var deviceInfoService = DeviceInfoService()
     
     private let localWebServer = LocalWebServer()
     
@@ -116,12 +115,10 @@ final public class Insider: NSObject {
     }
     
     func invokeMethodOnDelegateWithParamsForResponse(params: AnyObject?) -> Dictionary<String, AnyObject>? {
-        var response: AnyObject?
         mainQueue {
-            response = self.delegate?.insider(self, invokeMethodForResponseWithParams: params)
+            return self.delegate?.insider(self, invokeMethodForResponseWithParams: params)
         }
-        
-        return response as? Dictionary<String, AnyObject> ?? nil
+        return nil
     }
     
     func sendLocalNotificationWithParams(params: AnyObject?) {
