@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+public typealias JSONDictionary = Dictionary<String, AnyObject>
+
 @objc
 public protocol InsiderDelegate: class {
     
@@ -18,7 +20,7 @@ public protocol InsiderDelegate: class {
      - parameter insider: instance of Insider class
      - parameter params:  request params
      */
-    func insider(insider: Insider, invokeMethodWithParams params: AnyObject?)
+    func insider(insider: Insider, invokeMethodWithParams params: JSONDictionary?)
     
     /**
      This method will be called on delegate for "invokeForResponse" action
@@ -28,7 +30,7 @@ public protocol InsiderDelegate: class {
      
      - returns: return params
      */
-    func insider(insider: Insider, invokeMethodForResponseWithParams params: AnyObject?) -> AnyObject?
+    func insider(insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary?
     
     /**
      This method will be called on delegate for "notification" action
@@ -36,7 +38,7 @@ public protocol InsiderDelegate: class {
      - parameter insider: instance of Insider class
      - parameter params:  request params sent in notification
      */
-    optional func insider(insider: Insider, didSendNotificationWithParams params: AnyObject?)
+    optional func insider(insider: Insider, didSendNotificationWithParams params: JSONDictionary?)
     
     /**
      This method will be called on delegate for "systemInfo" action
@@ -44,7 +46,7 @@ public protocol InsiderDelegate: class {
      - parameter insider:    instance of Insider class
      - parameter systemInfo: returned system information
      */
-    optional func insider(insider: Insider, didReturnSystemInfo systemInfo: Dictionary<String, AnyObject>?)
+    optional func insider(insider: Insider, didReturnSystemInfo systemInfo: JSONDictionary?)
 }
 
 @objc
@@ -65,8 +67,7 @@ final public class Insider: NSObject {
     
     // Insider notification key
     public static let insiderNotificationKey = "com.insider.insiderNotificationKey"
-    
-    private lazy var deviceInfoService: DeviceInfoService = DeviceInfoService()
+    private lazy var deviceInfoService = DeviceInfoService()
     
     private let localWebServer = LocalWebServer()
     
@@ -103,7 +104,7 @@ final public class Insider: NSObject {
         }
     }
     
-    func invokeMethodOnDelegateWithParams(params: AnyObject?) -> Bool {
+    func invokeMethodOnDelegateWithParams(params: JSONDictionary?) -> Bool {
         guard let delegate = delegate else {
             return false
         }
@@ -115,23 +116,23 @@ final public class Insider: NSObject {
         return true
     }
     
-    func invokeMethodOnDelegateWithParamsForResponse(params: AnyObject?) -> Dictionary<String, AnyObject>? {
-        var response: AnyObject?
+    func invokeMethodOnDelegateWithParamsForResponse(params: JSONDictionary?) -> JSONDictionary? {
+        var response: JSONDictionary?
         mainQueue {
             response = self.delegate?.insider(self, invokeMethodForResponseWithParams: params)
         }
         
-        return response as? Dictionary<String, AnyObject> ?? nil
+        return response
     }
     
-    func sendLocalNotificationWithParams(params: AnyObject?) {
+    func sendLocalNotificationWithParams(params: JSONDictionary?) {
         mainQueue {
             NSNotificationCenter.defaultCenter().postNotificationName(Insider.insiderNotificationKey, object: params)
             self.delegate?.insider?(self, didSendNotificationWithParams: params)
         }
     }
     
-    func getSystemInfo() -> Dictionary<String, AnyObject>? {
+    func getSystemInfo() -> JSONDictionary? {
         let systemInfo = self.deviceInfoService.allSystemInfo
         mainQueue {
             self.delegate?.insider?(self, didReturnSystemInfo: systemInfo)
