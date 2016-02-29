@@ -10,7 +10,7 @@ import Foundation
 
 final class DeviceInfoService {
     
-    var allSystemInfo: Dictionary<String, AnyObject>? {
-        return SystemServices.sharedServices().allSystemInformation as? Dictionary<String, AnyObject>
+    var allSystemInfo: JSONDictionary? {
+        return SystemServices.sharedServices().allSystemInformation as? JSONDictionary
     }
 }
