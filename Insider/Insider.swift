@@ -62,11 +62,12 @@ final public class Insider: NSObject {
     /// Shared instance
     public static let sharedInstance = Insider()
     
-    // Insider delegate
+    /// Insider delegate
     public weak var delegate: InsiderDelegate?
     
-    // Insider notification key
+    /// Insider notification key
     public static let insiderNotificationKey = "com.insider.insiderNotificationKey"
+    
     private lazy var deviceInfoService = DeviceInfoService()
     
     private let localWebServer = LocalWebServer()
@@ -80,21 +81,23 @@ final public class Insider: NSObject {
         
         // Invoke method on delegate
         server.addHandlerForMethod(.POST, path: Endpoints.invokeEndpoint) { (requestParams) -> (LocalWebServerResponse) in
-            
             let didProcessParams = self.invokeMethodOnDelegateWithParams(requestParams)
             return LocalWebServerResponse(statusCode: (didProcessParams) ? .Success : .NotFound)
         }
         
         // Invoke method on delegate and wait for return value
         server.addHandlerForMethod(.POST, path: Endpoints.invokeWithResponse) { (requestParams) -> (LocalWebServerResponse) in
-            
             let response = self.invokeMethodOnDelegateWithParamsForResponse(requestParams)
-            return (response == nil) ? LocalWebServerResponse(statusCode: .NotFound) : LocalWebServerResponse(response: response)
+            
+            if let response = response {
+                return LocalWebServerResponse(response: response)
+            } else {
+                return LocalWebServerResponse(statusCode: .NotFound)
+            }
         }
         
         // Send a local notification
         server.addHandlerForMethod(.POST, path: Endpoints.sendNotification) { (requestParams) -> (LocalWebServerResponse) in
-            
             self.sendLocalNotificationWithParams(requestParams)
             return LocalWebServerResponse(statusCode: .Success)
         }
@@ -106,62 +109,78 @@ final public class Insider: NSObject {
     
     func invokeMethodOnDelegateWithParams(params: JSONDictionary?) -> Bool {
         guard let delegate = delegate else {
+            print("[Insider] Warning: Delegate not set.")
             return false
         }
         
-        mainQueue {
-            delegate.insider(self, invokeMethodWithParams: params)
-        }
+        delegate.insider(self, invokeMethodWithParams: params)
         
         return true
     }
     
     func invokeMethodOnDelegateWithParamsForResponse(params: JSONDictionary?) -> JSONDictionary? {
-        var response: JSONDictionary?
-        mainQueue {
-            response = self.delegate?.insider(self, invokeMethodForResponseWithParams: params)
+        guard let delegate = delegate else {
+            print("[Insider] Warning: Delegate not set.")
+            return nil;
         }
         
-        return response
+        return delegate.insider(self, invokeMethodForResponseWithParams: params)
     }
     
     func sendLocalNotificationWithParams(params: JSONDictionary?) {
-        mainQueue {
-            NSNotificationCenter.defaultCenter().postNotificationName(Insider.insiderNotificationKey, object: params)
-            self.delegate?.insider?(self, didSendNotificationWithParams: params)
+        defer {
+            delegate?.insider?(self, didSendNotificationWithParams: params)
         }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Insider.insiderNotificationKey, object: params)
     }
     
     func getSystemInfo() -> JSONDictionary? {
-        let systemInfo = self.deviceInfoService.allSystemInfo
-        mainQueue {
-            self.delegate?.insider?(self, didReturnSystemInfo: systemInfo)
+        defer {
+            delegate?.insider?(self, didReturnSystemInfo: systemInfo)
         }
+        
+        let systemInfo = self.deviceInfoService.allSystemInfo
         
         return systemInfo
     }
     
-    func mainQueue(closure: (() -> ())?) {
-        dispatch_sync(dispatch_get_main_queue()) { () -> Void in closure?() }
-    }
-    
     // MARK - Public methods
     
+    /**
+     Start local web server which will listen for commands.
+     By default server listens on port 8080.
+    */
     public func start() {
         addHandlersForServer(localWebServer)
         localWebServer.start()
     }
     
+    /**
+     Start local web server which will listen for commands, for given delegate
+     By default server listens on port 8080.
+     
+     - parameter delegate: Insider delegate reference
+     */
     public func startWithDelegate(delegate: InsiderDelegate?) {
         self.delegate = delegate
         start()
     }
     
+    /**
+     Start local web server which will listen for commands, for given port.
+     By default server listens on port 8080.
+     
+     - parameter port: port on which local webserver will listen for commands.
+     */
     public func startWithPort(port: UInt) {
         addHandlersForServer(localWebServer)
         localWebServer.startWithPort(port)
     }
     
+    /**
+     Stop local web server.
+     */
     public func stop() {
         localWebServer.stop()
     }
