@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		CD009F191C7B1A70009235AC /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD009F181C7B1A70009235AC /* LogViewController.m */; };
+		CD100A441C873CD900449652 /* PublicHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = CD100A431C873C7C00449652 /* PublicHeaders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD33058B1C737B3800494BB9 /* Insider.h in Headers */ = {isa = PBXBuildFile; fileRef = CD33058A1C737B3800494BB9 /* Insider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3305D21C737CE000494BB9 /* Insider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3305D11C737CE000494BB9 /* Insider.swift */; };
 		CD3305E11C738D6B00494BB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3305E01C738D6B00494BB9 /* main.m */; };
@@ -131,6 +132,7 @@
 /* Begin PBXFileReference section */
 		CD009F171C7B1A70009235AC /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
 		CD009F181C7B1A70009235AC /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
+		CD100A431C873C7C00449652 /* PublicHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PublicHeaders.h; sourceTree = "<group>"; };
 		CD3305871C737B3800494BB9 /* Insider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Insider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD33058A1C737B3800494BB9 /* Insider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Insider.h; sourceTree = "<group>"; };
 		CD33058C1C737B3800494BB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				CD75FF8D1C776F9300F82FF1 /* libz.tbd */,
 				CD75FF111C776EB800F82FF1 /* GCDWebServer */,
 				CD75FF321C776EB800F82FF1 /* System Services */,
+				CD100A431C873C7C00449652 /* PublicHeaders.h */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD33058B1C737B3800494BB9 /* Insider.h in Headers */,
+				CD100A441C873CD900449652 /* PublicHeaders.h in Headers */,
 				CD75FF521C776EB800F82FF1 /* GCDWebServer.h in Headers */,
 				CD75FF671C776EB800F82FF1 /* GCDWebServerDataResponse.h in Headers */,
 				CD75FF6F1C776EB800F82FF1 /* SystemServices.h in Headers */,
