@@ -82,13 +82,13 @@
 		CD75FF831C776EB800F82FF1 /* SSMemoryInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF481C776EB800F82FF1 /* SSMemoryInfo.h */; };
 		CD75FF841C776EB800F82FF1 /* SSMemoryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF491C776EB800F82FF1 /* SSMemoryInfo.m */; };
 		CD75FF851C776EB800F82FF1 /* SSNetworkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF4A1C776EB800F82FF1 /* SSNetworkInfo.h */; };
-		CD75FF861C776EB800F82FF1 /* SSNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF4B1C776EB800F82FF1 /* SSNetworkInfo.m */; settings = {COMPILER_FLAGS = "-Wno-format"; }; };
+		CD75FF861C776EB800F82FF1 /* SSNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF4B1C776EB800F82FF1 /* SSNetworkInfo.m */; };
 		CD75FF871C776EB800F82FF1 /* SSProcessInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF4C1C776EB800F82FF1 /* SSProcessInfo.h */; };
 		CD75FF881C776EB800F82FF1 /* SSProcessInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF4D1C776EB800F82FF1 /* SSProcessInfo.m */; };
 		CD75FF891C776EB800F82FF1 /* SSProcessorInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF4E1C776EB800F82FF1 /* SSProcessorInfo.h */; };
 		CD75FF8A1C776EB800F82FF1 /* SSProcessorInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF4F1C776EB800F82FF1 /* SSProcessorInfo.m */; };
 		CD75FF8B1C776EB800F82FF1 /* SSUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF501C776EB800F82FF1 /* SSUUID.h */; };
-		CD75FF8C1C776EB800F82FF1 /* SSUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF511C776EB800F82FF1 /* SSUUID.m */; settings = {COMPILER_FLAGS = "-Wno-format"; }; };
+		CD75FF8C1C776EB800F82FF1 /* SSUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF511C776EB800F82FF1 /* SSUUID.m */; };
 		CD75FF8E1C776F9300F82FF1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CD75FF8D1C776F9300F82FF1 /* libz.tbd */; };
 		CDBD90BD1C7636D700879F0C /* DeviceInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBD90BC1C7636D700879F0C /* DeviceInfoService.swift */; };
 		CDCF8EB91C7722B300BD0B1D /* LocalWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCF8EB81C7722B300BD0B1D /* LocalWebServer.swift */; };
@@ -579,15 +579,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD75FF8C1C776EB800F82FF1 /* SSUUID.m in Sources */,
 				CD3305D21C737CE000494BB9 /* Insider.swift in Sources */,
+				CDCF8EB91C7722B300BD0B1D /* LocalWebServer.swift in Sources */,
+				CDCF8EBB1C7725C600BD0B1D /* LocalWebServerResponse.swift in Sources */,
+				CDBD90BD1C7636D700879F0C /* DeviceInfoService.swift in Sources */,
+				CD75FF8C1C776EB800F82FF1 /* SSUUID.m in Sources */,
 				CD75FF8A1C776EB800F82FF1 /* SSProcessorInfo.m in Sources */,
 				CD75FF621C776EB800F82FF1 /* GCDWebServerFileRequest.m in Sources */,
 				CD75FF701C776EB800F82FF1 /* SystemServices.m in Sources */,
 				CD75FF6E1C776EB800F82FF1 /* GCDWebServerStreamedResponse.m in Sources */,
 				CD75FF7C1C776EB800F82FF1 /* SSDiskInfo.m in Sources */,
 				CD75FF7E1C776EB800F82FF1 /* SSHardwareInfo.m in Sources */,
-				CDCF8EB91C7722B300BD0B1D /* LocalWebServer.swift in Sources */,
 				CD75FF681C776EB800F82FF1 /* GCDWebServerDataResponse.m in Sources */,
 				CD75FF741C776EB800F82FF1 /* SSAccessoryInfo.m in Sources */,
 				CD75FF661C776EB800F82FF1 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
@@ -597,7 +599,6 @@
 				CD75FF6C1C776EB800F82FF1 /* GCDWebServerFileResponse.m in Sources */,
 				CD75FF551C776EB800F82FF1 /* GCDWebServerConnection.m in Sources */,
 				CD75FF821C776EB800F82FF1 /* SSLocalizationInfo.m in Sources */,
-				CDCF8EBB1C7725C600BD0B1D /* LocalWebServerResponse.swift in Sources */,
 				CD75FF881C776EB800F82FF1 /* SSProcessInfo.m in Sources */,
 				CD75FF7A1C776EB800F82FF1 /* SSCarrierInfo.m in Sources */,
 				CD75FF781C776EB800F82FF1 /* SSBatteryInfo.m in Sources */,
@@ -607,7 +608,6 @@
 				CD75FF641C776EB800F82FF1 /* GCDWebServerMultiPartFormRequest.m in Sources */,
 				CD75FF5D1C776EB800F82FF1 /* GCDWebServerResponse.m in Sources */,
 				CD75FF531C776EB800F82FF1 /* GCDWebServer.m in Sources */,
-				CDBD90BD1C7636D700879F0C /* DeviceInfoService.swift in Sources */,
 				CD75FF571C776EB800F82FF1 /* GCDWebServerFunctions.m in Sources */,
 				CD75FF761C776EB800F82FF1 /* SSApplicationInfo.m in Sources */,
 			);
