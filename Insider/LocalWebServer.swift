@@ -63,9 +63,12 @@ final class LocalWebServer {
         localWebServer.addDefaultHandlerForMethod(method.rawValue, requestClass: GCDWebServerURLEncodedFormRequest.self) {
             (request) -> GCDWebServerResponse! in
             
-            let response = handler(nil)
+            var response: LocalWebServerResponse?
+            self.executeOnMainQueue {
+                response = handler(nil)
+            }
             
-            return response.convertedToGCDWebServerDataResponse()
+            return response?.convertedToGCDWebServerDataResponse()
         }
     }
     
@@ -75,10 +78,17 @@ final class LocalWebServer {
             (request) -> GCDWebServerResponse! in
             
             let params = self.paramsForRequest(request as? GCDWebServerURLEncodedFormRequest)
-            let response = handler(params)
+            var response: LocalWebServerResponse?
+            self.executeOnMainQueue {
+                response = handler(params)
+            }
             
-            return response.convertedToGCDWebServerDataResponse()
+            return response?.convertedToGCDWebServerDataResponse()
         }
+    }
+    
+    func executeOnMainQueue(closure: (() -> ())?) {
+        dispatch_sync(dispatch_get_main_queue()) { closure?() }
     }
     
     func paramsForRequest(request: GCDWebServerURLEncodedFormRequest?) -> JSONDictionary? {
