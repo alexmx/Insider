@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
 
   s.source                = { :git => "https://github.com/alexmx/Insider.git", :branch => "master" }
-  s.source_files          = "Insider/**/*.{swift}", "Libs/**/*.{h,m,swift}
+  s.source_files          = "Insider/**/*.{swift}", "Libs/**/*.{h,m,swift}"
 
   s.libraries             = 'xml2', 'z'
 
