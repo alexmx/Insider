@@ -11,12 +11,12 @@
 
 // GCDWebServer https://github.com/swisspol/GCDWebServer
 
-#import <Insider/GCDWebServer.h>
-#import <Insider/GCDWebServerURLEncodedFormRequest.h>
-#import <Insider/GCDWebServerDataResponse.h>
+#import "GCDWebServer.h"
+#import "GCDWebServerURLEncodedFormRequest.h"
+#import "GCDWebServerDataResponse.h"
 
 // iOS-System-Services https://github.com/Shmoopi/iOS-System-Services
 
-#import <Insider/SystemServices.h>
+#import "SystemServices.h"
 
 #endif /* PublicHeaders_h */
