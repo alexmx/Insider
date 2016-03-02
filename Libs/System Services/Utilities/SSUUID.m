@@ -181,7 +181,7 @@
     NSString *ConnectedtoWiFi = [NSString stringWithFormat:@"%d", [SSNetworkInfo connectedToWiFi]];
     
     // Device Orientation
-    NSString *DeviceOrientation = [NSString stringWithFormat:@"%ld", [SSAccelerometerInfo deviceOrientation]];
+    NSString *DeviceOrientation = [NSString stringWithFormat:@"%ld", (long)[SSAccelerometerInfo deviceOrientation]];
     
     // Country
     NSString *Country = [[[SSLocalizationInfo country] substringToIndex:2] uppercaseString];

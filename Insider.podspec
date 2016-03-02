@@ -8,12 +8,18 @@ Pod::Spec.new do |s|
   s.description   = <<-DESC
                       Insider is a testing utility framework which sets an HTTP communication channel between the app and testing environments like Appium, Calabash, Frank, etc.
                     DESC
-  s.homepage      = "https://github.com/alexmx/Insider"
-  s.license       = "MIT"
-  s.authors       = { "Alex Maimescu" => "maimescu.alex@gmail.com" }
 
-  s.platform      = :ios
-  s.source        = { :path => "." }
-  s.source_files  = "Insider/**/*.{h,m,swift}"
+
+  s.homepage              = "https://github.com/alexmx/Insider"
+  s.license               = "MIT"
+  s.authors               = { "Alex Maimescu" => "maimescu.alex@gmail.com" }
+
+  s.platform              = :ios
+  s.ios.deployment_target = '8.0'
+
+  s.source                = { :git => "https://github.com/alexmx/Insider.git", :branch => "master" }
+  s.source_files          = "Insider/**/*.{swift}", "Libs/**/*.{h,m,swift}
+
+  s.libraries             = 'xml2', 'z'
 
 end
