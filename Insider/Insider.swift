@@ -122,10 +122,10 @@ final public class Insider: NSObject {
         
         // Add sandbox access handlers
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first
-        server.addSandboxDirectory(documentsPath!, endpoint: Endpoints.documents);
+        server.addSandboxDirectory(documentsPath!, endpoint: Endpoints.documents)
         let libraryPath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true).first
-        server.addSandboxDirectory(libraryPath!, endpoint: Endpoints.library);
-        let tmpPath = NSTemporaryDirectory();
+        server.addSandboxDirectory(libraryPath!, endpoint: Endpoints.library)
+        let tmpPath = NSTemporaryDirectory()
         server.addSandboxDirectory(tmpPath, endpoint: Endpoints.tmp)
                 
         // Invoke method on delegate
@@ -170,7 +170,7 @@ final public class Insider: NSObject {
     func invokeMethodOnDelegateWithParamsForResponse(params: JSONDictionary?) -> JSONDictionary? {
         guard let delegate = delegate else {
             print("[Insider] Warning: Delegate not set.")
-            return nil;
+            return nil
         }
         
         return delegate.insider(self, invokeMethodForResponseWithParams: params)
