@@ -4,12 +4,12 @@
 [![Twitter: @amaimescu](https://img.shields.io/badge/contact-%40amaimescu-blue.svg)](https://twitter.com/amaimescu)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/alexmx/ios-ui-automation-overview/blob/master/LICENSE)
 
-Insider is a **testing utility framework** which sets an HTTP communication bridge between the app and testing environments like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc. Some real use cases which could require such communication channel:
+Insider is a **testing utility framework** which sets an HTTP communication bridge between the app and testing environments like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc. Some real use cases where Insider could be usefull:
 * Set a particular state for the app during the test scenario;
 * Simulate push notifications;
 * Simulate app invokation using custom schemes / universal links;
 * Simulate backend responses;
-* Put particular files in the application sandbox;
+* Manage files/directories in application sandbox;
 * Collect metrics from the app during test execution (CPU, memory, etc.);
 * etc.
 
@@ -21,6 +21,9 @@ Insider is a **testing utility framework** which sets an HTTP communication brid
 📎 | Invoke a method on a registered **delegate** with given parameters and wait for response;
 📢 | Send local notifications through **NSNotificationCenter** with given parameters;
 📱 | Get device system state information (CPU, memory, IP address, etc);
+:floppy_disk: |  Manage files/directories in application sandbox (Documents, Library, tmp);
+
+In the `scripts` directory can be found some sample ruby scripts which test the built-in features.
 
 ## Installation
 
@@ -38,7 +41,7 @@ github "alexmx/Insider"
 
 ## Usage
 
-Basic integration:
+#### Use case #1: Simulate Push Notifications
 
 ```swift
 
@@ -47,43 +50,37 @@ import Insider
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-  
-    Insider.sharedInstance().startWithDelegate(self)
+
+        Insider.sharedInstance.startWithDelegate(self)
         
-    return true
+        return true
+  }
+  
+  func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        
+        let alertController = UIAlertController(
+            title: "Insider Demo",
+            message: "Did receive Push Notification with payload: \(userInfo.description)",
+            preferredStyle: .Alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in }
+        alertController.addAction(cancelAction)
+        
+        self.window?.rootViewController!.presentViewController(alertController, animated: true) {}
   }
 }
 
 extension AppDelegate: InsiderDelegate {
 
-  func insider(insider: Insider, invokeMethodWithParams params: AnyObject?) {
-    // Received commands (params) from test script;
-    // Using this params we can perform different simulations. Consider the use in the description section above;
-    // Example: simulate app invokation using custom scheme:
-    simulatedURL = params["url"]
-    application(UIApplication.sharedApplication(), handleOpenURL: simulatedURL)
-  }
-  
-  func insider(insider: Insider, invokeMethodForResponseWithParams params: AnyObject?) -> AnyObject? {
-    // Received commands (params) from test script;
-    // Perform some actions and return the result back to test script;
-    // ...
-    return resultParams
-  }
-    
-  func insider(insider: Insider, didSendNotificationWithParams params: AnyObject?) {
-    // Called after an Insider built notification" is sent through NSNotificationCenter with given params;
-    // App should listen the notifications from Insider (Insider.insiderNotificationKey)
-  }
-    
-  func insider(insider: Insider, didReturnSystemInfo systemInfo: Dictionary<String, AnyObject>?) {
-    // Called after test script requests the full information about the system
-    // The system information is collected and sent automatically by Insider.
+  func insider(insider: Insider, invokeMethodWithParams params: JSONDictionary?) {
+        // Simulate push notification
+        self .application(UIApplication.sharedApplication(), didReceiveRemoteNotification: params!);
   }
 }
 
 ```
-
+In order to test this example run `InsiderUseCases` application target, after go to `scripts` directory and run `invoke_method.rb` script.
 
 ## License
 This project is licensed under the terms of the MIT license. See the LICENSE file.
