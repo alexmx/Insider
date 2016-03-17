@@ -80,6 +80,31 @@ NSString * kLogMessageNotificationKey = @"com.alexmx.notificationLogMessage";
     [self postLogNotificationWithObject:systemInfo];
 }
 
+- (void)insider:(Insider *)insider didCreateDirectoryAtPath:(NSString *)path
+{
+    [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did create path: %@", path]];
+}
+
+- (void)insider:(Insider *)insider didDeleteItemAtPath:(NSString *)path
+{
+    [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did delete item: %@", path]];
+}
+
+- (void)insider:(Insider *)insider didDownloadFileAtPath:(NSString *)path
+{
+    [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did download item: %@", path]];
+}
+
+- (void)insider:(Insider *)insider didMoveItemFromPath:(NSString *)fromPath toPath:(NSString *)toPath
+{
+    [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did move item from: %@ to: %@", fromPath, toPath]];
+}
+
+- (void)insider:(Insider *)insider didUploadFileAtPath:(NSString *)path
+{
+    [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did upload item: %@", path]];
+}
+
 #pragma mark - Notification
 
 - (void)insiderNotification:(NSNotification *)notification
