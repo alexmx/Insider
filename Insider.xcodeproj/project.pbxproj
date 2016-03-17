@@ -90,6 +90,9 @@
 		CD75FF8B1C776EB800F82FF1 /* SSUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = CD75FF501C776EB800F82FF1 /* SSUUID.h */; };
 		CD75FF8C1C776EB800F82FF1 /* SSUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75FF511C776EB800F82FF1 /* SSUUID.m */; };
 		CD75FF8E1C776F9300F82FF1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CD75FF8D1C776F9300F82FF1 /* libz.tbd */; };
+		CDA703251C8E0AE90056386A /* GCDWebUploader.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA703231C8E0AE90056386A /* GCDWebUploader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CDA703261C8E0AE90056386A /* GCDWebUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA703241C8E0AE90056386A /* GCDWebUploader.m */; };
+		CDA703281C8E128D0056386A /* GCDWebUploader.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CDA703271C8E128D0056386A /* GCDWebUploader.bundle */; };
 		CDBD90BD1C7636D700879F0C /* DeviceInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBD90BC1C7636D700879F0C /* DeviceInfoService.swift */; };
 		CDCF8EB91C7722B300BD0B1D /* LocalWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCF8EB81C7722B300BD0B1D /* LocalWebServer.swift */; };
 		CDCF8EBB1C7725C600BD0B1D /* LocalWebServerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCF8EBA1C7725C600BD0B1D /* LocalWebServerResponse.swift */; };
@@ -106,16 +109,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		CD03E9511C74E22700A0AC11 /* Copy Sub Framework */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Copy Sub Framework";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD3306011C73900300494BB9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -203,6 +196,9 @@
 		CD75FF501C776EB800F82FF1 /* SSUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSUUID.h; sourceTree = "<group>"; };
 		CD75FF511C776EB800F82FF1 /* SSUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSUUID.m; sourceTree = "<group>"; };
 		CD75FF8D1C776F9300F82FF1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		CDA703231C8E0AE90056386A /* GCDWebUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebUploader.h; sourceTree = "<group>"; };
+		CDA703241C8E0AE90056386A /* GCDWebUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebUploader.m; sourceTree = "<group>"; };
+		CDA703271C8E128D0056386A /* GCDWebUploader.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GCDWebUploader.bundle; sourceTree = "<group>"; };
 		CDBD90BC1C7636D700879F0C /* DeviceInfoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoService.swift; sourceTree = "<group>"; };
 		CDCF8EB81C7722B300BD0B1D /* LocalWebServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalWebServer.swift; sourceTree = "<group>"; };
 		CDCF8EBA1C7725C600BD0B1D /* LocalWebServerResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalWebServerResponse.swift; sourceTree = "<group>"; };
@@ -314,6 +310,9 @@
 		CD75FF111C776EB800F82FF1 /* GCDWebServer */ = {
 			isa = PBXGroup;
 			children = (
+				CDA703271C8E128D0056386A /* GCDWebUploader.bundle */,
+				CDA703231C8E0AE90056386A /* GCDWebUploader.h */,
+				CDA703241C8E0AE90056386A /* GCDWebUploader.m */,
 				CD75FF121C776EB800F82FF1 /* Core */,
 				CD75FF1F1C776EB800F82FF1 /* LICENSE */,
 				CD75FF201C776EB800F82FF1 /* Requests */,
@@ -424,6 +423,7 @@
 				CD33058B1C737B3800494BB9 /* Insider.h in Headers */,
 				CD100A441C873CD900449652 /* PublicHeaders.h in Headers */,
 				CD75FF521C776EB800F82FF1 /* GCDWebServer.h in Headers */,
+				CDA703251C8E0AE90056386A /* GCDWebUploader.h in Headers */,
 				CD75FF671C776EB800F82FF1 /* GCDWebServerDataResponse.h in Headers */,
 				CD75FF6F1C776EB800F82FF1 /* SystemServices.h in Headers */,
 				CD75FF5A1C776EB800F82FF1 /* GCDWebServerRequest.h in Headers */,
@@ -466,7 +466,6 @@
 				CD3305831C737B3800494BB9 /* Frameworks */,
 				CD3305841C737B3800494BB9 /* Headers */,
 				CD3305851C737B3800494BB9 /* Resources */,
-				CD03E9511C74E22700A0AC11 /* Copy Sub Framework */,
 			);
 			buildRules = (
 			);
@@ -542,6 +541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD75FF5E1C776EB800F82FF1 /* LICENSE in Resources */,
+				CDA703281C8E128D0056386A /* GCDWebUploader.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +598,7 @@
 				CD75FF841C776EB800F82FF1 /* SSMemoryInfo.m in Sources */,
 				CD75FF6C1C776EB800F82FF1 /* GCDWebServerFileResponse.m in Sources */,
 				CD75FF551C776EB800F82FF1 /* GCDWebServerConnection.m in Sources */,
+				CDA703261C8E0AE90056386A /* GCDWebUploader.m in Sources */,
 				CD75FF821C776EB800F82FF1 /* SSLocalizationInfo.m in Sources */,
 				CD75FF881C776EB800F82FF1 /* SSProcessInfo.m in Sources */,
 				CD75FF7A1C776EB800F82FF1 /* SSCarrierInfo.m in Sources */,

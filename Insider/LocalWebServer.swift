@@ -25,6 +25,16 @@ protocol GCDWebServerDataResponseConvertible {
 }
 
 
+protocol LocalWebServerDelegate: class {
+    
+    func localWebServer(server: LocalWebServer, didCreateDirectoryAtPath path: String)
+    func localWebServer(server: LocalWebServer, didDeleteItemAtPath path: String)
+    func localWebServer(server: LocalWebServer, didDownloadFileAtPath path: String)
+    func localWebServer(server: LocalWebServer, didMoveItemFromPath fromPath: String, toPath: String)
+    func localWebServer(server: LocalWebServer, didUploadFileAtPath path: String)
+}
+
+
 extension LocalWebServerResponse: GCDWebServerDataResponseConvertible {
     
     func convertedToGCDWebServerDataResponse() -> GCDWebServerDataResponse {
@@ -38,19 +48,22 @@ extension LocalWebServerResponse: GCDWebServerDataResponseConvertible {
 }
 
 
-final class LocalWebServer {
+final class LocalWebServer: NSObject {
     
     struct Constants {
         static let defaultPort: UInt = 8080
     }
     
-    private let localWebServer = GCDWebServer()
+    private let localWebServer = GCDWebUploader()
+    
+    weak var delegate: LocalWebServerDelegate?
     
     func start() {
         startWithPort(Constants.defaultPort)
     }
     
     func startWithPort(port: UInt) {
+        localWebServer.delegate = self
         localWebServer.startWithPort(port, bonjourName: nil)
     }
     
@@ -58,18 +71,8 @@ final class LocalWebServer {
         localWebServer.stop()
     }
     
-    func addDefaultHandlerForMethod(method: LocalWebServerRequestMethod, handler: LocalWebServerRequestHandler) {
-        
-        localWebServer.addDefaultHandlerForMethod(method.rawValue, requestClass: GCDWebServerURLEncodedFormRequest.self) {
-            (request) -> GCDWebServerResponse! in
-            
-            var response: LocalWebServerResponse?
-            self.executeOnMainQueue {
-                response = handler(nil)
-            }
-            
-            return response?.convertedToGCDWebServerDataResponse()
-        }
+    func addSandboxDirectory(path: String, endpoint: String) {
+        localWebServer.addDirectory(path, endpoint: endpoint)
     }
     
     func addHandlerForMethod(method: LocalWebServerRequestMethod, path: String, handler: LocalWebServerRequestHandler) {
@@ -110,5 +113,29 @@ final class LocalWebServer {
         }
         
         return params
+    }
+}
+
+
+extension LocalWebServer: GCDWebUploaderDelegate {
+    
+    func webUploader(uploader: GCDWebUploader!, didCreateDirectoryAtPath path: String!) {
+        delegate?.localWebServer(self, didCreateDirectoryAtPath: path)
+    }
+    
+    func webUploader(uploader: GCDWebUploader!, didDeleteItemAtPath path: String!) {
+        delegate?.localWebServer(self, didDeleteItemAtPath: path)
+    }
+    
+    func webUploader(uploader: GCDWebUploader!, didDownloadFileAtPath path: String!) {
+        delegate?.localWebServer(self, didDownloadFileAtPath: path)
+    }
+    
+    func webUploader(uploader: GCDWebUploader!, didMoveItemFromPath fromPath: String!, toPath: String!) {
+        delegate?.localWebServer(self, didMoveItemFromPath: fromPath, toPath: toPath)
+    }
+    
+    func webUploader(uploader: GCDWebUploader!, didUploadFileAtPath path: String!) {
+        delegate?.localWebServer(self, didUploadFileAtPath: path)
     }
 }

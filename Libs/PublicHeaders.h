@@ -14,6 +14,7 @@
 #import "GCDWebServer.h"
 #import "GCDWebServerURLEncodedFormRequest.h"
 #import "GCDWebServerDataResponse.h"
+#import "GCDWebUploader.h"
 
 // iOS-System-Services https://github.com/Shmoopi/iOS-System-Services
 

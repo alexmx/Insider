@@ -47,6 +47,47 @@ public protocol InsiderDelegate: class {
      - parameter systemInfo: returned system information
      */
     optional func insider(insider: Insider, didReturnSystemInfo systemInfo: JSONDictionary?)
+    
+    /**
+     This method is caled when a new directory is created in sandbox
+     
+     - parameter insider: instance of Insider class
+     - parameter path:    path to the new created directory
+     */
+    optional func insider(insider: Insider, didCreateDirectoryAtPath path: String)
+    
+    /**
+     This method is called when an item is removed from sandbox
+     
+     - parameter insider: instance of Insider class
+     - parameter path:    path of the removed item
+     */
+    optional func insider(insider: Insider, didDeleteItemAtPath path: String)
+    
+    /**
+     This method is called when an item is downloaded from sandbox
+     
+     - parameter insider: instance of Insider class
+     - parameter path:    path to the downloaded item
+     */
+    optional func insider(insider: Insider, didDownloadFileAtPath path: String)
+    
+    /**
+     This method is called when an item is moved in sandbox
+     
+     - parameter insider:  instance of Insider class
+     - parameter fromPath: initial path to the item
+     - parameter toPath:   path to the item after it was moved
+     */
+    optional func insider(insider: Insider, didMoveItemFromPath fromPath: String, toPath: String)
+    
+    /**
+     This method is called when an item is uploaded to sandbox
+     
+     - parameter insider: instance of Insider class
+     - parameter path:    path to the uploaded item
+     */
+    optional func insider(insider: Insider, didUploadFileAtPath path: String)
 }
 
 @objc
@@ -57,6 +98,9 @@ final public class Insider: NSObject {
         static let invokeWithResponse = "/invokeForResponse"
         static let sendNotification = "/notification"
         static let systemInfo = "/systemInfo"
+        static let documents = "/documents"
+        static let library = "/library"
+        static let tmp = "/tmp"
     }
     
     /// Shared instance
@@ -73,12 +117,17 @@ final public class Insider: NSObject {
     private let localWebServer = LocalWebServer()
     
     func addHandlersForServer(server: LocalWebServer) {
-                
-        // Default handler
-        server.addDefaultHandlerForMethod(.POST) { (requestParams) -> (LocalWebServerResponse) in
-            return LocalWebServerResponse(statusCode: .NotFound)
-        }
         
+        server.delegate = self
+        
+        // Add sandbox access handlers
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first
+        server.addSandboxDirectory(documentsPath!, endpoint: Endpoints.documents)
+        let libraryPath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true).first
+        server.addSandboxDirectory(libraryPath!, endpoint: Endpoints.library)
+        let tmpPath = NSTemporaryDirectory()
+        server.addSandboxDirectory(tmpPath, endpoint: Endpoints.tmp)
+                
         // Invoke method on delegate
         server.addHandlerForMethod(.POST, path: Endpoints.invokeEndpoint) { (requestParams) -> (LocalWebServerResponse) in
             let didProcessParams = self.invokeMethodOnDelegateWithParams(requestParams)
@@ -121,7 +170,7 @@ final public class Insider: NSObject {
     func invokeMethodOnDelegateWithParamsForResponse(params: JSONDictionary?) -> JSONDictionary? {
         guard let delegate = delegate else {
             print("[Insider] Warning: Delegate not set.")
-            return nil;
+            return nil
         }
         
         return delegate.insider(self, invokeMethodForResponseWithParams: params)
@@ -183,5 +232,29 @@ final public class Insider: NSObject {
      */
     public func stop() {
         localWebServer.stop()
+    }
+}
+
+
+extension Insider: LocalWebServerDelegate {
+    
+    func localWebServer(server: LocalWebServer, didCreateDirectoryAtPath path: String) {
+        delegate?.insider?(self, didCreateDirectoryAtPath: path)
+    }
+    
+    func localWebServer(server: LocalWebServer, didDeleteItemAtPath path: String) {
+        delegate?.insider?(self, didDeleteItemAtPath: path)
+    }
+    
+    func localWebServer(server: LocalWebServer, didDownloadFileAtPath path: String) {
+        delegate?.insider?(self, didDownloadFileAtPath: path)
+    }
+    
+    func localWebServer(server: LocalWebServer, didMoveItemFromPath fromPath: String, toPath: String) {
+        delegate?.insider?(self, didMoveItemFromPath: fromPath, toPath: toPath)
+    }
+    
+    func localWebServer(server: LocalWebServer, didUploadFileAtPath path: String) {
+        delegate?.insider?(self, didUploadFileAtPath: path)
     }
 }
