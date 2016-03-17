@@ -57,6 +57,8 @@ final public class Insider: NSObject {
         static let invokeWithResponse = "/invokeForResponse"
         static let sendNotification = "/notification"
         static let systemInfo = "/systemInfo"
+        static let documents = "/documents"
+        static let library = "/library"
     }
     
     /// Shared instance
@@ -73,7 +75,13 @@ final public class Insider: NSObject {
     private let localWebServer = LocalWebServer()
     
     func addHandlersForServer(server: LocalWebServer) {
-                
+        
+        // Add sandbox access handlers
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first
+        server.addSandboxDirectory(documentsPath!, endpoint: Endpoints.documents);
+        let libraryPath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true).first
+        server.addSandboxDirectory(libraryPath!, endpoint: Endpoints.library);
+        
         // Default handler
         server.addDefaultHandlerForMethod(.POST) { (requestParams) -> (LocalWebServerResponse) in
             return LocalWebServerResponse(statusCode: .NotFound)

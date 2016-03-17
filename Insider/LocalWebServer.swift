@@ -44,7 +44,7 @@ final class LocalWebServer {
         static let defaultPort: UInt = 8080
     }
     
-    private let localWebServer = GCDWebServer()
+    private let localWebServer = GCDWebUploader()
     
     func start() {
         startWithPort(Constants.defaultPort)
@@ -56,6 +56,10 @@ final class LocalWebServer {
     
     func stop() {
         localWebServer.stop()
+    }
+    
+    func addSandboxDirectory(path: String, endpoint: String) {
+        localWebServer.addDirectory(path, endpoint: endpoint)
     }
     
     func addDefaultHandlerForMethod(method: LocalWebServerRequestMethod, handler: LocalWebServerRequestHandler) {
