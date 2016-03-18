@@ -107,5 +107,48 @@ extension AppDelegate: InsiderDelegate {
 ```
 In order to test this example run `InsiderUseCases` application target, after go to `scripts` directory and run `invoke_method_with_response.rb` script.
 
+#### Use case #3: Get application system information during test execution
+
+```swift
+import Insider
+
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        Insider.sharedInstance.start()
+        
+        return true
+  }
+}
+```
+As it is a built-in feature there is no need to set a delegate for Insider in this case. In order to test this example run `InsiderDemo` application target, after go to `scripts` directory and run `system_info.rb` script.
+
+#### Use case #3: Add files to Documents folder in application sandbox.
+
+```swift
+import Insider
+
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        Insider.sharedInstance.start()
+        
+        return true
+  }
+}
+```
+As it is a built-in feature there is no need to set a delegate for Insider in this case. In order to test this example run `InsiderDemo` application target, and open [http://localhost:8080/documents](http://localhost:8080/documents) url in your browser.
+
+![Insider](/assets/sandbox.png)
+
+There are 3 directories supported in application sandbox:
+* **Documents**: `http://localhost:8080/documents`
+* **Library**: `http://localhost:8080/library`
+* **tmp**: `http://localhost:8080/tmp`
+
+You can create new folders. Upload, download, move, remove files/folders from application sandbox. 
+
 ## License
 This project is licensed under the terms of the MIT license. See the LICENSE file.
