@@ -13,17 +13,29 @@ Insider is a **testing utility framework** which sets an HTTP communication brid
 * Collect metrics from the app during test execution (CPU, memory, etc.);
 * etc.
 
+Insider runs an HTTP server inside the application and listens for commands. By default Insider runs on `http://localhost:8080`. Commands represent simple HTTP request: `http://localhost:8080/<command>`
+
 ## Features
 
-  | Built-in Features 
------------- | -------------
-💡 | Invoke a method on a registered **delegate** with given parameters;
-📎 | Invoke a method on a registered **delegate** with given parameters and wait for response;
-📢 | Send local notifications through **NSNotificationCenter** with given parameters;
-📱 | Get device system state information (CPU, memory, IP address, etc);
-:floppy_disk: |  Manage files/directories in application sandbox (Documents, Library, tmp);
+  | Built-in Features | Commands | HTTP Method
+------------ | ------------- | ------------- | -------------
+💡 | Invoke a method on a registered **delegate** with given parameters; | `/invoke` | POST
+📎 | Invoke a method on a registered **delegate** with given parameters and wait for response; | `/invokeForResponse` | POST
+📢 | Send local notifications through **NSNotificationCenter** with given parameters; | `/notification` | POST
+📱 | Get device system state information (CPU, memory, IP address, etc); | `/systemInfo` | GET
+:floppy_disk: |  Manage files/directories in application sandbox (Documents, Library, tmp); | `/documents/<command>`<br /> `/library/<command>`<br /> `/tmp/<command>` | See the table below
 
 In the `scripts` directory can be found some sample ruby scripts which test the built-in features.
+Supported commands for file managing feature:
+
+ File Managing Commands | HTTP Method 
+------------ | ------------- 
+List items: `/<directory>/list` | GET
+Download items: `/<directory>/download`  | GET
+Upload items: `/<directory>/upload`  | POST
+Move items: `/<directory>/move`  | POST
+Delete items: `/<directory>/delete`  | POST
+Create folder: `/<directory>/create`  | POST
 
 ## Installation
 
@@ -124,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 ```
 As it is a built-in feature there is no need to set a delegate for Insider in this case. In order to test this example run `InsiderDemo` application target, after go to `scripts` directory and run `system_info.rb` script.
 
-#### Use case #3: Add files to Documents folder in application sandbox.
+#### Use case #4: Add files to Documents folder in application sandbox.
 
 ```swift
 import Insider
