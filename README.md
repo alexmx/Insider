@@ -97,7 +97,7 @@ extension AppDelegate: InsiderDelegate {
 
   func insider(insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary? {
         // Simulate app invokation using a custom scheme
-        let url = NSURL(string: "insiderDemo://somescheme/params")
+        let url = NSURL(string: "insiderDemo://hello/params")
         let response = application(UIApplication.sharedApplication(), handleOpenURL: url!)
         
         return ["response" : response]
