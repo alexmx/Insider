@@ -20,7 +20,7 @@ public protocol InsiderDelegate: class {
      - parameter insider: instance of Insider class
      - parameter params:  request params
      */
-    func insider(insider: Insider, invokeMethodWithParams params: JSONDictionary?)
+    optional func insider(insider: Insider, invokeMethodWithParams params: JSONDictionary?)
     
     /**
      This method will be called on delegate for "invokeForResponse" action
@@ -162,7 +162,7 @@ final public class Insider: NSObject {
             return false
         }
         
-        delegate.insider(self, invokeMethodWithParams: params)
+        delegate.insider?(self, invokeMethodWithParams: params)
         
         return true
     }

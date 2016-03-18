@@ -36,6 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window?.rootViewController!.presentViewController(alertController, animated: true) {}
     }
+    
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        // Process custom scheme invokation
+        print(url);
+        return true
+    }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -64,7 +70,15 @@ extension AppDelegate: InsiderDelegate {
     
     func insider(insider: Insider, invokeMethodWithParams params: JSONDictionary?) {
         // Simulate push notification
-        self .application(UIApplication.sharedApplication(), didReceiveRemoteNotification: params!);
+        application(UIApplication.sharedApplication(), didReceiveRemoteNotification: params!);
+    }
+    
+    func insider(insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary? {
+        // Simulate app invokation using a custom scheme
+        let url = NSURL(string: "insiderDemo://hello/params")
+        let response = application(UIApplication.sharedApplication(), handleOpenURL: url!)
+        
+        return ["response" : response]
     }
 }
 
