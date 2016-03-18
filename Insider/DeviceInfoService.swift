@@ -11,6 +11,6 @@ import Foundation
 final class DeviceInfoService {
     
     var allSystemInfo: JSONDictionary? {
-        return SystemServices.sharedServices().allSystemInformation as? JSONDictionary
+        return SystemServices.sharedServices().allSystemInformation
     }
 }
