@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public typealias JSONDictionary = Dictionary<String, AnyObject>
+public typealias JSONDictionary = Dictionary<NSObject, AnyObject>
 
 @objc
 public protocol InsiderDelegate: class {
@@ -30,7 +30,7 @@ public protocol InsiderDelegate: class {
      
      - returns: return params
      */
-    func insider(insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary?
+    optional func insider(insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary?
     
     /**
      This method will be called on delegate for "notification" action
@@ -173,7 +173,7 @@ final public class Insider: NSObject {
             return nil
         }
         
-        return delegate.insider(self, invokeMethodForResponseWithParams: params)
+        return delegate.insider!(self, invokeMethodForResponseWithParams: params)
     }
     
     func sendLocalNotificationWithParams(params: JSONDictionary?) {

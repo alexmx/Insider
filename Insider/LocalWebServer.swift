@@ -108,7 +108,7 @@ final class LocalWebServer: NSObject {
             }
         } else {
             if let encodedParams = request.arguments {
-                params = encodedParams as? JSONDictionary
+                params = encodedParams
             }
         }
         

@@ -64,7 +64,7 @@ NSString * kLogMessageNotificationKey = @"com.alexmx.notificationLogMessage";
     [self postLogNotificationWithObject:params];
 }
 
-- (id)insider:(Insider *)insider invokeMethodForResponseWithParams:(id)params
+- (NSDictionary *)insider:(Insider *)insider invokeMethodForResponseWithParams:(NSDictionary *)params
 {
     [self postLogNotificationWithObject:params];
     return @{@"test": @YES};
@@ -75,7 +75,7 @@ NSString * kLogMessageNotificationKey = @"com.alexmx.notificationLogMessage";
     [self postLogNotificationWithObject:params];
 }
 
-- (void)insider:(Insider *)insider didReturnSystemInfo:(NSDictionary<NSString *,id> *)systemInfo
+- (void)insider:(Insider *)insider didReturnSystemInfo:(NSDictionary * _Nullable)systemInfo
 {
     [self postLogNotificationWithObject:systemInfo];
 }
