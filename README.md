@@ -57,17 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        
-        let alertController = UIAlertController(
-            title: "Insider Demo",
-            message: "Did receive Push Notification with payload: \(userInfo.description)",
-            preferredStyle: .Alert
-        )
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in }
-        alertController.addAction(cancelAction)
-        
-        self.window?.rootViewController!.presentViewController(alertController, animated: true) {}
+        // Process push notification
   }
 }
 
@@ -81,6 +71,41 @@ extension AppDelegate: InsiderDelegate {
 
 ```
 In order to test this example run `InsiderUseCases` application target, after go to `scripts` directory and run `invoke_method.rb` script.
+
+#### Use case #2: Simulate app invocation using a custom scheme
+
+```swift
+
+import Insider
+
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        Insider.sharedInstance.startWithDelegate(self)
+        
+        return true
+  }
+  
+  func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        // Process custom scheme invocation
+        return true
+    }
+}
+
+extension AppDelegate: InsiderDelegate {
+
+  func insider(insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary? {
+        // Simulate app invokation using a custom scheme
+        let url = NSURL(string: "insiderDemo://somescheme/params")
+        let response = application(UIApplication.sharedApplication(), handleOpenURL: url!)
+        
+        return ["response" : response]
+    }
+}
+
+```
+In order to test this example run `InsiderUseCases` application target, after go to `scripts` directory and run `invoke_method_with_response.rb` script.
 
 ## License
 This project is licensed under the terms of the MIT license. See the LICENSE file.
