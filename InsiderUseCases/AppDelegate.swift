@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
         // Process custom scheme invokation
-        print(url);
+        print(url)
         return true
     }
 
@@ -70,7 +70,7 @@ extension AppDelegate: InsiderDelegate {
     
     func insider(insider: Insider, invokeMethodWithParams params: JSONDictionary?) {
         // Simulate push notification
-        application(UIApplication.sharedApplication(), didReceiveRemoteNotification: params!);
+        application(UIApplication.sharedApplication(), didReceiveRemoteNotification: params!)
     }
     
     func insider(insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary? {
