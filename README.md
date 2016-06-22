@@ -4,16 +4,16 @@
 [![Twitter: @amaimescu](https://img.shields.io/badge/contact-%40amaimescu-blue.svg)](https://twitter.com/amaimescu)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/alexmx/ios-ui-automation-overview/blob/master/LICENSE)
 
-Insider is a **testing utility framework** which sets an HTTP communication bridge between the app and testing environments like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc. Some real use cases where Insider could be usefull:
+Insider is a **testing utility framework** which sets an HTTP client-sever communication channel between your app and testing environments like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc. Some real use cases where Insider can be useful as part of the automation testing process:
 * Set a particular state for the app during the test scenario;
 * Simulate push notifications;
-* Simulate app invokation using custom schemes / universal links;
-* Simulate backend responses;
-* Manage files/directories in application sandbox;
+* Simulate app invocation using custom schemes / universal links;
+* Simulate back-end responses;
+* Manage files / directories in application sandbox;
 * Collect metrics from the app during test execution (CPU, memory, etc.);
 * etc.
 
-Insider runs an HTTP server inside the application and listens for commands. By default Insider runs on `http://localhost:8080`. Commands represent simple HTTP request: `http://localhost:8080/<command>`
+Insider runs an HTTP server inside the application and listens for commands. By default Insider runs on `http://localhost:8080`. A command represents a simple HTTP request: `http://localhost:8080/<command>`
 
 ## Features
 
@@ -23,9 +23,8 @@ Insider runs an HTTP server inside the application and listens for commands. By 
 📎 | Invoke a method on a registered **delegate** with given parameters and wait for response; | `/invokeForResponse` | POST
 📢 | Send local notifications through **NSNotificationCenter** with given parameters; | `/notification` | POST
 📱 | Get device system state information (CPU, memory, IP address, etc); | `/systemInfo` | GET
-:floppy_disk: |  Manage files/directories in application sandbox (Documents, Library, tmp); | `/documents/<command>`<br /> `/library/<command>`<br /> `/tmp/<command>` | See the table below
+:floppy_disk: |  Manage files / directories in application sandbox (Documents, Library, tmp); | `/documents/<command>`<br /> `/library/<command>`<br /> `/tmp/<command>` | See the table below
 
-In the `scripts` directory can be found some sample ruby scripts which test the built-in features.
 Supported commands for file managing feature:
 
  File Managing Commands | HTTP Method 
@@ -36,6 +35,8 @@ Upload items: `/<directory>/upload`  | POST
 Move items: `/<directory>/move`  | POST
 Delete items: `/<directory>/delete`  | POST
 Create folder: `/<directory>/create`  | POST
+
+In the `scripts` directory can be found some sample ruby scripts which show the built-in features in action.
 
 ## Installation
 
@@ -77,7 +78,7 @@ extension AppDelegate: InsiderDelegate {
 
   func insider(insider: Insider, invokeMethodWithParams params: JSONDictionary?) {
         // Simulate push notification
-        self .application(UIApplication.sharedApplication(), didReceiveRemoteNotification: params!);
+        self.application(UIApplication.sharedApplication(), didReceiveRemoteNotification: params!);
   }
 }
 
@@ -108,7 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: InsiderDelegate {
 
   func insider(insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary? {
-        // Simulate app invokation using a custom scheme
+        // Simulate app invocation using a custom scheme
         let url = NSURL(string: "insiderDemo://hello/params")
         let response = application(UIApplication.sharedApplication(), handleOpenURL: url!)
         
@@ -160,7 +161,7 @@ There are 3 directories supported in application sandbox:
 * **Library**: `http://localhost:8080/library`
 * **tmp**: `http://localhost:8080/tmp`
 
-You can create new folders. Upload, download, move, remove files/folders from application sandbox. 
+You can create new folders. Upload, download, move, remove files / folders from application sandbox. 
 
 ## License
 This project is licensed under the terms of the MIT license. See the LICENSE file.
