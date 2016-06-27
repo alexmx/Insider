@@ -52,7 +52,7 @@ If you are using **Carthage**, you can always use it to build the library within
 github "alexmx/Insider"
 ```
 
-#### CocoaPods installation
+#### CocoaPods
 
 If you are using **CocoaPods**, you can as well use it to integrate the library by adding the following lines to your `Podfile`.
 
