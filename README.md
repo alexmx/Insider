@@ -42,7 +42,7 @@ In the `scripts` directory can be found some sample ruby scripts which show the 
 
 #### Manual installation
 
-In order to include the **Insider** library into your project, you need to build a dynamic framework from provided source code and include it into your project; however you can get a prebuilt version of the framework from the [release page](https://github.com/alexmx/Insider/releases).
+In order to include the **Insider** library into your project, you need to build a dynamic framework from provided source code and include it into your project, or inlcude the entire **Insider** library as sub-project by copying it to your project directory or include as Git submodule.
 
 #### Carthage
 
@@ -50,6 +50,20 @@ If you are using **Carthage**, you can always use it to build the library within
 
 ```
 github "alexmx/Insider"
+```
+
+#### CocoaPods installation
+
+In the case you use CocoaPods*, you can as well use it to integrate the library with the next script. 
+
+```ruby
+platform :ios, '8.0'
+use_frameworks!
+
+target 'YourAppTarget' do
+    pod "Insider", :git => 'git@github.com:alexmx/Insider.git'
+end
+
 ```
 
 ## Usage
