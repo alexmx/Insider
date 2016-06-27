@@ -54,7 +54,7 @@ github "alexmx/Insider"
 
 #### CocoaPods installation
 
-In the case you use CocoaPods*, you can as well use it to integrate the library with the next script. 
+If you are using **CocoaPods**, you can as well use it to integrate the library by adding the following lines to your `Podfile`.
 
 ```ruby
 platform :ios, '8.0'
