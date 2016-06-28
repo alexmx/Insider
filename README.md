@@ -166,9 +166,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 ```
-As it is a built-in feature there is no need to set a delegate for Insider in this case. In order to test this example run `InsiderDemo` application target, and open [http://localhost:8080/documents](http://localhost:8080/documents) url in your browser.
-
-![Insider](/assets/sandbox.png)
+As it is a built-in feature there is no need to set a delegate for Insider in this case. 
 
 There are 3 directories supported in application sandbox:
 * **Documents**: `http://localhost:8080/documents`
@@ -176,6 +174,12 @@ There are 3 directories supported in application sandbox:
 * **tmp**: `http://localhost:8080/tmp`
 
 You can create new folders. Upload, download, move, remove files / folders from application sandbox. 
+
+In order to test this example run `InsiderDemo` application target, and open [http://localhost:8080/documents](http://localhost:8080/documents), [http://localhost:8080/library](http://localhost:8080/library) or [http://localhost:8080/tmp](http://localhost:8080/tmp) url in your browser. You will see the files which are in your application sandbox.
+
+![Insider](/assets/sandbox.png)
+
+If you need to use the sandbox files managing API in your automation scripts please check **File Managing Commands** section above.
 
 ## License
 This project is licensed under the terms of the MIT license. See the LICENSE file.
