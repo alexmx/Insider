@@ -181,5 +181,10 @@ In order to test this example run `InsiderDemo` application target, and open [ht
 
 If you need to use the sandbox files managing API in your automation scripts please check **File Managing Commands** section above.
 
+## Credits
+**Insider** uses these amazing libaries under the hood:
+* [GCDWebServer](https://github.com/swisspol/GCDWebServer)
+* [iOS-System-Services](https://github.com/Shmoopi/iOS-System-Services)
+
 ## License
 This project is licensed under the terms of the MIT license. See the LICENSE file.
