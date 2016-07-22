@@ -39,6 +39,8 @@ Create folder: `/<directory>/create`  | POST
 
 In the `scripts` directory can be found some sample ruby scripts which show the built-in features in action.
 
+Check out the [API reference](http://alexmx.github.io/Insider/) for more information.
+
 ## Installation
 
 #### Manual installation
