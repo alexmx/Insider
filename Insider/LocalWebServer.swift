@@ -10,7 +10,6 @@ import Foundation
 
 typealias LocalWebServerRequestHandler = (JSONDictionary?) -> (LocalWebServerResponse)
 
-
 enum LocalWebServerRequestMethod: String {
     case GET = "GET"
     case POST = "POST"
@@ -18,35 +17,31 @@ enum LocalWebServerRequestMethod: String {
     case DELETE = "DELETE"
 }
 
-
 protocol GCDWebServerDataResponseConvertible {
     
     func convertedToGCDWebServerDataResponse() -> GCDWebServerDataResponse
 }
 
-
 protocol LocalWebServerDelegate: class {
     
-    func localWebServer(server: LocalWebServer, didCreateDirectoryAtPath path: String)
-    func localWebServer(server: LocalWebServer, didDeleteItemAtPath path: String)
-    func localWebServer(server: LocalWebServer, didDownloadFileAtPath path: String)
-    func localWebServer(server: LocalWebServer, didMoveItemFromPath fromPath: String, toPath: String)
-    func localWebServer(server: LocalWebServer, didUploadFileAtPath path: String)
+    func localWebServer(_ server: LocalWebServer, didCreateDirectoryAtPath path: String)
+    func localWebServer(_ server: LocalWebServer, didDeleteItemAtPath path: String)
+    func localWebServer(_ server: LocalWebServer, didDownloadFileAtPath path: String)
+    func localWebServer(_ server: LocalWebServer, didMoveItemFromPath fromPath: String, toPath: String)
+    func localWebServer(_ server: LocalWebServer, didUploadFileAtPath path: String)
 }
-
 
 extension LocalWebServerResponse: GCDWebServerDataResponseConvertible {
     
     func convertedToGCDWebServerDataResponse() -> GCDWebServerDataResponse {
         
         if let jsonObject = self.response {
-            return GCDWebServerDataResponse(JSONObject: jsonObject)
+            return GCDWebServerDataResponse(jsonObject: jsonObject)
         } else {
             return GCDWebServerDataResponse(statusCode: self.statusCode.rawValue)
         }
     }
 }
-
 
 final class LocalWebServer: NSObject {
     
@@ -54,7 +49,7 @@ final class LocalWebServer: NSObject {
         static let defaultPort: UInt = 8080
     }
     
-    private let localWebServer = GCDWebUploader()
+    fileprivate let localWebServer = GCDWebUploader()
     
     weak var delegate: LocalWebServerDelegate?
     
@@ -62,22 +57,22 @@ final class LocalWebServer: NSObject {
         startWithPort(Constants.defaultPort)
     }
     
-    func startWithPort(port: UInt) {
-        localWebServer.delegate = self
-        localWebServer.startWithPort(port, bonjourName: nil)
+    func startWithPort(_ port: UInt) {
+        localWebServer?.delegate = self
+        localWebServer?.start(withPort: port, bonjourName: nil)
     }
     
     func stop() {
-        localWebServer.stop()
+        localWebServer?.stop()
     }
     
-    func addSandboxDirectory(path: String, endpoint: String) {
-        localWebServer.addDirectory(path, endpoint: endpoint)
+    func addSandboxDirectory(_ path: String, endpoint: String) {
+        localWebServer?.addDirectory(path, endpoint: endpoint)
     }
     
-    func addHandlerForMethod(method: LocalWebServerRequestMethod, path: String, handler: LocalWebServerRequestHandler) {
+    func addHandlerForMethod(_ method: LocalWebServerRequestMethod, path: String, handler: @escaping LocalWebServerRequestHandler) {
         
-        localWebServer.addHandlerForMethod(method.rawValue, path: path, requestClass: GCDWebServerURLEncodedFormRequest.self) {
+        localWebServer?.addHandler(forMethod: method.rawValue, path: path, request: GCDWebServerURLEncodedFormRequest.self) {
             (request) -> GCDWebServerResponse! in
             
             let params = self.paramsForRequest(request as? GCDWebServerURLEncodedFormRequest)
@@ -90,25 +85,25 @@ final class LocalWebServer: NSObject {
         }
     }
     
-    func executeOnMainQueue(closure: (() -> ())?) {
-        dispatch_sync(dispatch_get_main_queue()) { closure?() }
+    func executeOnMainQueue(_ closure: (() -> ())?) {
+        DispatchQueue.main.sync { closure?() }
     }
     
-    func paramsForRequest(request: GCDWebServerURLEncodedFormRequest?) -> JSONDictionary? {
-        guard let request = request where LocalWebServerRequestMethod(rawValue: request.method) != .GET else {
+    func paramsForRequest(_ request: GCDWebServerURLEncodedFormRequest?) -> JSONDictionary? {
+        guard let request = request, LocalWebServerRequestMethod(rawValue: request.method) != .GET else {
             return nil
         }
         
         var params: JSONDictionary?
         let contentType = request.contentType
         let jsonTypes = ["application/json", "text/json", "text/javascript"]
-        if jsonTypes.contains(contentType) {
+        if jsonTypes.contains(contentType!) {
             if let json = request.jsonObject {
                 params = json as? JSONDictionary
             }
         } else {
             if let encodedParams = request.arguments {
-                params = encodedParams
+                params = encodedParams as JSONDictionary?
             }
         }
         
@@ -116,26 +111,25 @@ final class LocalWebServer: NSObject {
     }
 }
 
-
 extension LocalWebServer: GCDWebUploaderDelegate {
     
-    func webUploader(uploader: GCDWebUploader!, didCreateDirectoryAtPath path: String!) {
+    func webUploader(_ uploader: GCDWebUploader!, didCreateDirectoryAtPath path: String!) {
         delegate?.localWebServer(self, didCreateDirectoryAtPath: path)
     }
     
-    func webUploader(uploader: GCDWebUploader!, didDeleteItemAtPath path: String!) {
+    func webUploader(_ uploader: GCDWebUploader!, didDeleteItemAtPath path: String!) {
         delegate?.localWebServer(self, didDeleteItemAtPath: path)
     }
     
-    func webUploader(uploader: GCDWebUploader!, didDownloadFileAtPath path: String!) {
+    func webUploader(_ uploader: GCDWebUploader!, didDownloadFileAtPath path: String!) {
         delegate?.localWebServer(self, didDownloadFileAtPath: path)
     }
     
-    func webUploader(uploader: GCDWebUploader!, didMoveItemFromPath fromPath: String!, toPath: String!) {
+    func webUploader(_ uploader: GCDWebUploader!, didMoveItemFromPath fromPath: String!, toPath: String!) {
         delegate?.localWebServer(self, didMoveItemFromPath: fromPath, toPath: toPath)
     }
     
-    func webUploader(uploader: GCDWebUploader!, didUploadFileAtPath path: String!) {
+    func webUploader(_ uploader: GCDWebUploader!, didUploadFileAtPath path: String!) {
         delegate?.localWebServer(self, didUploadFileAtPath: path)
     }
 }

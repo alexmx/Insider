@@ -9,8 +9,8 @@
 import Foundation
 
 enum LocalWebServerResponseStatusCode: Int {
-    case Success = 200
-    case NotFound = 404
+    case success = 200
+    case notFound = 404
 }
 
 final class LocalWebServerResponse {
@@ -23,7 +23,7 @@ final class LocalWebServerResponse {
     }
     
     init(response: JSONDictionary?) {
-        self.statusCode = .Success
+        self.statusCode = .success
         self.response = response
     }
 }

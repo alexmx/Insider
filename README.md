@@ -79,23 +79,23 @@ import Insider
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        Insider.sharedInstance.startWithDelegate(self)
+        Insider.shared.start(withDelegate: self)
         
         return true
   }
   
-  func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        // Process push notification
+  func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) { 
+  		// Process push notification 
   }
 }
 
 extension AppDelegate: InsiderDelegate {
 
-  func insider(insider: Insider, invokeMethodWithParams params: JSONDictionary?) {
+  func insider(_ insider: Insider, invokeMethodWithParams params: JSONDictionary?) {
         // Simulate push notification
-        self.application(UIApplication.sharedApplication(), didReceiveRemoteNotification: params!);
+        application(UIApplication.shared, didReceiveRemoteNotification: params!)
   }
 }
 
@@ -110,28 +110,28 @@ import Insider
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        Insider.sharedInstance.startWithDelegate(self)
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        Insider.shared.start(withDelegate: self)
         
         return true
   }
   
-  func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+  func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
         // Process custom scheme invocation
         return true
-    }
+  }
 }
 
 extension AppDelegate: InsiderDelegate {
 
-  func insider(insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary? {
-        // Simulate app invocation using a custom scheme
-        let url = NSURL(string: "insiderDemo://hello/params")
-        let response = application(UIApplication.sharedApplication(), handleOpenURL: url!)
+  func insider(_ insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary? {
+        // Simulate app invokation using a custom scheme
+        let url = URL(string: "insiderDemo://hello/params")
+        let response = application(UIApplication.shared, handleOpen: url!)
         
-        return ["response" : response]
-    }
+        return ["response" as NSObject : response as AnyObject]
+  }
 }
 
 ```
@@ -144,9 +144,9 @@ import Insider
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        Insider.sharedInstance.start()
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        Insider.shared.start()
         
         return true
   }
@@ -161,9 +161,9 @@ import Insider
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        Insider.sharedInstance.start()
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        Insider.shared.start()
         
         return true
   }

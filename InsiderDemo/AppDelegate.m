@@ -23,8 +23,7 @@ NSString * kLogMessageNotificationKey = @"com.alexmx.notificationLogMessage";
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(insiderNotification:) name:[Insider insiderNotificationKey] object:nil];
     
-    [[Insider sharedInstance] setDelegate:self];
-    [[Insider sharedInstance] start];
+    [[Insider shared] startWithDelegate:self];
     
     return YES;
 }
