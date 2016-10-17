@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Insider  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="Insider  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">Insider Docs</a> (88% documented)</p>
+        <p class="header-right"><a href="https://github.com/alexmx/Insider"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">Insider Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Insider  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/Insider.html">Insider</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/InsiderDelegate.html">InsiderDelegate</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <a href='#insider' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='insider'>Insider</h1>
+
+<p><a href="https://travis-ci.org/alexmx/Insider"><img src="https://travis-ci.org/alexmx/Insider.svg?branch=master" alt="Build Status"></a>
+<a href="https://twitter.com/amaimescu"><img src="https://img.shields.io/badge/contact-%40amaimescu-blue.svg" alt="Twitter: @amaimescu"></a>
+<a href="https://github.com/alexmx/ios-ui-automation-overview/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat" alt="License"></a></p>
+
+<p>Insider is a <strong>testing utility framework</strong> which sets an HTTP client-sever communication channel between your app and testing environments like <a href="http://appium.io/">Appium</a>, <a href="http://calaba.sh/">Calabash</a>, <a href="http://www.testingwithfrank.com/">Frank</a>, etc. Some real use cases where Insider can be useful as part of the automation testing process:</p>
+
+<ul>
+<li>Set a particular state for the app during the test scenario;</li>
+<li>Simulate push notifications;</li>
+<li>Simulate app invocation using custom schemes / universal links;</li>
+<li>Simulate back-end responses;</li>
+<li>Manage files / directories in application sandbox;</li>
+<li>Collect metrics from the app during test execution (CPU, memory, etc.);</li>
+<li>etc.</li>
+</ul>
+
+<p>Insider runs an HTTP server inside the application and listens for commands. By default Insider runs on <code>http://localhost:8080</code>. A command represents a simple HTTP request: <code>http://localhost:8080/&lt;command&gt;</code></p>
+<a href='#features' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='features'>Features</h2>
+
+<table><thead>
+<tr>
+<th></th>
+<th>Built-in Features</th>
+<th>Commands</th>
+<th>HTTP Method</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>💡</td>
+<td>Invoke a method on a registered <strong>delegate</strong> with given parameters;</td>
+<td><code>/invoke</code></td>
+<td>POST</td>
+</tr>
+<tr>
+<td>📎</td>
+<td>Invoke a method on a registered <strong>delegate</strong> with given parameters and wait for response;</td>
+<td><code>/invokeForResponse</code></td>
+<td>POST</td>
+</tr>
+<tr>
+<td>📢</td>
+<td>Send local notifications through <strong>NSNotificationCenter</strong> with given parameters;</td>
+<td><code>/notification</code></td>
+<td>POST</td>
+</tr>
+<tr>
+<td>📱</td>
+<td>Get device system state information (CPU, memory, IP address, etc);</td>
+<td><code>/systemInfo</code></td>
+<td>GET</td>
+</tr>
+<tr>
+<td>:floppy_disk:</td>
+<td>Manage files / directories in application sandbox (Documents, Library, tmp);</td>
+<td><code>/documents/&lt;command&gt;</code><br /> <code>/library/&lt;command&gt;</code><br /> <code>/tmp/&lt;command&gt;</code></td>
+<td>See the table below</td>
+</tr>
+</tbody></table>
+
+<p>Supported commands for file managing feature:</p>
+
+<table><thead>
+<tr>
+<th>File Managing Commands</th>
+<th>HTTP Method</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>List items: <code>/&lt;directory&gt;/list</code></td>
+<td>GET</td>
+</tr>
+<tr>
+<td>Download items: <code>/&lt;directory&gt;/download</code></td>
+<td>GET</td>
+</tr>
+<tr>
+<td>Upload items: <code>/&lt;directory&gt;/upload</code></td>
+<td>POST</td>
+</tr>
+<tr>
+<td>Move items: <code>/&lt;directory&gt;/move</code></td>
+<td>POST</td>
+</tr>
+<tr>
+<td>Delete items: <code>/&lt;directory&gt;/delete</code></td>
+<td>POST</td>
+</tr>
+<tr>
+<td>Create folder: <code>/&lt;directory&gt;/create</code></td>
+<td>POST</td>
+</tr>
+</tbody></table>
+
+<p>In the <code>scripts</code> directory can be found some sample ruby scripts which show the built-in features in action.</p>
+
+<p>Check out the <a href="http://alexmx.github.io/Insider/">API reference</a> for more information.</p>
+<a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
+<a href='#manual-installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='manual-installation'>Manual installation</h4>
+
+<p>In order to include the <strong>Insider</strong> library into your project, you need to build a dynamic framework from provided source code and include it into your project, or inlcude the entire <strong>Insider</strong> library as sub-project by copying it to your project directory or include as Git submodule.</p>
+<a href='#carthage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='carthage'>Carthage</h4>
+
+<p>If you are using <strong>Carthage</strong>, you can always use it to build the library within your workspace by adding the line below to your <code>Cartfile</code>.</p>
+<pre class="highlight plaintext"><code>github "alexmx/Insider"
+</code></pre>
+<a href='#cocoapods' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='cocoapods'>CocoaPods</h4>
+
+<p>If you are using <strong>CocoaPods</strong>, you can as well use it to integrate the library by adding the following lines to your <code>Podfile</code>.</p>
+<pre class="highlight ruby"><code><span class="n">platform</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s1">'8.0'</span>
+<span class="n">use_frameworks!</span>
+
+<span class="n">target</span> <span class="s1">'YourAppTarget'</span> <span class="k">do</span>
+    <span class="n">pod</span> <span class="s2">"Insider"</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s1">'git@github.com:alexmx/Insider.git'</span>
+<span class="k">end</span>
+
+</code></pre>
+<a href='#usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='usage'>Usage</h2>
+<a href='#use-case-1-simulate-push-notifications' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='use-case-1-simulate-push-notifications'>Use case #1: Simulate Push Notifications</h4>
+<pre class="highlight swift"><code>
+<span class="kd">import</span> <span class="kt">Insider</span>
+
+<span class="kd">class</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">,</span> <span class="kt">UIApplicationDelegate</span> <span class="p">{</span>
+
+  <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+
+        <span class="kt">Insider</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">start</span><span class="p">(</span><span class="nv">withDelegate</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">true</span>
+  <span class="p">}</span>
+
+  <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didReceiveRemoteNotification</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">])</span> <span class="p">{</span> 
+        <span class="c1">// Process push notification </span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">InsiderDelegate</span> <span class="p">{</span>
+
+  <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt">Insider</span><span class="p">,</span> <span class="n">invokeMethodWithParams</span> <span class="nv">params</span><span class="p">:</span> <span class="kt">JSONDictionary</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="c1">// Simulate push notification</span>
+        <span class="nf">application</span><span class="p">(</span><span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="p">,</span> <span class="nv">didReceiveRemoteNotification</span><span class="p">:</span> <span class="n">params</span><span class="o">!</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre>
+
+<p>In order to test this example run <code>InsiderUseCases</code> application target, after go to <code>scripts</code> directory and run <code>invoke_method.rb</code> script.</p>
+<a href='#use-case-2-simulate-app-invocation-using-a-custom-scheme' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='use-case-2-simulate-app-invocation-using-a-custom-scheme'>Use case #2: Simulate app invocation using a custom scheme</h4>
+<pre class="highlight swift"><code>
+<span class="kd">import</span> <span class="kt">Insider</span>
+
+<span class="kd">class</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">,</span> <span class="kt">UIApplicationDelegate</span> <span class="p">{</span>
+
+  <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+
+        <span class="kt">Insider</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">start</span><span class="p">(</span><span class="nv">withDelegate</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">true</span>
+  <span class="p">}</span>
+
+  <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">handleOpen</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="c1">// Process custom scheme invocation</span>
+        <span class="k">return</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">InsiderDelegate</span> <span class="p">{</span>
+
+  <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt">Insider</span><span class="p">,</span> <span class="n">invokeMethodForResponseWithParams</span> <span class="nv">params</span><span class="p">:</span> <span class="kt">JSONDictionary</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">JSONDictionary</span><span class="p">?</span> <span class="p">{</span>
+        <span class="c1">// Simulate app invokation using a custom scheme</span>
+        <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"insiderDemo://hello/params"</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="nf">application</span><span class="p">(</span><span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="p">,</span> <span class="nv">handleOpen</span><span class="p">:</span> <span class="n">url</span><span class="o">!</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="s">"response"</span> <span class="k">as</span> <span class="kt">NSObject</span> <span class="p">:</span> <span class="n">response</span> <span class="k">as</span> <span class="kt">AnyObject</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre>
+
+<p>In order to test this example run <code>InsiderUseCases</code> application target, after go to <code>scripts</code> directory and run <code>invoke_method_with_response.rb</code> script.</p>
+<a href='#use-case-3-get-application-system-information-during-test-execution' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='use-case-3-get-application-system-information-during-test-execution'>Use case #3: Get application system information during test execution</h4>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Insider</span>
+
+<span class="kd">class</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">,</span> <span class="kt">UIApplicationDelegate</span> <span class="p">{</span>
+
+  <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+
+        <span class="kt">Insider</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">start</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>As it is a built-in feature there is no need to set a delegate for Insider in this case. In order to test this example run <code>InsiderDemo</code> application target, after go to <code>scripts</code> directory and run <code>system_info.rb</code> script.</p>
+<a href='#use-case-4-add-files-to-documents-folder-in-application-sandbox' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='use-case-4-add-files-to-documents-folder-in-application-sandbox'>Use case #4: Add files to Documents folder in application sandbox.</h4>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Insider</span>
+
+<span class="kd">class</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">,</span> <span class="kt">UIApplicationDelegate</span> <span class="p">{</span>
+
+  <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+
+        <span class="kt">Insider</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">start</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>As it is a built-in feature there is no need to set a delegate for Insider in this case. </p>
+
+<p>There are 3 directories supported in application sandbox:
+* <strong>Documents</strong>: <code>http://localhost:8080/documents</code>
+* <strong>Library</strong>: <code>http://localhost:8080/library</code>
+* <strong>tmp</strong>: <code>http://localhost:8080/tmp</code></p>
+
+<p>You can create new folders. Upload, download, move, remove files / folders from application sandbox. </p>
+
+<p>In order to test this example run <code>InsiderDemo</code> application target, and open <a href="http://localhost:8080/documents">http://localhost:8080/documents</a>, <a href="http://localhost:8080/library">http://localhost:8080/library</a> or <a href="http://localhost:8080/tmp">http://localhost:8080/tmp</a> url in your browser. You will see the files which are in your application sandbox.</p>
+
+<p><img src="/assets/sandbox.png" alt="Insider"></p>
+
+<p>If you need to use the sandbox files managing API in your automation scripts please check <strong>File Managing Commands</strong> section above.</p>
+<a href='#credits' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='credits'>Credits</h2>
+
+<p><strong>Insider</strong> uses these amazing libaries under the hood:
+* <a href="https://github.com/swisspol/GCDWebServer">GCDWebServer</a>
+* <a href="https://github.com/Shmoopi/iOS-System-Services">iOS-System-Services</a></p>
+<a href='#license' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='license'>License</h2>
+
+<p>This project is licensed under the terms of the MIT license. See the LICENSE file.</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://github.com/alexmx/Insider" target="_blank" rel="external">Alex Maimescu</a>. All rights reserved. (Last updated: 2016-10-17)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
