@@ -18,8 +18,8 @@ Insider runs an HTTP server inside the application and listens for commands. By 
 
 ## Features
 
-  | Built-in Features | Commands | HTTP Method
------------- | ------------- | -------------
+|  | Built-in Features | Commands | HTTP Method
+------------ | ------------- | ------------- | -------------
 💡 | Invoke a method on a registered **delegate** with given parameters; | `/invoke` | POST
 📎 | Invoke a method on a registered **delegate** with given parameters and wait for response; | `/invokeForResponse` | POST
 📢 | Send local notifications through **NSNotificationCenter** with given parameters; | `/notification` | POST
