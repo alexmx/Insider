@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             preferredStyle: .alert
         )
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(cancelAction)
         
         self.window?.rootViewController!.present(alertController, animated: true) {}
@@ -77,7 +77,7 @@ extension AppDelegate: InsiderDelegate {
         let url = URL(string: "insiderDemo://hello/params")
         let response = application(UIApplication.shared, handleOpen: url!)
         
-        return ["response" as NSObject : response as AnyObject]
+        return ["response" as NSObject: response as AnyObject]
     }
 }
 

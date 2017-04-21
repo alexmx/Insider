@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public typealias JSONDictionary = Dictionary<NSObject, AnyObject>
+public typealias JSONDictionary = [NSObject: AnyObject]
 
 @objc
 public protocol InsiderDelegate: class {
@@ -151,7 +151,7 @@ final public class Insider: NSObject {
             return LocalWebServerResponse(statusCode: .success)
         }
         
-        server.addHandlerForMethod(.GET, path: Endpoints.systemInfo) { (requestParams) -> (LocalWebServerResponse) in
+        server.addHandlerForMethod(.GET, path: Endpoints.systemInfo) { _ in
             return LocalWebServerResponse(response: self.getSystemInfo())
         }
     }
@@ -185,11 +185,11 @@ final public class Insider: NSObject {
     }
     
     func getSystemInfo() -> JSONDictionary? {
+        let systemInfo = self.deviceInfoService.allSystemInfo
+        
         defer {
             delegate?.insider?(self, didReturnSystemInfo: systemInfo)
         }
-        
-        let systemInfo = self.deviceInfoService.allSystemInfo
         
         return systemInfo
     }

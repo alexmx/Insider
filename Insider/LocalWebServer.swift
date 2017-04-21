@@ -11,10 +11,10 @@ import Foundation
 typealias LocalWebServerRequestHandler = (JSONDictionary?) -> (LocalWebServerResponse)
 
 enum LocalWebServerRequestMethod: String {
-    case GET = "GET"
-    case POST = "POST"
-    case PUT = "PUT"
-    case DELETE = "DELETE"
+    case GET
+    case POST
+    case PUT
+    case DELETE
 }
 
 protocol GCDWebServerDataResponseConvertible {
@@ -72,8 +72,9 @@ final class LocalWebServer: NSObject {
     
     func addHandlerForMethod(_ method: LocalWebServerRequestMethod, path: String, handler: @escaping LocalWebServerRequestHandler) {
         
-        localWebServer?.addHandler(forMethod: method.rawValue, path: path, request: GCDWebServerURLEncodedFormRequest.self) {
-            (request) -> GCDWebServerResponse! in
+        localWebServer?.addHandler(forMethod: method.rawValue,
+                                   path: path,
+                                   request: GCDWebServerURLEncodedFormRequest.self) { (request) -> GCDWebServerResponse! in
             
             let params = self.paramsForRequest(request as? GCDWebServerURLEncodedFormRequest)
             var response: LocalWebServerResponse?
@@ -85,7 +86,7 @@ final class LocalWebServer: NSObject {
         }
     }
     
-    func executeOnMainQueue(_ closure: (() -> ())?) {
+    func executeOnMainQueue(_ closure: (() -> Void)?) {
         DispatchQueue.main.sync { closure?() }
     }
     
