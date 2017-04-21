@@ -64,7 +64,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'YourAppTarget' do
-    pod "Insider", :git => 'git@github.com:alexmx/Insider.git'
+    pod "Insider"
 end
 
 ```
