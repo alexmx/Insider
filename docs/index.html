@@ -14,6 +14,7 @@
     <header>
       <div class="content-wrapper">
         <p><a href="index.html">Insider Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/alexmx/Insider"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -57,7 +58,7 @@
 <p>Insider is an utility framework which sets a <strong>backdoor</strong> into your app for testing tools like <a href="http://appium.io/">Appium</a>, <a href="http://calaba.sh/">Calabash</a>, <a href="http://www.testingwithfrank.com/">Frank</a>, etc.</p>
 <h2 id='why-do-i-need-this' class='heading'>Why do I need this?</h2>
 
-<p>There are many scenarios which should be covered during the automation testing, but are hard to do because the testing environment is isolated from the tested app:</p>
+<p>There are many scenarios which are hard to cover during the automation testing because the testing environment is isolated from the tested app:</p>
 
 <ul>
 <li>Set a particular state for the app during the test scenario;</li>
@@ -69,7 +70,9 @@
 <li>etc.</li>
 </ul>
 
-<p>Insider runs an HTTP server inside the application and listens for commands (RPCs). By default Insider runs on <code>http://localhost:8080</code>. A command represents a simple HTTP request: <code>http://localhost:8080/&lt;command&gt;</code>. You can pre-configure your app to simulate an action when it receives such a remote command.</p>
+<p>Insider runs an HTTP server inside the application and listens for commands (RPCs). By default, Insider runs on <code>http://localhost:8080</code>. </p>
+
+<p>A command represents a simple HTTP request: <code>http://localhost:8080/&lt;command&gt;</code>. You can pre-configure your app to simulate an action when it receives such a remote command.</p>
 <h2 id='features' class='heading'>Features</h2>
 
 <table><thead>
@@ -146,7 +149,7 @@
 </tr>
 </tbody></table>
 
-<p>In the <code>scripts</code> directory can be found some sample ruby scripts which show the built-in features in action.</p>
+<p>In the <code>scripts</code> directory can be found sample ruby scripts which show the built-in features in action.</p>
 
 <p>Check out the <a href="http://alexmx.github.io/Insider/">API reference</a> for more information.</p>
 <h2 id='installation' class='heading'>Installation</h2>
@@ -178,27 +181,29 @@
 
   <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
 
+    <span class="c1">// Launch the Isider with the given delegate</span>
         <span class="kt">Insider</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">start</span><span class="p">(</span><span class="nv">withDelegate</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="kc">true</span>
   <span class="p">}</span>
 
   <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didReceiveRemoteNotification</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">])</span> <span class="p">{</span> 
-        <span class="c1">// Process push notification </span>
+    <span class="c1">// Process push notification </span>
   <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="kd">extension</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">InsiderDelegate</span> <span class="p">{</span>
 
-  <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt">Insider</span><span class="p">,</span> <span class="n">invokeMethodWithParams</span> <span class="nv">params</span><span class="p">:</span> <span class="kt">JSONDictionary</span><span class="p">?)</span> <span class="p">{</span>
+  <span class="c1">// This delegate method is invoked when a remote message is sent to the app</span>
+  <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt">Insider</span><span class="p">,</span> <span class="n">didReceiveRemote</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">InsiderMessage</span><span class="p">?)</span> <span class="p">{</span>
         <span class="c1">// Simulate push notification</span>
-        <span class="nf">application</span><span class="p">(</span><span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="p">,</span> <span class="nv">didReceiveRemoteNotification</span><span class="p">:</span> <span class="n">params</span><span class="o">!</span><span class="p">)</span>
+        <span class="nf">application</span><span class="p">(</span><span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="p">,</span> <span class="nv">didReceiveRemoteNotification</span><span class="p">:</span> <span class="n">message</span><span class="o">!</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
 </code></pre>
 
-<p>In order to test this example run <code>InsiderUseCases</code> application target, after go to <code>scripts</code> directory and run <code>invoke_method.rb</code> script.</p>
+<p>In order to test this example run <code>InsiderDemo</code> application target, after go to <code>scripts</code> directory and run <code>send_message.rb</code> script.</p>
 <h4 id='use-case-2-simulate-app-invocation-using-a-custom-scheme' class='heading'>Use case #2: Simulate app invocation using a custom scheme</h4>
 <pre class="highlight swift"><code>
 <span class="kd">import</span> <span class="kt">Insider</span>
@@ -213,15 +218,16 @@
   <span class="p">}</span>
 
   <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">handleOpen</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
-        <span class="c1">// Process custom scheme invocation</span>
+
+    <span class="c1">// Process custom scheme invocation</span>
         <span class="k">return</span> <span class="kc">true</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="kd">extension</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">InsiderDelegate</span> <span class="p">{</span>
 
-  <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt">Insider</span><span class="p">,</span> <span class="n">invokeMethodForResponseWithParams</span> <span class="nv">params</span><span class="p">:</span> <span class="kt">JSONDictionary</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">JSONDictionary</span><span class="p">?</span> <span class="p">{</span>
-        <span class="c1">// Simulate app invokation using a custom scheme</span>
+  <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt">Insider</span><span class="p">,</span> <span class="n">returnResponseMessageForRemote</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">InsiderMessage</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">InsiderMessage</span><span class="p">?</span> <span class="p">{</span>
+        <span class="c1">// Simulate app invocation using a custom scheme</span>
         <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"insiderDemo://hello/params"</span><span class="p">)</span>
         <span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="nf">application</span><span class="p">(</span><span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="p">,</span> <span class="nv">handleOpen</span><span class="p">:</span> <span class="n">url</span><span class="o">!</span><span class="p">)</span>
 
@@ -231,7 +237,7 @@
 
 </code></pre>
 
-<p>In order to test this example run <code>InsiderUseCases</code> application target, after go to <code>scripts</code> directory and run <code>invoke_method_with_response.rb</code> script.</p>
+<p>In order to test this example run <code>InsiderDemo</code> application target, after go to <code>scripts</code> directory and run <code>send_message_with_response.rb</code> script.</p>
 <h4 id='use-case-3-get-application-system-information-during-test-execution' class='heading'>Use case #3: Get application system information during test execution</h4>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Insider</span>
 
@@ -273,7 +279,15 @@
 
 <p>You can create new folders. Upload, download, move, remove files / folders from application sandbox. </p>
 
-<p>In order to test this example run <code>InsiderDemo</code> application target, and open <a href="http://localhost:8080/documents">http://localhost:8080/documents</a>, <a href="http://localhost:8080/library">http://localhost:8080/library</a> or <a href="http://localhost:8080/tmp">http://localhost:8080/tmp</a> url in your browser. You will see the files which are in your application sandbox.</p>
+<p>In order to test this example run <code>InsiderDemo</code> application target, and open in your browser: </p>
+
+<ul>
+<li><a href="http://localhost:8080/documents">http://localhost:8080/documents</a>,</li>
+<li><a href="http://localhost:8080/library">http://localhost:8080/library</a></li>
+<li><a href="http://localhost:8080/tmp">http://localhost:8080/tmp</a></li>
+</ul>
+
+<p>You will see the files which are in your application sandbox.</p>
 
 <p><img src="/assets/sandbox.png" alt="Insider"></p>
 

@@ -2,17 +2,18 @@
 Pod::Spec.new do |s|
 
   s.name          = "Insider"
-  s.version       = "0.3"
-  s.summary       = "Set a communication channel between your app and external testing environments."
+  s.version       = "1.0.0"
+  s.summary       = "Insider is an utility framework which sets a backdoor into your app for testing tools like Appium, Calabash, Frank, etc."
 
   s.description   = <<-DESC
-                      Insider is a testing utility framework which sets an HTTP communication channel between the app and testing environments like Appium, Calabash, Frank, etc.
+                      Insider is an utility framework which sets a backdoor into your app for testing tools like Appium, Calabash, Frank, etc.
+                      Insider runs an HTTP server inside the application and listens for commands (RPCs).
                     DESC
 
 
   s.homepage              = "https://github.com/alexmx/Insider"
   s.license               = "MIT"
-  s.authors               = { "Alex Maimescu" => "maimescu.alex@gmail.com" }
+  s.authors               = "Alex Maimescu"
 
   s.platform              = :ios
   s.ios.deployment_target = '8.0'

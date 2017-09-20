@@ -7,7 +7,7 @@
 Insider is an utility framework which sets a **backdoor** into your app for testing tools like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc.
 
 ## Why do I need this?
-There are many scenarios which should be covered during the automation testing, but are hard to do because the testing environment is isolated from the tested app:
+There are many scenarios which are hard to cover during the automation testing because the testing environment is isolated from the tested app:
 
 * Set a particular state for the app during the test scenario;
 * Simulate push notifications;
@@ -17,7 +17,9 @@ There are many scenarios which should be covered during the automation testing, 
 * Collect metrics from the app during test execution (CPU, memory, etc.);
 * etc.
 
-Insider runs an HTTP server inside the application and listens for commands (RPCs). By default Insider runs on `http://localhost:8080`. A command represents a simple HTTP request: `http://localhost:8080/<command>`. You can pre-configure your app to simulate an action when it receives such a remote command.
+Insider runs an HTTP server inside the application and listens for commands (RPCs). By default, Insider runs on `http://localhost:8080`. 
+
+A command represents a simple HTTP request: `http://localhost:8080/<command>`. You can pre-configure your app to simulate an action when it receives such a remote command.
 
 ## Features
 
@@ -40,7 +42,7 @@ Move items: `/<directory>/move`  | POST
 Delete items: `/<directory>/delete`  | POST
 Create folder: `/<directory>/create`  | POST
 
-In the `scripts` directory can be found some sample ruby scripts which show the built-in features in action.
+In the `scripts` directory can be found sample ruby scripts which show the built-in features in action.
 
 Check out the [API reference](http://alexmx.github.io/Insider/) for more information.
 
@@ -84,19 +86,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-		// Launch the Isider with the given delegate
+	// Launch the Isider with the given delegate
         Insider.shared.start(withDelegate: self)
         
         return true
   }
   
   func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) { 
-  		// Process push notification 
+  	// Process push notification 
   }
 }
 
 extension AppDelegate: InsiderDelegate {
 
+  // This delegate method is invoked when a remote message is sent to the app
   func insider(_ insider: Insider, didReceiveRemote message: InsiderMessage?) {
         // Simulate push notification
         application(UIApplication.shared, didReceiveRemoteNotification: message!)
@@ -104,7 +107,7 @@ extension AppDelegate: InsiderDelegate {
 }
 
 ```
-In order to test this example run `InsiderUseCases` application target, after go to `scripts` directory and run `send_message.rb` script.
+In order to test this example run `InsiderDemo` application target, after go to `scripts` directory and run `send_message.rb` script.
 
 #### Use case #2: Simulate app invocation using a custom scheme
 
@@ -122,7 +125,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
-        // Process custom scheme invocation
+        
+	// Process custom scheme invocation
         return true
   }
 }
@@ -130,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: InsiderDelegate {
 
   func insider(_ insider: Insider, returnResponseMessageForRemote message: InsiderMessage?) -> InsiderMessage? {
-        // Simulate app invokation using a custom scheme
+        // Simulate app invocation using a custom scheme
         let url = URL(string: "insiderDemo://hello/params")
         let response = application(UIApplication.shared, handleOpen: url!)
         
@@ -139,7 +143,7 @@ extension AppDelegate: InsiderDelegate {
 }
 
 ```
-In order to test this example run `InsiderUseCases` application target, after go to `scripts` directory and run `send_message_with_response.rb` script.
+In order to test this example run `InsiderDemo` application target, after go to `scripts` directory and run `send_message_with_response.rb` script.
 
 #### Use case #3: Get application system information during test execution
 
@@ -182,7 +186,13 @@ There are 3 directories supported in application sandbox:
 
 You can create new folders. Upload, download, move, remove files / folders from application sandbox. 
 
-In order to test this example run `InsiderDemo` application target, and open [http://localhost:8080/documents](http://localhost:8080/documents), [http://localhost:8080/library](http://localhost:8080/library) or [http://localhost:8080/tmp](http://localhost:8080/tmp) url in your browser. You will see the files which are in your application sandbox.
+In order to test this example run `InsiderDemo` application target, and open in your browser: 
+
+* [http://localhost:8080/documents](http://localhost:8080/documents), 
+* [http://localhost:8080/library](http://localhost:8080/library)
+* [http://localhost:8080/tmp](http://localhost:8080/tmp)
+
+You will see the files which are in your application sandbox.
 
 ![Insider](/assets/sandbox.png)
 
