@@ -14,8 +14,7 @@
     <a title="InsiderDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Insider Docs</a> (88% documented)</p>
-        <p class="header-right"><a href="https://github.com/alexmx/Insider"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p><a href="../index.html">Insider Docs</a> (100% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -50,7 +49,13 @@
         <section>
           <section class="section">
             <h1>InsiderDelegate</h1>
-            <p>Undocumented</p>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">InsiderDelegate</span><span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>The Insider delegate protocol.</p>
 
           </section>
           <section class="section task-group-section">
@@ -59,9 +64,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider22invokeMethodWithParamsGSqGVs10DictionaryCSo8NSObjectPs9AnyObject____T_"></a>
-                    <a name="//apple_ref/swift/Method/insider(_:invokeMethodWithParams:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider22invokeMethodWithParamsGSqGVs10DictionaryCSo8NSObjectPs9AnyObject____T_">insider(_:invokeMethodWithParams:)</a>
+                    <a name="/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didReceiveRemoteMessage:"></a>
+                    <a name="//apple_ref/swift/Method/insider(_:didReceiveRemote:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didReceiveRemoteMessage:">insider(_:didReceiveRemote:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -69,14 +74,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This method will be called on delegate for <q>invoke</q> action</p>
+                        <p>This method will be called on delegate for <q>send</q> command</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">invokeMethodWithParams</span> <span class="nv">params</span><span class="p">:</span> <span class="kt">JSONDictionary</span><span class="p">?)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didReceiveRemote</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">InsiderMessage</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -93,7 +98,6 @@
                               <td>
                                 <div>
                                   <p>instance of Insider class</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -106,7 +110,6 @@
                               <td>
                                 <div>
                                   <p>request params</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -119,9 +122,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider33invokeMethodForResponseWithParamsGSqGVs10DictionaryCSo8NSObjectPs9AnyObject____GSqGS2_S3_PS4____"></a>
-                    <a name="//apple_ref/swift/Method/insider(_:invokeMethodForResponseWithParams:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider33invokeMethodForResponseWithParamsGSqGVs10DictionaryCSo8NSObjectPs9AnyObject____GSqGS2_S3_PS4____">insider(_:invokeMethodForResponseWithParams:)</a>
+                    <a name="/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:returnResponseMessageForRemoteMessage:"></a>
+                    <a name="//apple_ref/swift/Method/insider(_:returnResponseMessageForRemote:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:returnResponseMessageForRemoteMessage:">insider(_:returnResponseMessageForRemote:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -129,14 +132,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This method will be called on delegate for <q>invokeForResponse</q> action</p>
+                        <p>This method will be called on delegate for <q>sendAndWaitForResponse</q> command</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">invokeMethodForResponseWithParams</span> <span class="nv">params</span><span class="p">:</span> <span class="kt">JSONDictionary</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">JSONDictionary</span><span class="p">?</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">returnResponseMessageForRemote</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">InsiderMessage</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">InsiderMessage</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -153,7 +156,6 @@
                               <td>
                                 <div>
                                   <p>instance of Insider class</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -166,7 +168,6 @@
                               <td>
                                 <div>
                                   <p>request params</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -176,7 +177,6 @@
                       <div>
                         <h4>Return Value</h4>
                         <p>return params</p>
-
                       </div>
                     </section>
                   </div>
@@ -184,9 +184,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider29didSendNotificationWithParamsGSqGVs10DictionaryCSo8NSObjectPs9AnyObject____T_"></a>
-                    <a name="//apple_ref/swift/Method/insider(_:didSendNotificationWithParams:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider29didSendNotificationWithParamsGSqGVs10DictionaryCSo8NSObjectPs9AnyObject____T_">insider(_:didSendNotificationWithParams:)</a>
+                    <a name="/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didSendNotificationWithMessage:"></a>
+                    <a name="//apple_ref/swift/Method/insider(_:didSendNotificationWith:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didSendNotificationWithMessage:">insider(_:didSendNotificationWith:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -194,14 +194,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This method will be called on delegate for <q>notification</q> action</p>
+                        <p>This method will be called on delegate for <q>notification</q> command</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didSendNotificationWithParams</span> <span class="nv">params</span><span class="p">:</span> <span class="kt">JSONDictionary</span><span class="p">?)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didSendNotificationWith</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">InsiderMessage</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -218,7 +218,6 @@
                               <td>
                                 <div>
                                   <p>instance of Insider class</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -231,7 +230,6 @@
                               <td>
                                 <div>
                                   <p>request params sent in notification</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -244,9 +242,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider19didReturnSystemInfoGSqGVs10DictionaryCSo8NSObjectPs9AnyObject____T_"></a>
-                    <a name="//apple_ref/swift/Method/insider(_:didReturnSystemInfo:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider19didReturnSystemInfoGSqGVs10DictionaryCSo8NSObjectPs9AnyObject____T_">insider(_:didReturnSystemInfo:)</a>
+                    <a name="/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didReturnSystemInfo:"></a>
+                    <a name="//apple_ref/swift/Method/insider(_:didReturn:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didReturnSystemInfo:">insider(_:didReturn:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -254,14 +252,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This method will be called on delegate for <q>systemInfo</q> action</p>
+                        <p>This method will be called on delegate for <q>systemInfo</q> command</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didReturnSystemInfo</span> <span class="nv">systemInfo</span><span class="p">:</span> <span class="kt">JSONDictionary</span><span class="p">?)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didReturn</span> <span class="nv">systemInfo</span><span class="p">:</span> <span class="kt">InsiderMessage</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -278,7 +276,6 @@
                               <td>
                                 <div>
                                   <p>instance of Insider class</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -291,7 +288,6 @@
                               <td>
                                 <div>
                                   <p>returned system information</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -304,9 +300,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider24didCreateDirectoryAtPathSS_T_"></a>
-                    <a name="//apple_ref/swift/Method/insider(_:didCreateDirectoryAtPath:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider24didCreateDirectoryAtPathSS_T_">insider(_:didCreateDirectoryAtPath:)</a>
+                    <a name="/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didCreateDirectoryAtPath:"></a>
+                    <a name="//apple_ref/swift/Method/insider(_:didCreateDirectoryAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didCreateDirectoryAtPath:">insider(_:didCreateDirectoryAt:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -321,7 +317,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didCreateDirectoryAtPath</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didCreateDirectoryAt</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -338,7 +334,6 @@
                               <td>
                                 <div>
                                   <p>instance of Insider class</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -351,7 +346,6 @@
                               <td>
                                 <div>
                                   <p>path to the new created directory</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -364,9 +358,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider19didDeleteItemAtPathSS_T_"></a>
-                    <a name="//apple_ref/swift/Method/insider(_:didDeleteItemAtPath:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider19didDeleteItemAtPathSS_T_">insider(_:didDeleteItemAtPath:)</a>
+                    <a name="/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didDeleteItemAtPath:"></a>
+                    <a name="//apple_ref/swift/Method/insider(_:didDeleteItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didDeleteItemAtPath:">insider(_:didDeleteItemAt:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -381,7 +375,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didDeleteItemAtPath</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didDeleteItemAt</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -398,7 +392,6 @@
                               <td>
                                 <div>
                                   <p>instance of Insider class</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -411,7 +404,6 @@
                               <td>
                                 <div>
                                   <p>path of the removed item</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -424,9 +416,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider21didDownloadFileAtPathSS_T_"></a>
-                    <a name="//apple_ref/swift/Method/insider(_:didDownloadFileAtPath:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider21didDownloadFileAtPathSS_T_">insider(_:didDownloadFileAtPath:)</a>
+                    <a name="/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didDownloadFileAtPath:"></a>
+                    <a name="//apple_ref/swift/Method/insider(_:didDownloadFileAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didDownloadFileAtPath:">insider(_:didDownloadFileAt:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -441,7 +433,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didDownloadFileAtPath</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didDownloadFileAt</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -458,7 +450,6 @@
                               <td>
                                 <div>
                                   <p>instance of Insider class</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -471,7 +462,6 @@
                               <td>
                                 <div>
                                   <p>path to the downloaded item</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -484,9 +474,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider19didMoveItemFromPathSS6toPathSS_T_"></a>
-                    <a name="//apple_ref/swift/Method/insider(_:didMoveItemFromPath:toPath:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider19didMoveItemFromPathSS6toPathSS_T_">insider(_:didMoveItemFromPath:toPath:)</a>
+                    <a name="/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didMoveItemFromPath:toPath:"></a>
+                    <a name="//apple_ref/swift/Method/insider(_:didMoveItem:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didMoveItemFromPath:toPath:">insider(_:didMoveItem:to:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -501,7 +491,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didMoveItemFromPath</span> <span class="nv">fromPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">toPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didMoveItem</span> <span class="nv">fromPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">to</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -518,7 +508,6 @@
                               <td>
                                 <div>
                                   <p>instance of Insider class</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -531,7 +520,6 @@
                               <td>
                                 <div>
                                   <p>initial path to the item</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -544,7 +532,6 @@
                               <td>
                                 <div>
                                   <p>path to the item after it was moved</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -557,9 +544,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider19didUploadFileAtPathSS_T_"></a>
-                    <a name="//apple_ref/swift/Method/insider(_:didUploadFileAtPath:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FP7Insider15InsiderDelegate7insiderFTCS_7Insider19didUploadFileAtPathSS_T_">insider(_:didUploadFileAtPath:)</a>
+                    <a name="/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didUploadFileAtPath:"></a>
+                    <a name="//apple_ref/swift/Method/insider(_:didUploadFileAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Insider@objc(pl)InsiderDelegate(im)insider:didUploadFileAtPath:">insider(_:didUploadFileAt:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -574,7 +561,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didUploadFileAtPath</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">insider</span><span class="p">(</span><span class="n">_</span> <span class="nv">insider</span><span class="p">:</span> <span class="kt"><a href="../Classes/Insider.html">Insider</a></span><span class="p">,</span> <span class="n">didUploadFileAt</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -591,7 +578,6 @@
                               <td>
                                 <div>
                                   <p>instance of Insider class</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -604,7 +590,6 @@
                               <td>
                                 <div>
                                   <p>path to the uploaded item</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -619,8 +604,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="https://github.com/alexmx/Insider" target="_blank" rel="external">Alex Maimescu</a>. All rights reserved. (Last updated: 2016-10-17)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/alexmx/Insider" target="_blank" rel="external">Alex Maimescu</a>. All rights reserved. (Last updated: 2017-09-20)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

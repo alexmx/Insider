@@ -5,7 +5,7 @@
 require './http_client'
 require 'json'
 
-ENDPOINT = "invoke"
+ENDPOINT = "send"
 
 arguments = ARGV[0]
 params = nil
@@ -13,7 +13,7 @@ params = nil
 if arguments == nil
 	params = { 
 		'project' => 'Insider',
-		'action'=> 'invoke_method'
+		'action'=> 'send_message'
 	}
 else
 	params = JSON.parse(arguments)

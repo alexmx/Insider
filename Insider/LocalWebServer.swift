@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias LocalWebServerRequestHandler = (JSONDictionary?) -> (LocalWebServerResponse)
+typealias LocalWebServerRequestHandler = (InsiderMessage?) -> (LocalWebServerResponse)
 
 enum LocalWebServerRequestMethod: String {
     case GET
@@ -49,7 +49,7 @@ final class LocalWebServer: NSObject {
         static let defaultPort: UInt = 8080
     }
     
-    fileprivate let localWebServer = GCDWebUploader()
+    private let localWebServer = GCDWebUploader()
     
     weak var delegate: LocalWebServerDelegate?
     
@@ -86,25 +86,25 @@ final class LocalWebServer: NSObject {
         }
     }
     
-    func executeOnMainQueue(_ closure: (() -> Void)?) {
+    private func executeOnMainQueue(_ closure: (() -> Void)?) {
         DispatchQueue.main.sync { closure?() }
     }
     
-    func paramsForRequest(_ request: GCDWebServerURLEncodedFormRequest?) -> JSONDictionary? {
+    private func paramsForRequest(_ request: GCDWebServerURLEncodedFormRequest?) -> InsiderMessage? {
         guard let request = request, LocalWebServerRequestMethod(rawValue: request.method) != .GET else {
             return nil
         }
         
-        var params: JSONDictionary?
+        var params: InsiderMessage?
         let contentType = request.contentType
         let jsonTypes = ["application/json", "text/json", "text/javascript"]
         if jsonTypes.contains(contentType!) {
             if let json = request.jsonObject {
-                params = json as? JSONDictionary
+                params = json as? InsiderMessage
             }
         } else {
             if let encodedParams = request.arguments {
-                params = encodedParams as JSONDictionary?
+                params = encodedParams as InsiderMessage?
             }
         }
         

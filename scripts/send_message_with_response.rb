@@ -5,7 +5,7 @@
 require './http_client'
 require 'json'
 
-ENDPOINT = "invokeForResponse"
+ENDPOINT = "sendAndWaitForResponse"
 
 arguments = ARGV[0]
 params = nil
@@ -13,7 +13,7 @@ params = nil
 if arguments == nil
 	params = { 
 		'project' => 'Insider',
-		'action'=> 'invoke_method_with_response'
+		'action'=> 'send_message_with_response'
 	}
 else
 	params = JSON.parse(arguments)

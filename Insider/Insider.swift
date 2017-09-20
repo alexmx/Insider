@@ -7,46 +7,50 @@
 //
 
 import Foundation
-import UIKit
 
-public typealias JSONDictionary = [NSObject: AnyObject]
+public typealias InsiderMessage = [NSObject: AnyObject]
 
+/// The Insider delegate protocol.
 @objc
-public protocol InsiderDelegate: class {
+public protocol InsiderDelegate: AnyObject {
     
     /**
-     This method will be called on delegate for "invoke" action
+     This method will be called on delegate for "send" command
      
      - parameter insider: instance of Insider class
      - parameter params:  request params
      */
-    @objc optional func insider(_ insider: Insider, invokeMethodWithParams params: JSONDictionary?)
+    @objc(insider:didReceiveRemoteMessage:)
+    optional func insider(_ insider: Insider, didReceiveRemote message: InsiderMessage?)
     
     /**
-     This method will be called on delegate for "invokeForResponse" action
+     This method will be called on delegate for "sendAndWaitForResponse" command
      
      - parameter insider: instance of Insider class
      - parameter params:  request params
      
      - returns: return params
      */
-    @objc optional func insider(_ insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary?
+    @objc(insider:returnResponseMessageForRemoteMessage:)
+    optional func insider(_ insider: Insider, returnResponseMessageForRemote message: InsiderMessage?) -> InsiderMessage?
     
     /**
-     This method will be called on delegate for "notification" action
+     This method will be called on delegate for "notification" command
      
      - parameter insider: instance of Insider class
      - parameter params:  request params sent in notification
      */
-    @objc optional func insider(_ insider: Insider, didSendNotificationWithParams params: JSONDictionary?)
+    @objc(insider:didSendNotificationWithMessage:)
+    optional func insider(_ insider: Insider, didSendNotificationWith message: InsiderMessage?)
     
     /**
-     This method will be called on delegate for "systemInfo" action
+     This method will be called on delegate for "systemInfo" command
      
      - parameter insider:    instance of Insider class
      - parameter systemInfo: returned system information
      */
-    @objc optional func insider(_ insider: Insider, didReturnSystemInfo systemInfo: JSONDictionary?)
+    @objc(insider:didReturnSystemInfo:)
+    optional func insider(_ insider: Insider, didReturn systemInfo: InsiderMessage?)
     
     /**
      This method is caled when a new directory is created in sandbox
@@ -54,7 +58,8 @@ public protocol InsiderDelegate: class {
      - parameter insider: instance of Insider class
      - parameter path:    path to the new created directory
      */
-    @objc optional func insider(_ insider: Insider, didCreateDirectoryAtPath path: String)
+    @objc(insider:didCreateDirectoryAtPath:)
+    optional func insider(_ insider: Insider, didCreateDirectoryAt path: String)
     
     /**
      This method is called when an item is removed from sandbox
@@ -62,7 +67,8 @@ public protocol InsiderDelegate: class {
      - parameter insider: instance of Insider class
      - parameter path:    path of the removed item
      */
-    @objc optional func insider(_ insider: Insider, didDeleteItemAtPath path: String)
+    @objc(insider:didDeleteItemAtPath:)
+    optional func insider(_ insider: Insider, didDeleteItemAt path: String)
     
     /**
      This method is called when an item is downloaded from sandbox
@@ -70,7 +76,8 @@ public protocol InsiderDelegate: class {
      - parameter insider: instance of Insider class
      - parameter path:    path to the downloaded item
      */
-    @objc optional func insider(_ insider: Insider, didDownloadFileAtPath path: String)
+    @objc(insider:didDownloadFileAtPath:)
+    optional func insider(_ insider: Insider, didDownloadFileAt path: String)
     
     /**
      This method is called when an item is moved in sandbox
@@ -79,7 +86,8 @@ public protocol InsiderDelegate: class {
      - parameter fromPath: initial path to the item
      - parameter toPath:   path to the item after it was moved
      */
-    @objc optional func insider(_ insider: Insider, didMoveItemFromPath fromPath: String, toPath: String)
+    @objc(insider:didMoveItemFromPath:toPath:)
+    optional func insider(_ insider: Insider, didMoveItem fromPath: String, to path: String)
     
     /**
      This method is called when an item is uploaded to sandbox
@@ -87,15 +95,17 @@ public protocol InsiderDelegate: class {
      - parameter insider: instance of Insider class
      - parameter path:    path to the uploaded item
      */
-    @objc optional func insider(_ insider: Insider, didUploadFileAtPath path: String)
+    @objc(insider:didUploadFileAtPath:)
+    optional func insider(_ insider: Insider, didUploadFileAt path: String)
 }
 
-@objc
+/// The Insider API facade class.
+@objcMembers
 final public class Insider: NSObject {
     
-    struct Endpoints {
-        static let invokeEndpoint = "/invoke"
-        static let invokeWithResponse = "/invokeForResponse"
+    private struct Endpoints {
+        static let sendMessage = "/send"
+        static let sendMessageAndWaitForResponse = "/sendAndWaitForResponse"
         static let sendNotification = "/notification"
         static let systemInfo = "/systemInfo"
         static let documents = "/documents"
@@ -103,20 +113,62 @@ final public class Insider: NSObject {
         static let tmp = "/tmp"
     }
     
-    /// Shared instance
+    /// The shared instance.
     public static let shared = Insider()
     
-    /// Insider delegate
+    /// The Insider delegate.
     public weak var delegate: InsiderDelegate?
     
-    /// Insider notification key
+    /// The Insider notification key.
     public static let insiderNotificationKey = "com.insider.insiderNotificationKey"
     
-    fileprivate lazy var deviceInfoService = DeviceInfoService()
+    private lazy var deviceInfoService = DeviceInfoService()
     
-    fileprivate let localWebServer = LocalWebServer()
+    private let localWebServer = LocalWebServer()
     
-    func addHandlersForServer(_ server: LocalWebServer) {
+    // MARK: - Public methods
+    
+    /**
+     Start the local web server which will listen for commands.
+     By default server listens on port 8080.
+     */
+    public func start() {
+        addHandlersForServer(localWebServer)
+        localWebServer.start()
+    }
+    
+    /**
+     Start the local web server which will listen for commands, for given delegate.
+     By default server listens on port 8080.
+     
+     - parameter delegate: Insider delegate reference
+     */
+    public func start(withDelegate delegate: InsiderDelegate?) {
+        self.delegate = delegate
+        start()
+    }
+    
+    /// Start the local web server which will listen for commands, for given delegate and port number.
+    ///
+    /// - Parameters:
+    ///   - delegate: The Insider delegate reference.
+    ///   - port: the port on which local webserver will listen for commands.
+    public func start(withDelegate delegate: InsiderDelegate?, port: UInt) {
+        self.delegate = delegate
+        addHandlersForServer(localWebServer)
+        localWebServer.startWithPort(port)
+    }
+    
+    /**
+     Stop the local web server.
+     */
+    public func stop() {
+        localWebServer.stop()
+    }
+    
+    // MARK: - Private methods
+    
+    private func addHandlersForServer(_ server: LocalWebServer) {
         
         server.delegate = self
         
@@ -129,14 +181,14 @@ final public class Insider: NSObject {
         server.addSandboxDirectory(tmpPath, endpoint: Endpoints.tmp)
                 
         // Invoke method on delegate
-        server.addHandlerForMethod(.POST, path: Endpoints.invokeEndpoint) { (requestParams) -> (LocalWebServerResponse) in
-            let didProcessParams = self.invokeMethodOnDelegateWithParams(requestParams)
+        server.addHandlerForMethod(.POST, path: Endpoints.sendMessage) { (requestParams) -> (LocalWebServerResponse) in
+            let didProcessParams = self.didReceiveRemoteMessage(requestParams)
             return LocalWebServerResponse(statusCode: (didProcessParams) ? .success : .notFound)
         }
         
         // Invoke method on delegate and wait for return value
-        server.addHandlerForMethod(.POST, path: Endpoints.invokeWithResponse) { (requestParams) -> (LocalWebServerResponse) in
-            let response = self.invokeMethodOnDelegateWithParamsForResponse(requestParams)
+        server.addHandlerForMethod(.POST, path: Endpoints.sendMessageAndWaitForResponse) { (requestParams) -> (LocalWebServerResponse) in
+            let response = self.returnResponseMessageForRemoteMesssage(requestParams)
             
             if let response = response {
                 return LocalWebServerResponse(response: response)
@@ -156,104 +208,64 @@ final public class Insider: NSObject {
         }
     }
     
-    func invokeMethodOnDelegateWithParams(_ params: JSONDictionary?) -> Bool {
+    private func didReceiveRemoteMessage(_ message: InsiderMessage?) -> Bool {
         guard let delegate = delegate else {
             print("[Insider] Warning: Delegate not set.")
             return false
         }
         
-        delegate.insider?(self, invokeMethodWithParams: params)
+        delegate.insider?(self, didReceiveRemote: message)
         
         return true
     }
     
-    func invokeMethodOnDelegateWithParamsForResponse(_ params: JSONDictionary?) -> JSONDictionary? {
+    private func returnResponseMessageForRemoteMesssage(_ message: InsiderMessage?) -> InsiderMessage? {
         guard let delegate = delegate else {
             print("[Insider] Warning: Delegate not set.")
             return nil
         }
         
-        return delegate.insider!(self, invokeMethodForResponseWithParams: params)
+        return delegate.insider?(self, returnResponseMessageForRemote: message)
     }
     
-    func sendLocalNotificationWithParams(_ params: JSONDictionary?) {
+    private func sendLocalNotificationWithParams(_ params: InsiderMessage?) {
         defer {
-            delegate?.insider?(self, didSendNotificationWithParams: params)
+            delegate?.insider?(self, didSendNotificationWith: params)
         }
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: Insider.insiderNotificationKey), object: params)
     }
     
-    func getSystemInfo() -> JSONDictionary? {
+    private func getSystemInfo() -> InsiderMessage? {
         let systemInfo = self.deviceInfoService.allSystemInfo
         
         defer {
-            delegate?.insider?(self, didReturnSystemInfo: systemInfo)
+            delegate?.insider?(self, didReturn: systemInfo)
         }
         
         return systemInfo
-    }
-    
-    // MARK - Public methods
-    
-    /**
-     Start local web server which will listen for commands.
-     By default server listens on port 8080.
-    */
-    public func start() {
-        addHandlersForServer(localWebServer)
-        localWebServer.start()
-    }
-    
-    /**
-     Start local web server which will listen for commands, for given delegate
-     By default server listens on port 8080.
-     
-     - parameter delegate: Insider delegate reference
-     */
-    public func start(withDelegate delegate: InsiderDelegate?) {
-        self.delegate = delegate
-        start()
-    }
-    
-    /**
-     Start local web server which will listen for commands, for given port.
-     By default server listens on port 8080.
-     
-     - parameter port: port on which local webserver will listen for commands.
-     */
-    public func start(withPort port: UInt) {
-        addHandlersForServer(localWebServer)
-        localWebServer.startWithPort(port)
-    }
-    
-    /**
-     Stop local web server.
-     */
-    public func stop() {
-        localWebServer.stop()
     }
 }
 
 extension Insider: LocalWebServerDelegate {
     
     func localWebServer(_ server: LocalWebServer, didCreateDirectoryAtPath path: String) {
-        delegate?.insider?(self, didCreateDirectoryAtPath: path)
+        delegate?.insider?(self, didCreateDirectoryAt: path)
     }
     
     func localWebServer(_ server: LocalWebServer, didDeleteItemAtPath path: String) {
-        delegate?.insider?(self, didDeleteItemAtPath: path)
+        delegate?.insider?(self, didDeleteItemAt: path)
     }
     
     func localWebServer(_ server: LocalWebServer, didDownloadFileAtPath path: String) {
-        delegate?.insider?(self, didDownloadFileAtPath: path)
+        delegate?.insider?(self, didDownloadFileAt: path)
     }
     
     func localWebServer(_ server: LocalWebServer, didMoveItemFromPath fromPath: String, toPath: String) {
-        delegate?.insider?(self, didMoveItemFromPath: fromPath, toPath: toPath)
+        delegate?.insider?(self, didMoveItem: fromPath, to: toPath)
     }
     
     func localWebServer(_ server: LocalWebServer, didUploadFileAtPath path: String) {
-        delegate?.insider?(self, didUploadFileAtPath: path)
+        delegate?.insider?(self, didUploadFileAt: path)
     }
 }

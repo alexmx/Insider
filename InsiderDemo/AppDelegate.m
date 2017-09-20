@@ -57,21 +57,22 @@ NSString * kLogMessageNotificationKey = @"com.alexmx.notificationLogMessage";
 
 #pragma mark - InsiderDelegate
 
-- (void)insider:(Insider *)insider invokeMethodWithParams:(id)params
+- (void)insider:(Insider *)insider didReceiveRemoteMessage:(NSDictionary * _Nullable)message
 {
-    NSLog(@"Insider invoke object: %@", params);
-    [self postLogNotificationWithObject:params];
+    NSLog(@"Insider invoke object: %@", message);
+    [self postLogNotificationWithObject:message];
 }
 
-- (NSDictionary *)insider:(Insider *)insider invokeMethodForResponseWithParams:(NSDictionary *)params
+- (NSDictionary *)insider:(Insider *)insider returnResponseMessageForRemoteMessage:(NSDictionary * _Nullable)message
 {
-    [self postLogNotificationWithObject:params];
+    [self postLogNotificationWithObject:message];
+    
     return @{@"test": @YES};
 }
 
-- (void)insider:(Insider *)insider didSendNotificationWithParams:(id)params
+- (void)insider:(Insider *)insider didSendNotificationWithMessage:(NSDictionary * _Nullable)message
 {
-    [self postLogNotificationWithObject:params];
+    [self postLogNotificationWithObject:message];
 }
 
 - (void)insider:(Insider *)insider didReturnSystemInfo:(NSDictionary * _Nullable)systemInfo
@@ -79,27 +80,27 @@ NSString * kLogMessageNotificationKey = @"com.alexmx.notificationLogMessage";
     [self postLogNotificationWithObject:systemInfo];
 }
 
-- (void)insider:(Insider *)insider didCreateDirectoryAtPath:(NSString *)path
+- (void)insider:(Insider *)insider didCreateDirectoryAtPath:(NSString * _Nonnull)path
 {
     [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did create path: %@", path]];
 }
 
-- (void)insider:(Insider *)insider didDeleteItemAtPath:(NSString *)path
+- (void)insider:(Insider *)insider didDeleteItemAtPath:(NSString * _Nonnull)path
 {
     [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did delete item: %@", path]];
 }
 
-- (void)insider:(Insider *)insider didDownloadFileAtPath:(NSString *)path
+- (void)insider:(Insider *)insider didDownloadFileAtPath:(NSString * _Nonnull)path
 {
     [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did download item: %@", path]];
 }
 
-- (void)insider:(Insider *)insider didMoveItemFromPath:(NSString *)fromPath toPath:(NSString *)toPath
+- (void)insider:(Insider *)insider didMoveItemFromPath:(NSString * _Nonnull)fromPath toPath:(NSString * _Nonnull)path
 {
-    [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did move item from: %@ to: %@", fromPath, toPath]];
+    [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did move item from: %@ to: %@", fromPath, path]];
 }
 
-- (void)insider:(Insider *)insider didUploadFileAtPath:(NSString *)path
+- (void)insider:(Insider *)insider didUploadFileAtPath:(NSString * _Nonnull)path
 {
     [self postLogNotificationWithObject:[NSString stringWithFormat:@"Did upload item: %@", path]];
 }

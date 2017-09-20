@@ -1,19 +1,6 @@
 {
   "warnings": [
-    {
-      "file": "/Users/amaimescu/Documents/Projects/mine/Insider/Insider/Insider.swift",
-      "line": 15,
-      "symbol": "InsiderDelegate",
-      "symbol_kind": "source.lang.swift.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/amaimescu/Documents/Projects/mine/Insider/Insider/Insider.swift",
-      "line": 94,
-      "symbol": "Insider",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    }
+
   ],
   "source_directory": "/Users/amaimescu/Documents/Projects/mine/Insider"
 }

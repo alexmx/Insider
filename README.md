@@ -4,25 +4,27 @@
 [![Twitter: @amaimescu](https://img.shields.io/badge/contact-%40amaimescu-blue.svg)](https://twitter.com/amaimescu)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/alexmx/ios-ui-automation-overview/blob/master/LICENSE)
 
-Insider is an utility framework which sets a **backdoor** into your app for testing tools like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc. 
+Insider is an utility framework which sets a **backdoor** into your app for testing tools like [Appium](http://appium.io/), [Calabash](http://calaba.sh/), [Frank](http://www.testingwithfrank.com/), etc.
 
 ## Why do I need this?
+There are many scenarios which should be covered during the automation testing, but are hard to do because the testing environment is isolated from the tested app:
+
 * Set a particular state for the app during the test scenario;
 * Simulate push notifications;
 * Simulate app invocation using custom schemes / universal links;
-* Simulate back-end responses;
+* Simulate handoff invocations;
 * Manage files / directories in application sandbox;
 * Collect metrics from the app during test execution (CPU, memory, etc.);
 * etc.
 
-Insider runs an HTTP server inside the application and listens for commands. By default Insider runs on `http://localhost:8080`. A command represents a simple HTTP request: `http://localhost:8080/<command>`
+Insider runs an HTTP server inside the application and listens for commands (RPCs). By default Insider runs on `http://localhost:8080`. A command represents a simple HTTP request: `http://localhost:8080/<command>`. You can pre-configure your app to simulate an action when it receives such a remote command.
 
 ## Features
 
 |  | Built-in Features | Commands | HTTP Method
 ------------ | ------------- | ------------- | -------------
-💡 | Invoke a method on a registered **delegate** with given parameters; | `/invoke` | POST
-📎 | Invoke a method on a registered **delegate** with given parameters and wait for response; | `/invokeForResponse` | POST
+🚚 | Send a message (dictionary) to the app; | `/send` | POST
+🚌 | Send a message to the app and wait for response; | `/sendAndWaitForResponse` | POST
 📢 | Send local notifications through **NSNotificationCenter** with given parameters; | `/notification` | POST
 📱 | Get device system state information (CPU, memory, IP address, etc); | `/systemInfo` | GET
 :floppy_disk: |  Manage files / directories in application sandbox (Documents, Library, tmp); | `/documents/<command>`<br /> `/library/<command>`<br /> `/tmp/<command>` | See the table below
@@ -82,6 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
+		// Launch the Isider with the given delegate
         Insider.shared.start(withDelegate: self)
         
         return true
@@ -94,14 +97,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: InsiderDelegate {
 
-  func insider(_ insider: Insider, invokeMethodWithParams params: JSONDictionary?) {
+  func insider(_ insider: Insider, didReceiveRemote message: InsiderMessage?) {
         // Simulate push notification
-        application(UIApplication.shared, didReceiveRemoteNotification: params!)
+        application(UIApplication.shared, didReceiveRemoteNotification: message!)
   }
 }
 
 ```
-In order to test this example run `InsiderUseCases` application target, after go to `scripts` directory and run `invoke_method.rb` script.
+In order to test this example run `InsiderUseCases` application target, after go to `scripts` directory and run `send_message.rb` script.
 
 #### Use case #2: Simulate app invocation using a custom scheme
 
@@ -126,7 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: InsiderDelegate {
 
-  func insider(_ insider: Insider, invokeMethodForResponseWithParams params: JSONDictionary?) -> JSONDictionary? {
+  func insider(_ insider: Insider, returnResponseMessageForRemote message: InsiderMessage?) -> InsiderMessage? {
         // Simulate app invokation using a custom scheme
         let url = URL(string: "insiderDemo://hello/params")
         let response = application(UIApplication.shared, handleOpen: url!)
@@ -136,7 +139,7 @@ extension AppDelegate: InsiderDelegate {
 }
 
 ```
-In order to test this example run `InsiderUseCases` application target, after go to `scripts` directory and run `invoke_method_with_response.rb` script.
+In order to test this example run `InsiderUseCases` application target, after go to `scripts` directory and run `send_message_with_response.rb` script.
 
 #### Use case #3: Get application system information during test execution
 

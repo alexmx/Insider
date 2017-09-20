@@ -16,13 +16,13 @@ enum LocalWebServerResponseStatusCode: Int {
 final class LocalWebServerResponse {
     
     var statusCode: LocalWebServerResponseStatusCode
-    var response: JSONDictionary?
+    var response: InsiderMessage?
     
     init(statusCode: LocalWebServerResponseStatusCode) {
         self.statusCode = statusCode
     }
     
-    init(response: JSONDictionary?) {
+    init(response: InsiderMessage?) {
         self.statusCode = .success
         self.response = response
     }

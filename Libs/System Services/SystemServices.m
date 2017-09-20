@@ -8,323 +8,25 @@
 
 #import "SystemServices.h"
 
-#import "SSAccelerometerInfo.h"
-#import "SSAccessoryInfo.h"
-#import "SSApplicationInfo.h"
-#import "SSBatteryInfo.h"
-#import "SSCarrierInfo.h"
-#import "SSDiskInfo.h"
-#import "SSHardwareInfo.h"
-#import "SSLocalizationInfo.h"
-#import "SSMemoryInfo.h"
-#import "SSNetworkInfo.h"
-#import "SSProcessInfo.h"
-#import "SSProcessorInfo.h"
-#import "SSUUID.h"
-
-@interface SystemServices () {
-    // Private
-    
-    /* All System Information in Dictionary Format */
-    NSDictionary *allSystemInformation;
-    
-    /* Hardware Information */
-    
-    // System Uptime (dd hh mm)
-    NSString *systemsUptime;
-    
-    // Model of Device
-    NSString *deviceModel;
-    
-    // Device Name
-    NSString *deviceName;
-    
-    // System Name
-    NSString *systemName;
-    
-    // System Version
-    NSString *systemsVersion;
-    
-    // System Device Type (Not Formatted = iPhone1,0)
-    NSString *systemDeviceTypeNotFormatted;
-    
-    // System Device Type (Formatted = iPhone 1)
-    NSString *systemDeviceTypeFormatted;
-    
-    // Get the Screen Width (X)
-    NSInteger screenWidth;
-    
-    // Get the Screen Height (Y)
-    NSInteger screenHeight;
-    
-    // Get the Screen Brightness
-    float screenBrightness;
-    
-    // Multitasking enabled?
-    BOOL multitaskingEnabled;
-    
-    // Proximity sensor enabled?
-    BOOL proximitySensorEnabled;
-    
-    // Debugger Attached?
-    BOOL debuggerAttached;
-    
-    // Plugged In?
-    BOOL pluggedIn;
-    
-    /* Processor Information */
-    
-    // Number of processors
-    NSInteger numberProcessors;
-    
-    // Number of Active Processors
-    NSInteger numberActiveProcessors;
-    
-    // Processor Speed in MHz
-    NSInteger processorSpeed;
-    
-    // Processor Bus Speed in MHz
-    NSInteger processorBusSpeed;
-    
-    /* Accessory Information */
-    
-    // Are any accessories attached?
-    BOOL accessoriesAttached;
-    
-    // Are headphone attached?
-    BOOL headphonesAttached;
-    
-    // Number of attached accessories
-    NSInteger numberAttachedAccessories;
-    
-    // Name of attached accessory/accessories (seperated by , comma's)
-    NSString *nameAttachedAccessories;
-    
-    /* Carrier Information */
-    
-    // Carrier Name
-    NSString *carrierName;
-    
-    // Carrier Country
-    NSString *carrierCountry;
-    
-    // Carrier Mobile Country Code
-    NSString *carrierMobileCountryCode;
-    
-    // Carrier ISO Country Code
-    NSString *carrierISOCountryCode;
-    
-    // Carrier Mobile Network Code
-    NSString *carrierMobileNetworkCode;
-    
-    // Carrier Allows VOIP
-    BOOL carrierAllowsVOIP;
-    
-    /* Battery Information */
-    
-    // Battery Level
-    float batteryLevel;
-    
-    // Charging?
-    BOOL charging;
-    
-    // Fully Charged?
-    BOOL fullyCharged;
-    
-    /* Network Information */
-    
-    // Get Current IP Address
-    NSString *currentIPAddress;
-    
-    // Get Current MAC Address
-    NSString *currentMACAddress;
-    
-    // Get External IP Address
-    NSString *externalIPAddress;
-    
-    // Get Cell IP Address
-    NSString *cellIPAddress;
-    
-    // Get Cell MAC Address
-    NSString *cellMACAddress;
-    
-    // Get Cell Netmask Address
-    NSString *cellNetmaskAddress;
-    
-    // Get Cell Broadcast Address
-    NSString *cellBroadcastAddress;
-    
-    // Get WiFi IP Address
-    NSString *wiFiIPAddress;
-    
-    // Get WiFi MAC Address
-    NSString *wiFiMACAddress;
-    
-    // Get WiFi Netmask Address
-    NSString *wiFiNetmaskAddress;
-    
-    // Get WiFi Broadcast Address
-    NSString *wiFiBroadcastAddress;
-    
-    // Get WiFi Router Address
-    NSString *wiFiRouterAddress;
-    
-    // Connected to WiFi?
-    BOOL connectedToWiFi;
-    
-    // Connected to Cellular Network?
-    BOOL connectedToCellNetwork;
-    
-    /* Process Information */
-    
-    // Process ID
-    int processID;
-    
-    // Process Name
-    NSString *processName;
-    
-    // Process Status
-    int processStatus;
-    
-    // Parent Process ID
-    int parentPID;
-    
-    // List of process information including PID's, Names, PPID's, and Status'
-    NSMutableArray *processesInformation;
-    
-    /* Disk Information */
-    
-    // Total Disk Space
-    NSString *diskSpace;
-    
-    // Total Free Disk Space (Raw)
-    NSString *freeDiskSpaceinRaw;
-    
-    // Total Free Disk Space (Percentage)
-    NSString *freeDiskSpaceinPercent;
-    
-    // Total Used Disk Space (Raw)
-    NSString *usedDiskSpaceinRaw;
-    
-    // Total Used Disk Space (Percentage)
-    NSString *usedDiskSpaceinPercent;
-    
-    // Get the total disk space in long format
-    long long longDiskSpace;
-    
-    // Get the total free disk space in long format
-    long long longFreeDiskSpace;
-    
-    /* Memory Information */
-    
-    // Total Memory
-    double totalMemory;
-    
-    // Free Memory (Raw)
-    double freeMemoryinRaw;
-    
-    // Free Memory (Percent)
-    double freeMemoryinPercent;
-    
-    // Used Memory (Raw)
-    double usedMemoryinRaw;
-    
-    // Used Memory (Percent)
-    double usedMemoryinPercent;
-    
-    // Active Memory (Raw)
-    double activeMemoryinRaw;
-    
-    // Active Memory (Percent)
-    double activeMemoryinPercent;
-    
-    // Inactive Memory (Raw)
-    double inactiveMemoryinRaw;
-    
-    // Inactive Memory (Percent)
-    double inactiveMemoryinPercent;
-    
-    // Wired Memory (Raw)
-    double wiredMemoryinRaw;
-    
-    // Wired Memory (Percent)
-    double wiredMemoryinPercent;
-    
-    // Purgable Memory (Raw)
-    double purgableMemoryinRaw;
-    
-    // Purgable Memory (Percent)
-    double purgableMemoryinPercent;
-    
-    /* Accelerometer Information */
-    
-    // Device Orientation
-    UIInterfaceOrientation deviceOrientation;
-    
-    /* Localization Information */
-    
-    // Country
-    NSString *country;
-    
-    // Language
-    NSString *language;
-    
-    // TimeZone
-    NSString *timeZoneSS;
-    
-    // Currency Symbol
-    NSString *currency;
-    
-    /* Application Information */
-    
-    // Application Version
-    NSString *applicationVersion;
-    
-    // Clipboard Content
-    NSString *clipboardContent;
-    
-    /* Universal Unique Identifiers */
-    
-    // Unique ID
-    NSString *uniqueID;
-    
-    // Device Signature
-    NSString *deviceSignature;
-    
-    // CFUUID
-    NSString *cfuuid;
-    
-    // CPU Usage
-    float cpuUsage;
-}
+@interface SystemServices ()
 
 // Get all System Information (All Methods)
-- (NSDictionary *)getAllSystemInformation;
+- (nullable NSDictionary *)getAllSystemInformation;
 
 @end
 
 @implementation SystemServices
 
-@dynamic allSystemInformation, systemsUptime, deviceModel, deviceName, systemName, systemsVersion, systemDeviceTypeNotFormatted, systemDeviceTypeFormatted, screenWidth, screenHeight, screenBrightness, multitaskingEnabled, proximitySensorEnabled, debuggerAttached, pluggedIn, accessoriesAttached, headphonesAttached, numberAttachedAccessories, nameAttachedAccessories, carrierName, carrierCountry, carrierMobileCountryCode, carrierISOCountryCode, carrierMobileNetworkCode, carrierAllowsVOIP, batteryLevel, charging, fullyCharged, currentIPAddress, currentMACAddress, externalIPAddress, cellIPAddress, cellMACAddress, cellNetmaskAddress, cellBroadcastAddress, wiFiIPAddress, wiFiMACAddress, wiFiNetmaskAddress, wiFiBroadcastAddress, wiFiRouterAddress, connectedToWiFi, connectedToCellNetwork, diskSpace, freeDiskSpaceinRaw, freeDiskSpaceinPercent, usedDiskSpaceinRaw, usedDiskSpaceinPercent, longDiskSpace, longFreeDiskSpace, totalMemory, freeMemoryinRaw, freeMemoryinPercent, usedMemoryinRaw, usedMemoryinPercent, activeMemoryinRaw, activeMemoryinPercent, inactiveMemoryinRaw, inactiveMemoryinPercent, wiredMemoryinRaw, wiredMemoryinPercent, purgableMemoryinRaw, purgableMemoryinPercent, deviceOrientation, country, language, timeZoneSS, currency, applicationVersion, clipboardContent, cpuUsage;
+@dynamic allSystemInformation, systemsUptime, deviceModel, deviceName, systemName, systemsVersion, systemDeviceTypeNotFormatted, systemDeviceTypeFormatted, screenWidth, screenHeight, screenBrightness, multitaskingEnabled, proximitySensorEnabled, debuggerAttached, pluggedIn, jailbroken, numberProcessors, numberActiveProcessors, processorsUsage, accessoriesAttached, headphonesAttached, numberAttachedAccessories, nameAttachedAccessories, carrierName, carrierCountry, carrierMobileCountryCode, carrierISOCountryCode, carrierMobileNetworkCode, carrierAllowsVOIP, batteryLevel, charging, fullyCharged, currentIPAddress, externalIPAddress, cellIPAddress, cellNetmaskAddress, cellBroadcastAddress, wiFiIPAddress, wiFiNetmaskAddress, wiFiBroadcastAddress, wiFiRouterAddress, connectedToWiFi, connectedToCellNetwork, processID, diskSpace, freeDiskSpaceinRaw, freeDiskSpaceinPercent, usedDiskSpaceinRaw, usedDiskSpaceinPercent, longDiskSpace, longFreeDiskSpace, totalMemory, freeMemoryinRaw, freeMemoryinPercent, usedMemoryinRaw, usedMemoryinPercent, activeMemoryinRaw, activeMemoryinPercent, inactiveMemoryinRaw, inactiveMemoryinPercent, wiredMemoryinRaw, wiredMemoryinPercent, purgableMemoryinRaw, purgableMemoryinPercent, deviceOrientation, country, language, timeZoneSS, currency, applicationVersion, clipboardContent, cfuuid, applicationCPUUsage;
 
 // Singleton
-+ (id)sharedServices {
++ (nonnull instancetype)sharedServices {
     static SystemServices *sharedSystemServices = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedSystemServices = [[self alloc] init];
     });
     return sharedSystemServices;
-}
-
-// Init
-- (id)init {
-    if (self = [super init]) {
-        // Initialize variables
-        //[self refreshValues];
-    }
-    
-    return self;
 }
 
 // System Information
@@ -385,6 +87,22 @@
     return [SSHardwareInfo pluggedIn];
 }
 
+- (int)jailbroken {
+    return [SSJailbreakCheck jailbroken];
+}
+
+- (NSInteger)numberProcessors {
+    return [SSProcessorInfo numberProcessors];
+}
+
+- (NSInteger)numberActiveProcessors {
+    return [SSProcessorInfo numberActiveProcessors];
+}
+
+- (nullable NSArray *)processorsUsage {
+    return [SSProcessorInfo processorsUsage];
+}
+
 - (BOOL)accessoriesAttached {
     return [SSAccessoryInfo accessoriesAttached];
 }
@@ -437,51 +155,39 @@
     return [SSBatteryInfo fullyCharged];
 }
 
-- (NSString *)currentIPAddress {
+- (nullable NSString *)currentIPAddress {
     return [SSNetworkInfo currentIPAddress];
 }
 
-- (NSString *)currentMACAddress{
-    return [SSNetworkInfo currentMACAddress];
-}
-
-- (NSString *)externalIPAddress {
+- (nullable NSString *)externalIPAddress {
     return [SSNetworkInfo externalIPAddress];
 }
 
-- (NSString *)cellIPAddress {
+- (nullable NSString *)cellIPAddress {
     return [SSNetworkInfo cellIPAddress];
 }
 
-- (NSString *)cellMACAddress {
-    return [SSNetworkInfo cellMACAddress];
-}
-
-- (NSString *)cellNetmaskAddress {
+- (nullable NSString *)cellNetmaskAddress {
     return [SSNetworkInfo cellNetmaskAddress];
 }
 
-- (NSString *)cellBroadcastAddress {
+- (nullable NSString *)cellBroadcastAddress {
     return [SSNetworkInfo cellBroadcastAddress];
 }
 
-- (NSString *)wiFiIPAddress {
+- (nullable NSString *)wiFiIPAddress {
     return [SSNetworkInfo wiFiIPAddress];
 }
 
-- (NSString *)wiFiMACAddress {
-    return [SSNetworkInfo wiFiMACAddress];
-}
-
-- (NSString *)wiFiNetmaskAddress {
+- (nullable NSString *)wiFiNetmaskAddress {
     return [SSNetworkInfo wiFiNetmaskAddress];
 }
 
-- (NSString *)wiFiBroadcastAddress {
+- (nullable NSString *)wiFiBroadcastAddress {
     return [SSNetworkInfo wiFiBroadcastAddress];
 }
 
-- (NSString *)wiFiRouterAddress {
+- (nullable NSString *)wiFiRouterAddress {
     return [SSNetworkInfo wiFiRouterAddress];
 }
 
@@ -491,6 +197,10 @@
 
 - (BOOL)connectedToCellNetwork {
     return [SSNetworkInfo connectedToCellNetwork];
+}
+
+- (int)processID {
+    return [SSProcessInfo processID];
 }
 
 - (NSString *)diskSpace {
@@ -601,7 +311,11 @@
     return [SSApplicationInfo clipboardContent];
 }
 
-- (float)cpuUsage {
+- (NSString *)cfuuid {
+    return [SSUUID cfuuid];
+}
+
+- (float)applicationCPUUsage {
     return [SSApplicationInfo cpuUsage];
 }
 
@@ -609,431 +323,452 @@
     return [self getAllSystemInformation];
 }
 
+// Private //
+
 // Get all System Information (All Methods)
 - (NSDictionary *)getAllSystemInformation {
-    // Create an array
-    NSDictionary *SystemInformationDict;
+    
+    // Create a dictionary
+    NSDictionary *systemInformationDict;
     
     // Set up all System Values
-    NSString *SystemUptime = [self systemsUptime];
-    NSString *DeviceModel = [self deviceModel];
-    NSString *DeviceName = [self deviceName];
-    NSString *SystemName = [self systemName];
-    NSString *SystemVersion = [self systemsVersion];
-    NSString *SystemDeviceTypeFormattedNO = [self systemDeviceTypeNotFormatted];
-    NSString *SystemDeviceTypeFormattedYES = [self systemDeviceTypeFormatted];
-    NSString *ScreenWidth = [NSString stringWithFormat:@"%ld", (long)[self screenWidth]];
-    NSString *ScreenHeight = [NSString stringWithFormat:@"%ld", (long)[self screenHeight]];
-    NSString *ScreenBrightness = [NSString stringWithFormat:@"%f", [self screenBrightness]];
-    NSString *MultitaskingEnabled = ([self multitaskingEnabled]) ? @"Yes" : @"No";
-    NSString *ProximitySensorEnabled = ([self proximitySensorEnabled]) ? @"Yes" : @"No";
-    NSString *DebuggerAttached = ([self debuggerAttached]) ? @"Yes" : @"No";
-    NSString *PluggedIn = ([self pluggedIn]) ? @"Yes" : @"No";
-    NSString *AccessoriesAttached = ([self accessoriesAttached]) ? @"Yes" : @"No";
-    NSString *HeadphonesAttached = ([self headphonesAttached]) ? @"Yes" : @"No";
-    NSString *NumberAttachedAccessories = [NSString stringWithFormat:@"%ld", (long)[self numberAttachedAccessories]];
-    NSString *NameAttachedAccessories = [self nameAttachedAccessories];
-    NSString *CarrierName = [self carrierName];
-    NSString *CarrierCountry = [self carrierCountry];
-    NSString *CarrierMobileCountryCode = [self carrierMobileCountryCode];
-    NSString *CarrierISOCountryCode = [self carrierISOCountryCode];
-    NSString *CarrierMobileNetworkCode = [self carrierMobileNetworkCode];
-    NSString *CarrierAllowsVOIP = ([self carrierAllowsVOIP]) ? @"Yes" : @"No";
-    NSString *BatteryLevel = [NSString stringWithFormat:@"%f", [self batteryLevel]];
-    NSString *Charging = ([self charging]) ? @"Yes" : @"No";
-    NSString *FullyCharged = ([self fullyCharged]) ? @"Yes" : @"No";
-    NSString *CurrentIPAddress = [self currentIPAddress];
-    NSString *CurrentMACAddress = [self currentMACAddress];
-    NSString *ExternalIPAddress = [self externalIPAddress];
-    NSString *CellIPAddress = [self cellIPAddress];
-    NSString *CellMACAddress = [self cellMACAddress];
-    NSString *CellNetmaskAddress = [self cellNetmaskAddress];
-    NSString *CellBroadcastAddress = [self cellBroadcastAddress];
-    NSString *WiFiIPAddress = [self wiFiIPAddress];
-    NSString *WiFiMACAddress = [self wiFiMACAddress];
-    NSString *WiFiNetmaskAddress = [self wiFiNetmaskAddress];
-    NSString *WiFiBroadcastAddress = [self wiFiBroadcastAddress];
-    NSString *WiFiRouterAddress = [self wiFiRouterAddress];
-    NSString *ConnectedToWiFi = ([self connectedToWiFi]) ? @"Yes" : @"No";
-    NSString *ConnectedToCellNetwork = ([self connectedToCellNetwork]) ? @"Yes" : @"No";
-    NSString *DiskSpace = [self diskSpace];
-    NSString *FreeDiskSpaceNO = [self freeDiskSpaceinRaw];
-    NSString *FreeDiskSpaceYES = [self freeDiskSpaceinPercent];
-    NSString *UsedDiskSpaceNO = [self usedDiskSpaceinRaw];
-    NSString *UsedDiskSpaceYES = [self usedDiskSpaceinPercent];
-    NSString *LongDiskSpace = [NSString stringWithFormat:@"%lld", [self longDiskSpace]];
-    NSString *LongFreeDiskSpace = [NSString stringWithFormat:@"%lld", [self longFreeDiskSpace]];
-    NSString *TotalMemory = [NSString stringWithFormat:@"%f", [self totalMemory]];
-    NSString *FreeMemoryNO = [NSString stringWithFormat:@"%f", [self freeMemoryinRaw]];
-    NSString *FreeMemoryYES = [NSString stringWithFormat:@"%f", [self freeMemoryinPercent]];
-    NSString *UsedMemoryNO = [NSString stringWithFormat:@"%f", [self usedMemoryinRaw]];
-    NSString *UsedMemoryYES = [NSString stringWithFormat:@"%f", [self usedMemoryinPercent]];
-    NSString *ActiveMemoryNO = [NSString stringWithFormat:@"%f", [self activeMemoryinRaw]];
-    NSString *ActiveMemoryYES = [NSString stringWithFormat:@"%f", [self activeMemoryinPercent]];
-    NSString *InactiveMemoryNO = [NSString stringWithFormat:@"%f", [self inactiveMemoryinRaw]];
-    NSString *InactiveMemoryYES = [NSString stringWithFormat:@"%f", [self inactiveMemoryinPercent]];
-    NSString *WiredMemoryNO = [NSString stringWithFormat:@"%f", [self wiredMemoryinRaw]];
-    NSString *WiredMemoryYES = [NSString stringWithFormat:@"%f", [self wiredMemoryinPercent]];
-    NSString *PurgableMemoryNO = [NSString stringWithFormat:@"%f", [self purgableMemoryinRaw]];
-    NSString *PurgableMemoryYES = [NSString stringWithFormat:@"%f", [self purgableMemoryinPercent]];
-    NSString *DeviceOrientation = [NSString stringWithFormat:@"%ld", (long)[self deviceOrientation]];
-    NSString *Country = [self country];
-    NSString *Language = [self language];
-    NSString *TimeZone = [self timeZoneSS];
-    NSString *Currency = [self currency];
-    NSString *ApplicationVersion = [self applicationVersion];
-    NSString *ClipboardContent = [self clipboardContent];
-    NSString *CPUUsage = [NSString stringWithFormat:@"%f", [self cpuUsage]];
+    NSString *systemUptime = [self systemsUptime];
+    NSString *deviceModel = [self deviceModel];
+    NSString *deviceName = [self deviceName];
+    NSString *systemName = [self systemName];
+    NSString *systemVersion = [self systemsVersion];
+    NSString *systemDeviceTypeFormattedNO = [self systemDeviceTypeNotFormatted];
+    NSString *systemDeviceTypeFormattedYES = [self systemDeviceTypeFormatted];
+    NSString *screenWidth = [NSString stringWithFormat:@"%ld", (long)[self screenWidth]];
+    NSString *screenHeight = [NSString stringWithFormat:@"%ld", (long)[self screenHeight]];
+    NSString *screenBrightness = [NSString stringWithFormat:@"%f", [self screenBrightness]];
+    NSString *multitaskingEnabled = ([self multitaskingEnabled]) ? @"Yes" : @"No";
+    NSString *proximitySensorEnabled = ([self proximitySensorEnabled]) ? @"Yes" : @"No";
+    NSString *debuggerAttached = ([self debuggerAttached]) ? @"Yes" : @"No";
+    NSString *pluggedIn = ([self pluggedIn]) ? @"Yes" : @"No";
+    NSString *jailbroken = [NSString stringWithFormat:@"%d", [self jailbroken]];
+    NSString *numberProcessors = [NSString stringWithFormat:@"%ld", (long)[self numberProcessors]];
+    NSString *numberActiveProcessors = [NSString stringWithFormat:@"%ld", (long)[self numberActiveProcessors]];
+    NSString *processorsUsage = [NSString stringWithFormat:@"%@", [self processorsUsage]];
+    NSString *accessoriesAttached = ([self accessoriesAttached]) ? @"Yes" : @"No";
+    NSString *headphonesAttached = ([self headphonesAttached]) ? @"Yes" : @"No";
+    NSString *numberAttachedAccessories = [NSString stringWithFormat:@"%ld", (long)[self numberAttachedAccessories]];
+    NSString *nameAttachedAccessories = [self nameAttachedAccessories];
+    NSString *carrierName = [self carrierName];
+    NSString *carrierCountry = [self carrierCountry];
+    NSString *carrierMobileCountryCode = [self carrierMobileCountryCode];
+    NSString *carrierISOCountryCode = [self carrierISOCountryCode];
+    NSString *carrierMobileNetworkCode = [self carrierMobileNetworkCode];
+    NSString *carrierAllowsVOIP = ([self carrierAllowsVOIP]) ? @"Yes" : @"No";
+    NSString *batteryLevel = [NSString stringWithFormat:@"%f", [self batteryLevel]];
+    NSString *charging = ([self charging]) ? @"Yes" : @"No";
+    NSString *fullyCharged = ([self fullyCharged]) ? @"Yes" : @"No";
+    NSString *currentIPAddress = [self currentIPAddress];
+    NSString *externalIPAddress = [self externalIPAddress];
+    NSString *cellIPAddress = [self cellIPAddress];
+    NSString *cellNetmaskAddress = [self cellNetmaskAddress];
+    NSString *cellBroadcastAddress = [self cellBroadcastAddress];
+    NSString *wiFiIPAddress = [self wiFiIPAddress];
+    NSString *wiFiNetmaskAddress = [self wiFiNetmaskAddress];
+    NSString *wiFiBroadcastAddress = [self wiFiBroadcastAddress];
+    NSString *wiFiRouterAddress = [self wiFiRouterAddress];
+    NSString *connectedToWiFi = ([self connectedToWiFi]) ? @"Yes" : @"No";
+    NSString *connectedToCellNetwork = ([self connectedToCellNetwork]) ? @"Yes" : @"No";
+    NSString *processID = [NSString stringWithFormat:@"%d", [self processID]];
+    NSString *diskSpace = [self diskSpace];
+    NSString *freeDiskSpaceNO = [self freeDiskSpaceinRaw];
+    NSString *freeDiskSpaceYES = [self freeDiskSpaceinPercent];
+    NSString *usedDiskSpaceNO = [self usedDiskSpaceinRaw];
+    NSString *usedDiskSpaceYES = [self usedDiskSpaceinPercent];
+    NSString *longDiskSpace = [NSString stringWithFormat:@"%lld", [self longDiskSpace]];
+    NSString *longFreeDiskSpace = [NSString stringWithFormat:@"%lld", [self longFreeDiskSpace]];
+    NSString *totalMemory = [NSString stringWithFormat:@"%f", [self totalMemory]];
+    NSString *freeMemoryNO = [NSString stringWithFormat:@"%f", [self freeMemoryinRaw]];
+    NSString *freeMemoryYES = [NSString stringWithFormat:@"%f", [self freeMemoryinPercent]];
+    NSString *usedMemoryNO = [NSString stringWithFormat:@"%f", [self usedMemoryinRaw]];
+    NSString *usedMemoryYES = [NSString stringWithFormat:@"%f", [self usedMemoryinPercent]];
+    NSString *activeMemoryNO = [NSString stringWithFormat:@"%f", [self activeMemoryinRaw]];
+    NSString *activeMemoryYES = [NSString stringWithFormat:@"%f", [self activeMemoryinPercent]];
+    NSString *inactiveMemoryNO = [NSString stringWithFormat:@"%f", [self inactiveMemoryinRaw]];
+    NSString *inactiveMemoryYES = [NSString stringWithFormat:@"%f", [self inactiveMemoryinPercent]];
+    NSString *wiredMemoryNO = [NSString stringWithFormat:@"%f", [self wiredMemoryinRaw]];
+    NSString *wiredMemoryYES = [NSString stringWithFormat:@"%f", [self wiredMemoryinPercent]];
+    NSString *purgableMemoryNO = [NSString stringWithFormat:@"%f", [self purgableMemoryinRaw]];
+    NSString *purgableMemoryYES = [NSString stringWithFormat:@"%f", [self purgableMemoryinPercent]];
+    NSString *deviceOrientation = [NSString stringWithFormat:@"%ld", (long)[self deviceOrientation]];
+    NSString *country = [self country];
+    NSString *language = [self language];
+    NSString *timeZone = [self timeZoneSS];
+    NSString *currency = [self currency];
+    NSString *applicationVersion = [self applicationVersion];
+    NSString *clipboardContent = [self clipboardContent];
+    NSString *cFUUID = [self cfuuid];
+    NSString *cPUUsage = [NSString stringWithFormat:@"%f", [self applicationCPUUsage]];
     
     // Check to make sure all values are valid (if not, make them)
-    if (SystemUptime == nil || SystemUptime.length <= 0) {
+    if (systemUptime == nil || systemUptime.length <= 0) {
         // Invalid value
-        SystemUptime = @"Unknown";
+        systemUptime = @"Unknown";
     }
-    if (DeviceModel == nil || DeviceModel.length <= 0) {
+    if (deviceModel == nil || deviceModel.length <= 0) {
         // Invalid value
-        DeviceModel = @"Unknown";
+        deviceModel = @"Unknown";
     }
-    if (DeviceName == nil || DeviceName.length <= 0) {
+    if (deviceName == nil || deviceName.length <= 0) {
         // Invalid value
-        DeviceName = @"Unknown";
+        deviceName = @"Unknown";
     }
-    if (SystemName == nil || SystemName.length <= 0) {
+    if (systemName == nil || systemName.length <= 0) {
         // Invalid value
-        SystemName = @"Unknown";
+        systemName = @"Unknown";
     }
-    if (SystemVersion == nil || SystemVersion.length <= 0) {
+    if (systemVersion == nil || systemVersion.length <= 0) {
         // Invalid value
-        SystemVersion = @"Unknown";
+        systemVersion = @"Unknown";
     }
-    if (SystemDeviceTypeFormattedNO == nil || SystemDeviceTypeFormattedNO.length <= 0) {
+    if (systemDeviceTypeFormattedNO == nil || systemDeviceTypeFormattedNO.length <= 0) {
         // Invalid value
-        SystemDeviceTypeFormattedNO = @"Unknown";
+        systemDeviceTypeFormattedNO = @"Unknown";
     }
-    if (SystemDeviceTypeFormattedYES == nil || SystemDeviceTypeFormattedYES.length <= 0) {
+    if (systemDeviceTypeFormattedYES == nil || systemDeviceTypeFormattedYES.length <= 0) {
         // Invalid value
-        SystemDeviceTypeFormattedYES = @"Unknown";
+        systemDeviceTypeFormattedYES = @"Unknown";
     }
-    if (ScreenWidth == nil || ScreenWidth.length <= 0) {
+    if (screenWidth == nil || screenWidth.length <= 0) {
         // Invalid value
-        ScreenWidth = @"Unknown";
+        screenWidth = @"Unknown";
     }
-    if (ScreenHeight == nil || ScreenHeight.length <= 0) {
+    if (screenHeight == nil || screenHeight.length <= 0) {
         // Invalid value
-        ScreenHeight = @"Unknown";
+        screenHeight = @"Unknown";
     }
-    if (ScreenBrightness == nil || ScreenBrightness.length <= 0) {
+    if (screenBrightness == nil || screenBrightness.length <= 0) {
         // Invalid value
-        ScreenBrightness = @"Unknown";
+        screenBrightness = @"Unknown";
     }
-    if (MultitaskingEnabled == nil || MultitaskingEnabled.length <= 0) {
+    if (multitaskingEnabled == nil || multitaskingEnabled.length <= 0) {
         // Invalid value
-        MultitaskingEnabled = @"Unknown";
+        multitaskingEnabled = @"Unknown";
     }
-    if (ProximitySensorEnabled == nil || ProximitySensorEnabled.length <= 0) {
+    if (proximitySensorEnabled == nil || proximitySensorEnabled.length <= 0) {
         // Invalid value
-        ProximitySensorEnabled = @"Unknown";
+        proximitySensorEnabled = @"Unknown";
     }
-    if (DebuggerAttached == nil || DebuggerAttached.length <= 0) {
+    if (debuggerAttached == nil || debuggerAttached.length <= 0) {
         // Invalid value
-        DebuggerAttached = @"Unknown";
+        debuggerAttached = @"Unknown";
     }
-    if (PluggedIn == nil || PluggedIn.length <= 0) {
+    if (pluggedIn == nil || pluggedIn.length <= 0) {
         // Invalid value
-        PluggedIn = @"Unknown";
+        pluggedIn = @"Unknown";
     }
-    if (AccessoriesAttached == nil || AccessoriesAttached.length <= 0) {
+    if (jailbroken == nil || jailbroken.length <= 0) {
         // Invalid value
-        AccessoriesAttached = @"Unknown";
+        jailbroken = @"Unknown";
     }
-    if (HeadphonesAttached == nil || HeadphonesAttached.length <= 0) {
+    if (numberProcessors == nil || numberProcessors.length <= 0) {
         // Invalid value
-        HeadphonesAttached = @"Unknown";
+        numberProcessors = @"Unknown";
     }
-    if (NumberAttachedAccessories == nil || NumberAttachedAccessories.length <= 0) {
+    if (numberActiveProcessors == nil || numberActiveProcessors.length <= 0) {
         // Invalid value
-        NumberAttachedAccessories = @"Unknown";
+        numberActiveProcessors = @"Unknown";
     }
-    if (NameAttachedAccessories == nil || NameAttachedAccessories.length <= 0) {
+    if (processorsUsage == nil || processorsUsage.length <= 0) {
         // Invalid value
-        NameAttachedAccessories = @"Unknown";
+        processorsUsage = @"Unknown";
     }
-    if (CarrierName == nil || CarrierName.length <= 0) {
+    if (accessoriesAttached == nil || accessoriesAttached.length <= 0) {
         // Invalid value
-        CarrierName = @"Unknown";
+        accessoriesAttached = @"Unknown";
     }
-    if (CarrierCountry == nil || CarrierCountry.length <= 0) {
+    if (headphonesAttached == nil || headphonesAttached.length <= 0) {
         // Invalid value
-        CarrierCountry = @"Unknown";
+        headphonesAttached = @"Unknown";
     }
-    if (CarrierMobileCountryCode == nil || CarrierMobileCountryCode.length <= 0) {
+    if (numberAttachedAccessories == nil || numberAttachedAccessories.length <= 0) {
         // Invalid value
-        CarrierMobileCountryCode = @"Unknown";
+        numberAttachedAccessories = @"Unknown";
     }
-    if (CarrierISOCountryCode == nil || CarrierISOCountryCode.length <= 0) {
+    if (nameAttachedAccessories == nil || nameAttachedAccessories.length <= 0) {
         // Invalid value
-        CarrierISOCountryCode = @"Unknown";
+        nameAttachedAccessories = @"Unknown";
     }
-    if (CarrierMobileNetworkCode == nil || CarrierMobileNetworkCode.length <= 0) {
+    if (carrierName == nil || carrierName.length <= 0) {
         // Invalid value
-        CarrierMobileNetworkCode = @"Unknown";
+        carrierName = @"Unknown";
     }
-    if (CarrierAllowsVOIP == nil || CarrierAllowsVOIP.length <= 0) {
+    if (carrierCountry == nil || carrierCountry.length <= 0) {
         // Invalid value
-        CarrierAllowsVOIP = @"Unknown";
+        carrierCountry = @"Unknown";
     }
-    if (BatteryLevel == nil || BatteryLevel.length <= 0) {
+    if (carrierMobileCountryCode == nil || carrierMobileCountryCode.length <= 0) {
         // Invalid value
-        BatteryLevel = @"Unknown";
+        carrierMobileCountryCode = @"Unknown";
     }
-    if (Charging == nil || Charging.length <= 0) {
+    if (carrierISOCountryCode == nil || carrierISOCountryCode.length <= 0) {
         // Invalid value
-        Charging = @"Unknown";
+        carrierISOCountryCode = @"Unknown";
     }
-    if (FullyCharged == nil || FullyCharged.length <= 0) {
+    if (carrierMobileNetworkCode == nil || carrierMobileNetworkCode.length <= 0) {
         // Invalid value
-        FullyCharged = @"Unknown";
+        carrierMobileNetworkCode = @"Unknown";
     }
-    if (CurrentIPAddress == nil || CurrentIPAddress.length <= 0) {
+    if (carrierAllowsVOIP == nil || carrierAllowsVOIP.length <= 0) {
         // Invalid value
-        CurrentIPAddress = @"Unknown";
+        carrierAllowsVOIP = @"Unknown";
     }
-    if (CurrentMACAddress == nil || CurrentMACAddress.length <= 0) {
+    if (batteryLevel == nil || batteryLevel.length <= 0) {
         // Invalid value
-        CurrentMACAddress = @"Unknown";
+        batteryLevel = @"Unknown";
     }
-    if (ExternalIPAddress == nil || ExternalIPAddress.length <= 0) {
+    if (charging == nil || charging.length <= 0) {
         // Invalid value
-        ExternalIPAddress = @"Unknown";
+        charging = @"Unknown";
     }
-    if (CellIPAddress == nil || CellIPAddress.length <= 0) {
+    if (fullyCharged == nil || fullyCharged.length <= 0) {
         // Invalid value
-        CellIPAddress = @"Unknown";
+        fullyCharged = @"Unknown";
     }
-    if (CellMACAddress == nil || CellMACAddress.length <= 0) {
+    if (currentIPAddress == nil || currentIPAddress.length <= 0) {
         // Invalid value
-        CellMACAddress = @"Unknown";
+        currentIPAddress = @"Unknown";
     }
-    if (CellNetmaskAddress == nil || CellNetmaskAddress.length <= 0) {
+    if (externalIPAddress == nil || externalIPAddress.length <= 0) {
         // Invalid value
-        CellNetmaskAddress = @"Unknown";
+        externalIPAddress = @"Unknown";
     }
-    if (CellBroadcastAddress == nil || CellBroadcastAddress.length <= 0) {
+    if (cellIPAddress == nil || cellIPAddress.length <= 0) {
         // Invalid value
-        CellBroadcastAddress = @"Unknown";
+        cellIPAddress = @"Unknown";
     }
-    if (WiFiIPAddress == nil || WiFiIPAddress.length <= 0) {
+    if (cellNetmaskAddress == nil || cellNetmaskAddress.length <= 0) {
         // Invalid value
-        WiFiIPAddress = @"Unknown";
+        cellNetmaskAddress = @"Unknown";
     }
-    if (WiFiMACAddress == nil || WiFiMACAddress.length <= 0) {
+    if (cellBroadcastAddress == nil || cellBroadcastAddress.length <= 0) {
         // Invalid value
-        WiFiMACAddress = @"Unknown";
+        cellBroadcastAddress = @"Unknown";
     }
-    if (WiFiNetmaskAddress == nil || WiFiNetmaskAddress.length <= 0) {
+    if (wiFiIPAddress == nil || wiFiIPAddress.length <= 0) {
         // Invalid value
-        WiFiNetmaskAddress = @"Unknown";
+        wiFiIPAddress = @"Unknown";
     }
-    if (WiFiBroadcastAddress == nil || WiFiBroadcastAddress.length <= 0) {
+    if (wiFiNetmaskAddress == nil || wiFiNetmaskAddress.length <= 0) {
         // Invalid value
-        WiFiBroadcastAddress = @"Unknown";
+        wiFiNetmaskAddress = @"Unknown";
     }
-    if (WiFiRouterAddress == nil || WiFiRouterAddress.length <= 0) {
+    if (wiFiBroadcastAddress == nil || wiFiBroadcastAddress.length <= 0) {
         // Invalid value
-        WiFiRouterAddress = @"Unknown";
+        wiFiBroadcastAddress = @"Unknown";
     }
-    if (ConnectedToWiFi == nil || ConnectedToWiFi.length <= 0) {
+    if (wiFiRouterAddress == nil || wiFiRouterAddress.length <= 0) {
         // Invalid value
-        ConnectedToWiFi = @"Unknown";
+        wiFiRouterAddress = @"Unknown";
     }
-    if (ConnectedToCellNetwork == nil || ConnectedToCellNetwork.length <= 0) {
+    if (connectedToWiFi == nil || connectedToWiFi.length <= 0) {
         // Invalid value
-        ConnectedToCellNetwork = @"Unknown";
+        connectedToWiFi = @"Unknown";
     }
-    if (DiskSpace == nil || DiskSpace.length <= 0) {
+    if (connectedToCellNetwork == nil || connectedToCellNetwork.length <= 0) {
         // Invalid value
-        DiskSpace = @"Unknown";
+        connectedToCellNetwork = @"Unknown";
     }
-    if (FreeDiskSpaceNO == nil || FreeDiskSpaceNO.length <= 0) {
+    if (processID == nil || processID.length <= 0) {
         // Invalid value
-        FreeDiskSpaceNO = @"Unknown";
+        processID = @"Unknown";
     }
-    if (FreeDiskSpaceYES == nil || FreeDiskSpaceYES.length <= 0) {
+    if (diskSpace == nil || diskSpace.length <= 0) {
         // Invalid value
-        FreeDiskSpaceYES = @"Unknown";
+        diskSpace = @"Unknown";
     }
-    if (UsedDiskSpaceNO == nil || UsedDiskSpaceNO.length <= 0) {
+    if (freeDiskSpaceNO == nil || freeDiskSpaceNO.length <= 0) {
         // Invalid value
-        UsedDiskSpaceNO = @"Unknown";
+        freeDiskSpaceNO = @"Unknown";
     }
-    if (UsedDiskSpaceYES == nil || UsedDiskSpaceYES.length <= 0) {
+    if (freeDiskSpaceYES == nil || freeDiskSpaceYES.length <= 0) {
         // Invalid value
-        UsedDiskSpaceYES = @"Unknown";
+        freeDiskSpaceYES = @"Unknown";
     }
-    if (LongDiskSpace == nil || LongDiskSpace.length <= 0) {
+    if (usedDiskSpaceNO == nil || usedDiskSpaceNO.length <= 0) {
         // Invalid value
-        LongDiskSpace = @"Unknown";
+        usedDiskSpaceNO = @"Unknown";
     }
-    if (LongFreeDiskSpace == nil || LongFreeDiskSpace.length <= 0) {
+    if (usedDiskSpaceYES == nil || usedDiskSpaceYES.length <= 0) {
         // Invalid value
-        LongFreeDiskSpace = @"Unknown";
+        usedDiskSpaceYES = @"Unknown";
     }
-    if (TotalMemory == nil || TotalMemory.length <= 0) {
+    if (longDiskSpace == nil || longDiskSpace.length <= 0) {
         // Invalid value
-        TotalMemory = @"Unknown";
+        longDiskSpace = @"Unknown";
     }
-    if (FreeMemoryNO == nil || FreeMemoryNO.length <= 0) {
+    if (longFreeDiskSpace == nil || longFreeDiskSpace.length <= 0) {
         // Invalid value
-        FreeMemoryNO = @"Unknown";
+        longFreeDiskSpace = @"Unknown";
     }
-    if (FreeMemoryYES == nil || FreeMemoryYES.length <= 0) {
+    if (totalMemory == nil || totalMemory.length <= 0) {
         // Invalid value
-        FreeMemoryYES = @"Unknown";
+        totalMemory = @"Unknown";
     }
-    if (UsedMemoryNO == nil || UsedMemoryNO.length <= 0) {
+    if (freeMemoryNO == nil || freeMemoryNO.length <= 0) {
         // Invalid value
-        UsedMemoryNO = @"Unknown";
+        freeMemoryNO = @"Unknown";
     }
-    if (UsedMemoryYES == nil || UsedMemoryYES.length <= 0) {
+    if (freeMemoryYES == nil || freeMemoryYES.length <= 0) {
         // Invalid value
-        UsedMemoryYES = @"Unknown";
+        freeMemoryYES = @"Unknown";
     }
-    if (ActiveMemoryNO == nil || ActiveMemoryNO.length <= 0) {
+    if (usedMemoryNO == nil || usedMemoryNO.length <= 0) {
         // Invalid value
-        ActiveMemoryNO = @"Unknown";
+        usedMemoryNO = @"Unknown";
     }
-    if (ActiveMemoryYES == nil || ActiveMemoryYES.length <= 0) {
+    if (usedMemoryYES == nil || usedMemoryYES.length <= 0) {
         // Invalid value
-        ActiveMemoryYES = @"Unknown";
+        usedMemoryYES = @"Unknown";
     }
-    if (InactiveMemoryNO == nil || InactiveMemoryNO.length <= 0) {
+    if (activeMemoryNO == nil || activeMemoryNO.length <= 0) {
         // Invalid value
-        InactiveMemoryNO = @"Unknown";
+        activeMemoryNO = @"Unknown";
     }
-    if (InactiveMemoryYES == nil || InactiveMemoryYES.length <= 0) {
+    if (activeMemoryYES == nil || activeMemoryYES.length <= 0) {
         // Invalid value
-        InactiveMemoryYES = @"Unknown";
+        activeMemoryYES = @"Unknown";
     }
-    if (WiredMemoryNO == nil || WiredMemoryNO.length <= 0) {
+    if (inactiveMemoryNO == nil || inactiveMemoryNO.length <= 0) {
         // Invalid value
-        WiredMemoryNO = @"Unknown";
+        inactiveMemoryNO = @"Unknown";
     }
-    if (WiredMemoryYES == nil || WiredMemoryYES.length <= 0) {
+    if (inactiveMemoryYES == nil || inactiveMemoryYES.length <= 0) {
         // Invalid value
-        WiredMemoryYES = @"Unknown";
+        inactiveMemoryYES = @"Unknown";
     }
-    if (PurgableMemoryNO == nil || PurgableMemoryNO.length <= 0) {
+    if (wiredMemoryNO == nil || wiredMemoryNO.length <= 0) {
         // Invalid value
-        PurgableMemoryNO = @"Unknown";
+        wiredMemoryNO = @"Unknown";
     }
-    if (PurgableMemoryYES == nil || PurgableMemoryYES.length <= 0) {
+    if (wiredMemoryYES == nil || wiredMemoryYES.length <= 0) {
         // Invalid value
-        PurgableMemoryYES = @"Unknown";
+        wiredMemoryYES = @"Unknown";
     }
-    if (DeviceOrientation == nil || DeviceOrientation.length <= 0) {
+    if (purgableMemoryNO == nil || purgableMemoryNO.length <= 0) {
         // Invalid value
-        DeviceOrientation = @"Unknown";
+        purgableMemoryNO = @"Unknown";
     }
-    if (Country == nil || Country.length <= 0) {
+    if (purgableMemoryYES == nil || purgableMemoryYES.length <= 0) {
         // Invalid value
-        Country = @"Unknown";
+        purgableMemoryYES = @"Unknown";
     }
-    if (Language == nil || Language.length <= 0) {
+    if (deviceOrientation == nil || deviceOrientation.length <= 0) {
         // Invalid value
-        Language = @"Unknown";
+        deviceOrientation = @"Unknown";
     }
-    if (TimeZone == nil || TimeZone.length <= 0) {
+    if (country == nil || country.length <= 0) {
         // Invalid value
-        TimeZone = @"Unknown";
+        country = @"Unknown";
     }
-    if (Currency == nil || Currency.length <= 0) {
+    if (language == nil || language.length <= 0) {
         // Invalid value
-        Currency = @"Unknown";
+        language = @"Unknown";
     }
-    if (ApplicationVersion == nil || ApplicationVersion.length <= 0) {
+    if (timeZone == nil || timeZone.length <= 0) {
         // Invalid value
-        ApplicationVersion = @"Unknown";
+        timeZone = @"Unknown";
     }
-    if (ClipboardContent == nil || ClipboardContent.length <= 0) {
+    if (currency == nil || currency.length <= 0) {
         // Invalid value
-        ClipboardContent = @"Unknown";
+        currency = @"Unknown";
     }
-    if (CPUUsage == nil || CPUUsage.length <= 0) {
+    if (applicationVersion == nil || applicationVersion.length <= 0) {
         // Invalid value
-        CPUUsage = @"Unknown";
+        applicationVersion = @"Unknown";
+    }
+    if (clipboardContent == nil || clipboardContent.length <= 0) {
+        // Invalid value
+        clipboardContent = @"Unknown";
+    }
+    if (cFUUID == nil || cFUUID.length <= 0) {
+        // Invalid value
+        cFUUID = @"Unknown";
+    }
+    if (cPUUsage == nil || cPUUsage.length <= 0) {
+        // Invalid value
+        cPUUsage = @"Unknown";
     }
     
     // Get all Information in a dictionary
-    SystemInformationDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                                 SystemUptime,
-                                                                 DeviceModel,
-                                                                 DeviceName,
-                                                                 SystemName,
-                                                                 SystemVersion,
-                                                                 SystemDeviceTypeFormattedNO,
-                                                                 SystemDeviceTypeFormattedYES,
-                                                                 ScreenWidth,
-                                                                 ScreenHeight,
-                                                                 ScreenBrightness,
-                                                                 MultitaskingEnabled,
-                                                                 ProximitySensorEnabled,
-                                                                 DebuggerAttached,
-                                                                 PluggedIn,
-                                                                 AccessoriesAttached,
-                                                                 HeadphonesAttached,
-                                                                 NumberAttachedAccessories,
-                                                                 NameAttachedAccessories,
-                                                                 CarrierName,
-                                                                 CarrierCountry,
-                                                                 CarrierMobileCountryCode,
-                                                                 CarrierISOCountryCode,
-                                                                 CarrierMobileNetworkCode,
-                                                                 CarrierAllowsVOIP,
-                                                                 BatteryLevel,
-                                                                 Charging,
-                                                                 FullyCharged,
-                                                                 CurrentIPAddress,
-                                                                 CurrentMACAddress,
-                                                                 ExternalIPAddress,
-                                                                 CellIPAddress,
-                                                                 CellMACAddress,
-                                                                 CellNetmaskAddress,
-                                                                 CellBroadcastAddress,
-                                                                 WiFiIPAddress,
-                                                                 WiFiMACAddress,
-                                                                 WiFiNetmaskAddress,
-                                                                 WiFiBroadcastAddress,
-                                                                 WiFiRouterAddress,
-                                                                 ConnectedToWiFi,
-                                                                 ConnectedToCellNetwork,
-                                                                 DiskSpace,
-                                                                 FreeDiskSpaceNO,
-                                                                 FreeDiskSpaceYES,
-                                                                 UsedDiskSpaceNO,
-                                                                 UsedDiskSpaceYES,
-                                                                 LongDiskSpace,
-                                                                 LongFreeDiskSpace,
-                                                                 TotalMemory,
-                                                                 FreeMemoryNO,
-                                                                 FreeMemoryYES,
-                                                                 UsedMemoryNO,
-                                                                 UsedMemoryYES,
-                                                                 ActiveMemoryNO,
-                                                                 ActiveMemoryYES,
-                                                                 InactiveMemoryNO,
-                                                                 InactiveMemoryYES,
-                                                                 WiredMemoryNO,
-                                                                 WiredMemoryYES,
-                                                                 PurgableMemoryNO,
-                                                                 PurgableMemoryYES,
-                                                                 DeviceOrientation,
-                                                                 Country,
-                                                                 Language,
-                                                                 TimeZone,
-                                                                 Currency,
-                                                                 ApplicationVersion,
-                                                                 ClipboardContent,
-                                                                 CPUUsage,
+    systemInformationDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
+                                                                 systemUptime,
+                                                                 deviceModel,
+                                                                 deviceName,
+                                                                 systemName,
+                                                                 systemVersion,
+                                                                 systemDeviceTypeFormattedNO,
+                                                                 systemDeviceTypeFormattedYES,
+                                                                 screenWidth,
+                                                                 screenHeight,
+                                                                 screenBrightness,
+                                                                 multitaskingEnabled,
+                                                                 proximitySensorEnabled,
+                                                                 debuggerAttached,
+                                                                 pluggedIn,
+                                                                 jailbroken,
+                                                                 numberProcessors,
+                                                                 numberActiveProcessors,
+                                                                 processorsUsage,
+                                                                 accessoriesAttached,
+                                                                 headphonesAttached,
+                                                                 numberAttachedAccessories,
+                                                                 nameAttachedAccessories,
+                                                                 carrierName,
+                                                                 carrierCountry,
+                                                                 carrierMobileCountryCode,
+                                                                 carrierISOCountryCode,
+                                                                 carrierMobileNetworkCode,
+                                                                 carrierAllowsVOIP,
+                                                                 batteryLevel,
+                                                                 charging,
+                                                                 fullyCharged,
+                                                                 currentIPAddress,
+                                                                 externalIPAddress,
+                                                                 cellIPAddress,
+                                                                 cellNetmaskAddress,
+                                                                 cellBroadcastAddress,
+                                                                 wiFiIPAddress,
+                                                                 wiFiNetmaskAddress,
+                                                                 wiFiBroadcastAddress,
+                                                                 wiFiRouterAddress,
+                                                                 connectedToWiFi,
+                                                                 connectedToCellNetwork,
+                                                                 processID,
+                                                                 diskSpace,
+                                                                 freeDiskSpaceNO,
+                                                                 freeDiskSpaceYES,
+                                                                 usedDiskSpaceNO,
+                                                                 usedDiskSpaceYES,
+                                                                 longDiskSpace,
+                                                                 longFreeDiskSpace,
+                                                                 totalMemory,
+                                                                 freeMemoryNO,
+                                                                 freeMemoryYES,
+                                                                 usedMemoryNO,
+                                                                 usedMemoryYES,
+                                                                 activeMemoryNO,
+                                                                 activeMemoryYES,
+                                                                 inactiveMemoryNO,
+                                                                 inactiveMemoryYES,
+                                                                 wiredMemoryNO,
+                                                                 wiredMemoryYES,
+                                                                 purgableMemoryNO,
+                                                                 purgableMemoryYES,
+                                                                 deviceOrientation,
+                                                                 country,
+                                                                 language,
+                                                                 timeZone,
+                                                                 currency,
+                                                                 applicationVersion,
+                                                                 clipboardContent,
+                                                                 cFUUID,
+                                                                 cPUUsage,
                                                                  nil]
                                                         forKeys:[NSArray arrayWithObjects:
                                                                  @"Uptime (dd hh mm)",
@@ -1050,6 +785,10 @@
                                                                  @"ProximitySensorEnabled",
                                                                  @"DebuggerAttached",
                                                                  @"PluggedIn",
+                                                                 @"Jailbroken",
+                                                                 @"NumberProcessors",
+                                                                 @"NumberActiveProcessors",
+                                                                 @"ProcessorsUsage",
                                                                  @"AccessoriesAttached",
                                                                  @"HeadphonesAttached",
                                                                  @"NumberAttachedAccessories",
@@ -1064,19 +803,17 @@
                                                                  @"Charging",
                                                                  @"FullyCharged",
                                                                  @"CurrentIPAddress",
-                                                                 @"CurrentMACAddress",
                                                                  @"External IP Address",
                                                                  @"CellIPAddress",
-                                                                 @"CellMACAddress",
                                                                  @"CellNetmaskAddress",
                                                                  @"CellBroadcastAddress",
                                                                  @"WiFiIPAddress",
-                                                                 @"WiFiMACAddress",
                                                                  @"WiFiNetmaskAddress",
                                                                  @"WiFiBroadcastAddress",
                                                                  @"WiFiRouterAddress",
                                                                  @"ConnectedToWiFi",
                                                                  @"ConnectedToCellNetwork",
+                                                                 @"ProcessID",
                                                                  @"DiskSpace",
                                                                  @"FreeDiskSpace (Not Formatted)",
                                                                  @"FreeDiskSpace (Formatted)",
@@ -1104,17 +841,18 @@
                                                                  @"Currency",
                                                                  @"ApplicationVersion",
                                                                  @"ClipboardContent",
+                                                                 @"CFUUID",
                                                                  @"CPUUsage",
                                                                  nil]];
     
     // Check if Dictionary is populated
-    if (SystemInformationDict.count <= 0) {
+    if (systemInformationDict.count <= 0) {
         // Error, Dictionary is empty
         return nil;
     }
     
     // Successful
-    return SystemInformationDict;
+    return systemInformationDict;
 }
 
 @end
