@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "Insider"
-  s.version       = "1.0.0"
+  s.version       = "1.0.1"
   s.summary       = "Insider is an utility framework which sets a backdoor into your app for testing tools like Appium, Calabash, Frank, etc."
 
   s.description   = <<-DESC
